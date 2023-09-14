@@ -1,0 +1,127 @@
+.Selection {}
+
+.selectionBanner {
+    width: 560px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.searchBtn {
+    border-radius: 7px 7px 7px 7px;
+    border: 1px solid #c9c9c9;
+    color: #46475d;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.searchBtn:hover {
+    background-color: #46475d;
+    border: 1px solid #46475d;
+    color: white;
+}
+
+.searchBtn:disabled {
+    border: 1px solid #d9d9d9;
+    background-color: #f5f5f5;
+    color: #cacacf;
+}
+
+.selectionText {
+    font-size: 14px;
+    width: 250px;
+}
+
+.logoLink {
+    margin: 0;
+    background-color: red;
+}
+
+.selectionLicciumLogo {
+    margin: 0;
+
+    width: 125px;
+    height: 70px;
+}
+
+.paging {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.page {
+
+    font-size: 14px;
+    font-weight: 600;
+
+    background: #efcbd6;
+    color: black;
+
+    border-radius: 5px 5px 5px 5px;
+
+    padding-top: 2px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 2px;
+
+    margin: 0;
+}
+
+svg:hover {
+    fill: #cd1848;
+}
+
+button,
+input[type="submit"],
+input[type="reset"] {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.imageSelection {
+    margin: 0;
+    width: 560px;
+    height: 360px;
+    /* 360 */
+    overflow-x: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    /* border: 1px solid #46475d; */
+}
+
+.pic {
+    box-sizing: border-box;
+    margin: 2px;
+    padding: 2px;
+    border-radius: 7px 7px 7px 7px;
+    border: 3px solid white;
+}
+
+
+.pic:hover {
+/*     box-sizing: border-box; 
+    margin: 2px;
+    padding: 2px;
+    border-radius: 7px 7px 7px 7px; */
+    border: 3px solid #cd1848;
+    cursor: pointer;
+}

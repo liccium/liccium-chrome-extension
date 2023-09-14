@@ -1,0 +1,9 @@
+.Popup {
+    width: 600px;
+    /* max 800px */
+    height: 450px;
+    /* max 600px */
+
+    background-color: white;
+    /* border-radius: 15px; */
+}

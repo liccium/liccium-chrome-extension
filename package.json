@@ -1,0 +1,29 @@
+{
+  "name": "liccium-extension",
+  "version": "1.0.0",
+  "description": "Verification of images on websites.",
+  "main": "popup.js",
+  "scripts": {
+    "dev": "webpack --watch --progress --config webpack.dev.js",
+    "build": "webpack --progress --config webpack.prod.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ts-loader": "^9.4.3"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.237",
+    "@types/react": "^18.2.13",
+    "@types/react-dom": "^18.2.6",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.87.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-merge": "^5.9.0"
+  }
+}

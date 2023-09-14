@@ -1,0 +1,32 @@
+{
+  "name": "Liccium Trust Engine",
+  "description": "Search and verification of digital content declarations.",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "contextMenus",
+    "storage"
+  ],
+  "icons": {
+    "16": "liccium-icon.png",
+    "48": "liccium-icon.png",
+    "128": "liccium-icon.png"
+  },
+  "action": {
+    "default_title": "Liccium Trust Engine",
+    "default_popup": "popup.html"
+  },
+  //"options_page": "options.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["contentScript.js"]
+    }
+  ]
+}
