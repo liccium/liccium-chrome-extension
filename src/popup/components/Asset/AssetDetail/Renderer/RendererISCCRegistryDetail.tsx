@@ -134,7 +134,7 @@ class RendererISCCRegistryDetail {
             </div>
         );
         rowCounter++;
-        if (Object.keys(asset.isccMetadata.liccium_plugins).length !== 0) {
+        if (asset.isccMetadata.liccium_plugins !== undefined) {
             if (asset.isccMetadata.liccium_plugins.iptc !== undefined) {
                 data.push(
                     <div key="cro7" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
