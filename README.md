@@ -19,7 +19,8 @@ NOTE: Currently only images are supported.
 
 https://twitter.com/bildoperationen/status/1656312620129959942
 
-## Installation instructions
+## Installation instructions  
+[Latest release](https://github.com/liccium/liccium-chrome-extension/releases/tag/v0.0.1)
 
 1. Download [liccium-chrome-extension-v0.0.1.zip](https://github.com/liccium/liccium-chrome-extension/releases/download/v0.0.1/liccium-chrome-extension-v0.0.1.zip) file.
 3. Extract the zip file.
