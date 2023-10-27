@@ -1,4 +1,4 @@
-# First release of liccium-chrome-extension
+# Liccium Trust Engine Chrome Extension
 
 The Liccium browser plugin will allow users to identify and verify declarations of digital media content online and perform a reverse-lookup of associated metadata, rights, and available or already acquired licences. The plugin will then verify the content's declarations, public keys, identities, and integrity using cryptographic algorithms.  
 
