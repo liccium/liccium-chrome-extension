@@ -31,8 +31,3 @@ https://twitter.com/bildoperationen/status/1656312620129959942
 9. Select extracted **_liccium-chrome-extension-v0.0.1_** folder and enter.
 10. Go to the Plugins settings and pin the Liccium Trust Engine browser extension.
 
-## Checksum
-### Command to check
-Windows: ```certutil -hashfile liccium-chrome-extension-v0.0.1 SHA256```
-### Output
-SHA256: 4d159b17dbaabc9bb4b8332bd56449a02f4f9c1ddfa0deb907a51a7dd3b6d082
