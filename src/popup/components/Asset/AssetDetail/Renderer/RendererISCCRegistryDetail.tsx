@@ -99,94 +99,118 @@ class RendererISCCRegistryDetail {
             );
         }
         rowCounter++;
-        data.push(
-            <div key="cro2" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                <p key="keyDescription" className="pRowKey">Description</p>
-                <p key="keyDescriptionValue" className="pRowValue">{asset.isccMetadata.description}</p>
-            </div>
-        );
-        rowCounter++;
-        data.push(
-            <div key="cro3" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                <p key="keySourceUrl" className="pRowKey">Source URL</p>
-                <p key="keySourceUrlValue" className="pRowValue"><a href={asset.isccMetadata.sourceUrl} target="_blank">{asset.isccMetadata.sourceUrl}</a></p>
-            </div>
-        );
-        rowCounter++;
-        data.push(
-            <div key="cro4" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                <p key="keyRedirect" className="pRowKey">Redirect URL</p>
-                <p key="keyRedirectValue" className="pRowValue"><a href={asset.isccMetadata.redirect} target="_blank">{asset.isccMetadata.redirect}</a></p>
-            </div>
-        );
-        rowCounter++;
-        data.push(
-            <div key="cro5" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                <p key="keyAquire" className="pRowKey">Acquire URL</p>
-                <p key="keyAquireValue" className="pRowValue"><a href={asset.isccMetadata.acquire} target="_blank">{asset.isccMetadata.acquire}</a></p>
-            </div>
-        );
-        rowCounter++;
-        data.push(
-            <div key="cro6" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                <p key="keyLicence" className="pRowKey">Licence URL</p>
-                <p key="keyLicenceValue" className="pRowValue"><a href={asset.isccMetadata.license} target="_blank">{asset.isccMetadata.license}</a></p>
-            </div>
-        );
-        rowCounter++;
+        if (asset.isccMetadata.description !== undefined) {
+            data.push(
+                <div key="cro2" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                    <p key="keyDescription" className="pRowKey">Description</p>
+                    <p key="keyDescriptionValue" className="pRowValue">{asset.isccMetadata.description}</p>
+                </div>
+            );
+            rowCounter++;
+        }
+        if (asset.isccMetadata.sourceUrl !== undefined) {
+            data.push(
+                <div key="cro3" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                    <p key="keySourceUrl" className="pRowKey">Source URL</p>
+                    <p key="keySourceUrlValue" className="pRowValue"><a href={asset.isccMetadata.sourceUrl} target="_blank">{asset.isccMetadata.sourceUrl}</a></p>
+                </div>
+            );
+            rowCounter++;
+        }
+        if (asset.isccMetadata.redirect !== undefined) {
+            data.push(
+                <div key="cro4" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                    <p key="keyRedirect" className="pRowKey">Redirect URL</p>
+                    <p key="keyRedirectValue" className="pRowValue"><a href={asset.isccMetadata.redirect} target="_blank">{asset.isccMetadata.redirect}</a></p>
+                </div>
+            );
+            rowCounter++;
+        }
+        if (asset.isccMetadata.acquire !== undefined) {
+            data.push(
+                <div key="cro5" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                    <p key="keyAquire" className="pRowKey">Acquire URL</p>
+                    <p key="keyAquireValue" className="pRowValue"><a href={asset.isccMetadata.acquire} target="_blank">{asset.isccMetadata.acquire}</a></p>
+                </div>
+            );
+            rowCounter++;
+        }
+        if (asset.isccMetadata.license !== undefined) {
+            data.push(
+                <div key="cro6" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                    <p key="keyLicence" className="pRowKey">Licence URL</p>
+                    <p key="keyLicenceValue" className="pRowValue"><a href={asset.isccMetadata.license} target="_blank">{asset.isccMetadata.license}</a></p>
+                </div>
+            );
+            rowCounter++;
+        }
         if (asset.isccMetadata.liccium_plugins !== undefined) {
             if (asset.isccMetadata.liccium_plugins.iptc !== undefined) {
-                data.push(
-                    <div key="cro7" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                        <p key="keyKeywords" className="pRowKey">Keywords</p>
-                        <p key="keyKeywordsValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.keywords}</p>
-                    </div>
-                );
-                rowCounter++;
-                data.push(
-                    <div key="cro8" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                        <p key="keyCreatorName" className="pRowKey">Creator name</p>
-                        <p key="keyCreatorNameValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.creator}</p>
-                    </div>
-                );
-                rowCounter++;
-                data.push(
-                    <div key="cro9" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                        <p key="keyCreditLineName" className="pRowKey">Credit line</p>
-                        <p key="keyCreditLineNameValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.creditText}</p>
-                    </div>
-                );
-                rowCounter++;
-                data.push(
-                    <div key="cro10" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                        <p key="keyCopyrightNotice" className="pRowKey">Copyright Notice</p>
-                        <p key="keyCopyrightNoticeValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.copyrightNotice}</p>
-                    </div>
-                );
-                rowCounter++;
-                data.push(
-                    <div key="cro11" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                        <p key="keyDigitalSourceType" className="pRowKey">Digital Source Type</p>
-                        <p key="keyDigitalSourceTypeValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype}</p>
-                    </div>
-                );
-                rowCounter++;
+                if (asset.isccMetadata.liccium_plugins.iptc.keywords !== undefined) {
+                    data.push(
+                        <div key="cro7" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyKeywords" className="pRowKey">Keywords</p>
+                            <p key="keyKeywordsValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.keywords}</p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
+                if (asset.isccMetadata.liccium_plugins.iptc.creator !== undefined) {
+                    data.push(
+                        <div key="cro8" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyCreatorName" className="pRowKey">Creator name</p>
+                            <p key="keyCreatorNameValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.creator}</p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
+                if (asset.isccMetadata.liccium_plugins.iptc.creditText !== undefined) {
+                    data.push(
+                        <div key="cro9" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyCreditLineName" className="pRowKey">Credit line</p>
+                            <p key="keyCreditLineNameValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.creditText}</p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
+                if (asset.isccMetadata.liccium_plugins.iptc.copyrightNotice !== undefined) {
+                    data.push(
+                        <div key="cro10" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyCopyrightNotice" className="pRowKey">Copyright Notice</p>
+                            <p key="keyCopyrightNoticeValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.copyrightNotice}</p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
+                if (asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype !== undefined) {
+                    data.push(
+                        <div key="cro11" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyDigitalSourceType" className="pRowKey">Digital Source Type</p>
+                            <p key="keyDigitalSourceTypeValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype}</p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
             }
             if (asset.isccMetadata.liccium_plugins.tdmai !== undefined) {
-                data.push(
-                    <div key="cro12" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                        <p key="keyTDMAISummary" className="pRowKey">TDMAI Summary</p>
-                        <p key="keyTDMAISummaryValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.tdmai.TDMAI ? "Content may be used as AI training data." : "Content must not be used for AI training purposes."}</p>
-                    </div>
-                );
-                rowCounter++;
-                data.push(
-                    <div key="cro13" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                        <p key="keyTDMAIPolicyURL" className="pRowKey">TDMAI policy URL</p>
-                        <p key="keyTDMAIPolicyURLValue" className="pRowValue"><a href={asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL} target="_blank">{asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL}</a></p>
-                    </div>
-                );
-                rowCounter++;
+                if (asset.isccMetadata.liccium_plugins.tdmai.TDMAI !== undefined) {
+                    data.push(
+                        <div key="cro12" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyTDMAISummary" className="pRowKey">TDMAI Summary</p>
+                            <p key="keyTDMAISummaryValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.tdmai.TDMAI ? "Content may be used as AI training data." : "Content must not be used for AI training purposes."}</p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
+                if (asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL !== undefined) {
+                    data.push(
+                        <div key="cro13" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyTDMAIPolicyURL" className="pRowKey">TDMAI policy URL</p>
+                            <p key="keyTDMAIPolicyURLValue" className="pRowValue"><a href={asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL} target="_blank">{asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL}</a></p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
             }
         }
         this.setData(data);

@@ -1,24 +1,22 @@
-html {
-
-}
+html {}
 
 body {
-  margin: 0;
-  font-family: 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  height: 100vh;
+    height: 100vh;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-  background-color: #46475d;
-  
+    background-color: #46475d;
+
 }
 
 .Options {
@@ -106,18 +104,19 @@ input[type="reset"] {
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 20px;
-    border: 1px solid #46475d;
+    /* border: 1px solid #46475d; */
 }
 
 
 .settingFirst {
-    border-top: 1px solid #c9c9c9;
+    /* border-top: 1px solid #c9c9c9; */
 }
 
 .settingInfo {
     height: 30px;
     width: 100%;
 }
+
 .settingInfoText {
     margin-left: 10px;
     font-size: 17px;
@@ -130,7 +129,7 @@ input[type="reset"] {
     height: 90px;
     width: 100%;
     color: black;
-    border-bottom: 1px solid #c9c9c9;
+    /* border-bottom: 1px solid #c9c9c9; */
 
     display: flex;
     flex-direction: row;
@@ -152,12 +151,12 @@ input[type="reset"] {
 
 label {
     font-weight: 400;
-    font-size: 17px;
+    font-size: 14px;
 }
 
-input {
-    
+.serverUrls {
     width: 310px;
+    height: 35px;
 
     padding-top: 5px;
     padding-bottom: 5px;
@@ -165,16 +164,15 @@ input {
     padding-left: 20px;
     padding-right: 20px;
 
-
     border-radius: 6px;
-    font-size: 17px;
+    font-size: 14px;
     background: white;
     border: 2px solid transparent;
-    height: 26px;
+
     box-shadow: 0 0 0 1px #dddddd, 0 2px 4px 0 rgb(0 0 0 / 7%), 0 1px 1.5px 0 rgb(0 0 0 / 5%);
 }
 
-input:focus {
-    border: 2px solid red;
+.serverUrls:focus {
+    border: 2px solid lightgray;
     border-radius: 4px;
 }

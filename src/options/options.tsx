@@ -2,39 +2,20 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './options.css';
 
-let serverUrlSetting = "";
+let selectedServerUrl = "";
 
 const save = () => {
-
-    /* let regex = /[A-Z]/g; */ // Create a RegEx for all types of URLs
-    let regex = "";
-
-    if(serverUrlSetting.match(regex)) {
-
-        if(serverUrlSetting.charAt(serverUrlSetting.length-1) !== "/") {
-            serverUrlSetting = serverUrlSetting + "/";
-        }
-    
-        chrome.storage.local.set({ serverUrl: serverUrlSetting })
-            .then(result => {
-                console.log(result)
-                window.alert("Settings saved.");
-            }); // use callback in then to check if saved
-
-    } else {
-        window.alert("ServerUrl is not a valid URL.");
-    }
-
+    chrome.storage.local.set({ selectedServerUrl: selectedServerUrl })
+        .then(() => {
+            window.alert("Settings saved.");
+        }); // use callback in then to check if saved
 }
 
-const change = (event) => {
-    serverUrlSetting = event.target.value;
-    console.log(serverUrlSetting);
+const getSelectedServerUrl = (event) => {
+    selectedServerUrl = event.target.value;
 }
 
-const renderElements = (settings) => {
-
-    serverUrlSetting = settings;
+const renderElements = (storage) => {
 
     let elements = [];
 
@@ -47,10 +28,13 @@ const renderElements = (settings) => {
     elements.push(
         <div key={"settingServer"} className={"setting settingFirst"}>
             <div className="settingKey">
-                <label>Server Url</label>
+                <label>Server-URL</label>
             </div>
             <div className="settingValue">
-                <input id="serverSetting" type="text" defaultValue={settings} onChange={change} />
+                <select className="serverUrls" onChange={getSelectedServerUrl} defaultValue={storage.selectedServerUrl}>
+                    <option value={storage.serverUrls[0]}>{storage.serverUrls[0]}</option>
+                    <option value={storage.serverUrls[1]}>{storage.serverUrls[1]}</option>
+                </select>
             </div>
         </div>
     );
@@ -58,12 +42,13 @@ const renderElements = (settings) => {
     return elements;
 }
 
-chrome.storage.local.get(["serverUrl"]).then((storage) => {
+chrome.storage.local.get(["selectedServerUrl", "serverUrls"]).then((storage) => {
 
     console.log("---------- CHROME STORAGE -------->");
     console.log(storage);
 
-    if (storage.serverUrl !== undefined) {
+    if (storage.selectedServerUrl !== undefined && storage.serverUrls !== undefined) {
+        selectedServerUrl = storage.serverUrls[0];
         const options = (
             <div className="Options">
                 <div className="optionsBanner">
@@ -74,7 +59,7 @@ chrome.storage.local.get(["serverUrl"]).then((storage) => {
                     <button className="saveBtn" onClick={() => save()} >Save</button>
                 </div>
                 <div className="settings">
-                    {renderElements(storage.serverUrl)}
+                    {renderElements(storage)}
                 </div>
             </div>
         );

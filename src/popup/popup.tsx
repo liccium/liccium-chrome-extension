@@ -1,10 +1,9 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import './popup.css';
-import Selection from './components/Selection/Selection';
-import Processing from './components/Processing/Processing';
-import AssetList from './components/Asset/AssetList/AssetList';
+import React, { useEffect, useState } from 'react';
 import AssetDetail from './components/Asset/AssetDetail/AssetDetail';
+import AssetList from './components/Asset/AssetList/AssetList';
+import Processing from './components/Processing/Processing';
+import Selection from './components/Selection/Selection';
+import './popup.css';
 
 
 const Popup = () => {
@@ -130,14 +129,14 @@ const Popup = () => {
         let index = 0;
         let maxLength = 0;
         let maxIndex = 0;
-        while(assetVCs.length > 0) {
-            if(assetVCs[index].credentials.length >= maxLength) {
+        while (assetVCs.length > 0) {
+            if (assetVCs[index].credentials.length >= maxLength) {
                 maxLength = assetVCs[index].credentials.length;
                 maxIndex = index;
             }
             index++;
 
-            if(index === assetVCs.length) {
+            if (index === assetVCs.length) {
                 assetsSortedVCs.push(assetVCs[maxIndex]);
                 assetVCs.splice(maxIndex, 1);
                 index = 0;
@@ -299,22 +298,22 @@ const Popup = () => {
         let jsonIscc = [];
         let jsonAssets = [];
         try {
-            jsonIscc = await fetch("http://localhost:8080/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            let jsonExplain = await fetch("http://localhost:8080/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
-            // jsonIscc = await fetch(serverUrl + "iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            // let jsonExplain = await fetch(serverUrl + "iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            //jsonIscc = await fetch("http://localhost:8080/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
+            //let jsonExplain = await fetch("http://localhost:8080/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            jsonIscc = await fetch(serverUrl + "iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
+            let jsonExplain = await fetch(serverUrl + "iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             // Put sourceUrl and units from explained ISCC in jsonIscc
             jsonIscc[0].isccMetadata.name = getModeCapitalLetter(jsonIscc[0].isccMetadata.mode) + " from " + getISCCName(pageUrl);
             jsonIscc[0].isccMetadata.sourceUrl = srcUrl;
             jsonIscc[0].isccMetadata.units = jsonExplain.units;
 
             // FETCH ASSET DATA
-            jsonAssets = await fetch("http://localhost:8080/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
-            // jsonAssets = await fetch(serverUrl + "asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            //jsonAssets = await fetch("http://localhost:8080/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            jsonAssets = await fetch(serverUrl + "asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             // Put units from explained ISCC in jsonAssets
             for (let i = 0; i < jsonAssets.length; i++) {
-                let jsonExplain = await fetch("http://localhost:8080/iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
-                // let jsonExplain = await fetch(serverUrl + "iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+                //let jsonExplain = await fetch("http://localhost:8080/iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+                let jsonExplain = await fetch(serverUrl + "iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
                 let assetUnits = jsonExplain.units;
                 jsonAssets[i].isccMetadata.units = assetUnits;
             }
@@ -334,8 +333,8 @@ const Popup = () => {
 
             console.error(err);
 
-            window.alert("Reuqest with url http://localhost:8080 failed.");
-            //window.alert("Reuqest with url " + serverUrl + " failed.");
+            //window.alert("Reuqest with url http://localhost:8080 failed.");
+            window.alert("Reuqest with url " + serverUrl + " failed.");
             chrome.storage.local.remove(["srcUrl"]);
             setSrcUrl("");
         }
@@ -355,19 +354,19 @@ const Popup = () => {
 
         chrome.storage.local.get(
             [
-                // "serverUrl",
+                "selectedServerUrl",
                 "pageUrl",
-                "srcUrl", 
+                "srcUrl",
                 "iscc",
                 "assets"]
-            ).then((storage) => {
+        ).then((storage) => {
 
             console.log("---------- CHROME STORAGE -------->");
             console.log(storage);
 
-            /* if (storage.serverUrl !== undefined) {
-                setServerUrl(storage.serverUrl);
-            } */
+            if (storage.selectedServerUrl !== undefined) {
+                setServerUrl(storage.selectedServerUrl);
+            }
             if (storage.pageUrl !== undefined) {
                 setPageUrl(storage.pageUrl);
             }
@@ -380,6 +379,7 @@ const Popup = () => {
             if (storage.assets !== undefined) {
                 setAssets(storage.assets);
             }
+
         });
 
         console.log("############## useEffekt Popup ############## ");

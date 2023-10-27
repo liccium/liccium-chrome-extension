@@ -2,7 +2,16 @@ chrome.runtime.onInstalled.addListener(() => {
     console.log('I come from Background-Script.');
 
     chrome.storage.local.clear();
-    // chrome.storage.local.set({ serverUrl: "http://localhost:8080/" });
+    chrome.storage.local.set({ selectedServerUrl: "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/" });
+    chrome.storage.local.set(
+        {
+            serverUrls:
+                [
+                    "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/",
+                    "http://iscc.if-is.net:8080/"
+                ]
+        }
+    );
 
     chrome.contextMenus.create({
         id: "nns",

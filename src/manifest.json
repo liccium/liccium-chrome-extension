@@ -18,15 +18,19 @@
     "default_title": "Liccium Trust Engine",
     "default_popup": "popup.html"
   },
-  //"options_page": "options.html",
+  "options_page": "options.html",
   "background": {
     "service_worker": "background.js",
     "type": "module"
   },
   "content_scripts": [
     {
-      "matches": ["https://*/*"],
-      "js": ["contentScript.js"]
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
     }
   ]
 }
