@@ -13,11 +13,18 @@ Overall, the Liccium browser plugin will provide a straightforward and effective
 Go to any website and click on the extension icon to verify content on this page. 
 NOTE: Currently only images are supported. 
  
-## Links to test the plugin
+## Examples 
+To test the plugin, you can use the following examples: 
+
+### Test declarations
  
 [https://twitter.com/posth/status/1658723442235961344](https://twitter.com/posth/status/1658723442235961344)
 
 https://twitter.com/bildoperationen/status/1656312620129959942
+
+### Main declarations
+
+At present, there are no declarations made on Mainnet blockchains.  
 
 ## Installation instructions  
 [Latest release](https://github.com/liccium/liccium-chrome-extension/releases/tag/v0.0.1)
