@@ -22,7 +22,7 @@ To test the plugin, you can use the following examples:
 
 [https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r](https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r)
 
-#### Two verified declarations
+#### Declarations by two verified declarants
 
 [https://twitter.com/initials_art/status/1710308076958384552](https://twitter.com/initials_art/status/1710308076958384552)
 
@@ -32,6 +32,8 @@ To test the plugin, you can use the following examples:
 This example shows how to resolve the original declaration from manipulated content:
 
 [https://twitter.com/initials_art/status/1718227328239575353](https://twitter.com/initials_art/status/1718227328239575353)
+
+[https://twitter.com/posth/status/1658723442235961344](https://twitter.com/posth/status/1658723442235961344)
 
 ### Main declarations
 
