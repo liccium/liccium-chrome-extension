@@ -2,11 +2,11 @@
 
 The Liccium browser plugin will allow users to identify and verify declarations of digital media content online and perform a reverse-lookup of associated metadata, rights, and available or already acquired licences. 
 
-![Liccium browser extension](https://1543071982-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FKyPjnRgFAp1MzuOXKSXI%2Fuploads%2FokEGb9HJrYaL3kpZ0Nx6%2FBrowser%20plugin%20small.gif?alt=media&token=489e7ea6-1a6a-4fad-b18d-7af0b50eb3f4)
-
 The plugin will draw information from the Liccium index, which is based on content declarations on decentralised public blockchain networks, providing users with additional details about the media content and related assets.  
 
 Overall, the Liccium browser plugin will provide a straightforward and effective way for users to verify the authenticity and accuracy of digital media content encountered while browsing the web, helping to establish trust in online publications, data, and information.
+
+![Liccium browser extension](https://1543071982-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FKyPjnRgFAp1MzuOXKSXI%2Fuploads%2FokEGb9HJrYaL3kpZ0Nx6%2FBrowser%20plugin%20small.gif?alt=media&token=489e7ea6-1a6a-4fad-b18d-7af0b50eb3f4)
 
 ## Usage of the Liccium Trust Engine browser plugin
 
@@ -17,12 +17,21 @@ NOTE: Currently only images are supported.
 To test the plugin, you can use the following examples: 
 
 ### Test declarations
- 
-[https://twitter.com/initials_art/status/1710308076958384552](https://twitter.com/initials_art/status/1710308076958384552)
 
 [https://twitter.com/bildoperationen/status/1656312620129959942](https://twitter.com/bildoperationen/status/1656312620129959942)
 
 [https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r](https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r)
+
+#### Two verified declarations
+
+[https://twitter.com/initials_art/status/1710308076958384552](https://twitter.com/initials_art/status/1710308076958384552)
+
+
+#### Example of fake/manipulated content
+
+This example shows how to resolve the original declaration from manipulated content:
+
+[https://twitter.com/initials_art/status/1718227328239575353](https://twitter.com/initials_art/status/1718227328239575353)
 
 ### Main declarations
 
