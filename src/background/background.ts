@@ -5,11 +5,16 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.local.set({ selectedServerUrl: "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/" });
     chrome.storage.local.set(
         {
-            serverUrls:
-                [
-                    "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/",
-                    "http://iscc.if-is.net:8080/"
-                ]
+            serverUrls: [
+                {
+                    name: "Liccium",
+                    url: "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/"
+                },
+                {
+                    name: "if(is)",
+                    url: "http://iscc.if-is.net:8080/"
+                }
+            ]
         }
     );
 

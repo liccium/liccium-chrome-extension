@@ -21,6 +21,11 @@ const Popup = () => {
     const [assets, setAssets] = useState([]); // new Entries().data
     const [selectedItemId, setSelectedItemId] = useState<string>("");
 
+    const serverUrls = {
+        "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/": "Liccium",
+        "http://iscc.if-is.net:8080/": "if(is)"
+    }
+
     const clearStorage = () => {
         console.log("Clearing storage");
         chrome.storage.local.remove(["pageUrl", "srcUrl", "iscc", "assets"]);
@@ -334,7 +339,7 @@ const Popup = () => {
             console.error(err);
 
             //window.alert("Reuqest with url http://localhost:8080 failed.");
-            window.alert("Reuqest with url " + serverUrl + " failed.");
+            window.alert("Reuqest to " + serverUrls[serverUrl] + " failed.");
             chrome.storage.local.remove(["srcUrl"]);
             setSrcUrl("");
         }
@@ -358,7 +363,8 @@ const Popup = () => {
                 "pageUrl",
                 "srcUrl",
                 "iscc",
-                "assets"]
+                "assets"
+            ]
         ).then((storage) => {
 
             console.log("---------- CHROME STORAGE -------->");

@@ -2,7 +2,8 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './options.css';
 
-let selectedServerUrl = "";
+let serverUrls = null;
+let selectedServerUrl = null;
 
 const save = () => {
     chrome.storage.local.set({ selectedServerUrl: selectedServerUrl })
@@ -28,12 +29,12 @@ const renderElements = (storage) => {
     elements.push(
         <div key={"settingServer"} className={"setting settingFirst"}>
             <div className="settingKey">
-                <label>Server-URL</label>
+                <label>Server</label>
             </div>
             <div className="settingValue">
-                <select className="serverUrls" onChange={getSelectedServerUrl} defaultValue={storage.selectedServerUrl}>
-                    <option value={storage.serverUrls[0]}>{storage.serverUrls[0]}</option>
-                    <option value={storage.serverUrls[1]}>{storage.serverUrls[1]}</option>
+                <select className="serverUrls" onChange={getSelectedServerUrl} defaultValue={selectedServerUrl}>
+                    <option value={storage.serverUrls[0].url}>{storage.serverUrls[0].name}</option>
+                    <option value={storage.serverUrls[1].url}>{storage.serverUrls[1].name}</option>
                 </select>
             </div>
         </div>
@@ -48,7 +49,8 @@ chrome.storage.local.get(["selectedServerUrl", "serverUrls"]).then((storage) => 
     console.log(storage);
 
     if (storage.selectedServerUrl !== undefined && storage.serverUrls !== undefined) {
-        selectedServerUrl = storage.serverUrls[0];
+        serverUrls = storage.serverUrls;
+        selectedServerUrl = storage.selectedServerUrl;
         const options = (
             <div className="Options">
                 <div className="optionsBanner">

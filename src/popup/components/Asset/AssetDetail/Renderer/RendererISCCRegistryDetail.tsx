@@ -6,9 +6,64 @@ class RendererISCCRegistryDetail {
     data = null;
     setData = null;
 
+    digitalSourceTypes = null;
+    verificationTypes = null;
+
     constructor({ data, setData }) {
         this.data = data;
         this.setData = setData;
+        this.digitalSourceTypes = {
+            trainedAlgorithmicMedia: "Trained algorithmic media",
+            compositeSynthetic: "Composite including synthetic elements",
+            algorithmicMedia: "Pure algorithmic media",
+            digitalCapture: "Original digital capture sampled from real life",
+            minorHumanEdits: "Original media with minor human edits",
+            digitalArt: "Digital art"
+        }
+        this.verificationTypes = {
+            DomainVerification: "Domain verification",
+            TwitterVerification: "Twitter verification"
+        }
+    }
+
+    checkValue(value) {
+        return value !== undefined && value !== null && value !== ""
+    }
+
+    calculateFileSize(fileSize) {
+        let byte = fileSize;
+        let kiloByte = fileSize / 1000;
+        let megaByte = kiloByte / 1000;
+        let gigaByte = megaByte / 1000;
+        let terraByte = gigaByte / 1000;
+
+        if (Math.round(terraByte) === 0) {
+            if (Math.round(gigaByte) === 0) {
+                if (Math.round(megaByte) === 0) {
+                    if (Math.round(kiloByte) === 0) {
+                        fileSize = byte + " B";
+                    } else {
+                        fileSize = kiloByte.toFixed(2) + " KB";
+                    }
+                } else {
+                    fileSize = megaByte.toFixed(2) + " MB";
+                }
+            } else {
+                fileSize = gigaByte.toFixed(2) + " GB";
+            }
+        } else {
+            fileSize = terraByte.toFixed(2) + " TB";
+        }
+
+        return fileSize;
+    }
+
+    getDigitalSourceTypeName(digitalSourceType) {
+        return this.digitalSourceTypes[digitalSourceType];
+    }
+
+    getVerificationType(verificationType) {
+        return this.verificationTypes[verificationType];
     }
 
     copyToClipboard(value) {
@@ -67,22 +122,10 @@ class RendererISCCRegistryDetail {
         this.setControlsButtonStyle(metadataBtn);
         let rowCounter = 0;
         let data = [];
-        let origin = asset.origin;
-        if (origin === "iscc-registry") {
-            data.push(
-                <div key="cro0" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                    <p key="keyMetadata" className="pRowKey">Metadata</p>
-                    <p key="keyMetadataValue" className="pRowValue">
-                        <a href={asset.resourceMetadata.meta_url} target="_blank">{asset.resourceMetadata.meta_url}</a>
-                    </p>
-                </div>
-            );
-            rowCounter++;
-        }
         if (asset.resourceMetadata === undefined) {
             let splittedTitle = asset.isccMetadata.name.split(" ");
             data.push(
-                <div key="cro1" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
                     <p key="keyTitle" className="pRowKey">Title</p>
                     <p key="keyTitleValue" className="pRowValue">
                         {splittedTitle[0] + " " + splittedTitle[1] + " "}
@@ -92,120 +135,202 @@ class RendererISCCRegistryDetail {
             );
         } else {
             data.push(
-                <div key="cro1" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
                     <p key="keyTitle" className="pRowKey">Title</p>
                     <p key="keyTitleValue" className="pRowValue">{asset.isccMetadata.name}</p>
                 </div>
             );
         }
         rowCounter++;
-        if (asset.isccMetadata.description !== undefined) {
+        if (this.checkValue(asset.isccMetadata.description)) {
             data.push(
-                <div key="cro2" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
                     <p key="keyDescription" className="pRowKey">Description</p>
                     <p key="keyDescriptionValue" className="pRowValue">{asset.isccMetadata.description}</p>
                 </div>
             );
             rowCounter++;
         }
-        if (asset.isccMetadata.sourceUrl !== undefined) {
+        if (this.checkValue(asset.isccMetadata.sourceUrl)) {
             data.push(
-                <div key="cro3" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                    <p key="keySourceUrl" className="pRowKey">Source URL</p>
+                <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                    <p key="keySourceUrl" className="pRowKey">Source</p>
                     <p key="keySourceUrlValue" className="pRowValue"><a href={asset.isccMetadata.sourceUrl} target="_blank">{asset.isccMetadata.sourceUrl}</a></p>
                 </div>
             );
             rowCounter++;
         }
-        if (asset.isccMetadata.redirect !== undefined) {
+        if (this.checkValue(asset.isccMetadata.redirect)) {
             data.push(
-                <div key="cro4" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                    <p key="keyRedirect" className="pRowKey">Redirect URL</p>
+                <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                    <p key="keyRedirect" className="pRowKey">Redirect</p>
                     <p key="keyRedirectValue" className="pRowValue"><a href={asset.isccMetadata.redirect} target="_blank">{asset.isccMetadata.redirect}</a></p>
                 </div>
             );
             rowCounter++;
         }
-        if (asset.isccMetadata.acquire !== undefined) {
+        if (this.checkValue(asset.isccMetadata.original)) {
             data.push(
-                <div key="cro5" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                    <p key="keyAquire" className="pRowKey">Acquire URL</p>
-                    <p key="keyAquireValue" className="pRowValue"><a href={asset.isccMetadata.acquire} target="_blank">{asset.isccMetadata.acquire}</a></p>
+                <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                    <p key="keyOriginal" className="pRowKey">Claim</p>
+                    <p key="keyOriginalValue" className="pRowValue">{asset.isccMetadata.original ? "Declared by original creator or rightsholder" : "Declarer does not claim to be the original creator or rightsholder"}</p>
                 </div>
             );
             rowCounter++;
         }
-        if (asset.isccMetadata.license !== undefined) {
-            data.push(
-                <div key="cro6" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                    <p key="keyLicence" className="pRowKey">Licence URL</p>
-                    <p key="keyLicenceValue" className="pRowValue"><a href={asset.isccMetadata.license} target="_blank">{asset.isccMetadata.license}</a></p>
-                </div>
-            );
-            rowCounter++;
+
+        if (asset.isccMetadata.liccium_plugins !== undefined) {
+            if (asset.isccMetadata.liccium_plugins.iptc !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.iptc.acquireLicensePage !== undefined
+                    && asset.isccMetadata.liccium_plugins.iptc.acquireLicensePage !== null) {
+                    data.push(
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyAquire" className="pRowKey">Acquire</p>
+                            <p key="keyAquireValue" className="pRowValue"><a href={asset.isccMetadata.liccium_plugins.iptc.acquireLicensePage} target="_blank">{asset.isccMetadata.liccium_plugins.iptc.acquireLicensePage}</a></p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
+            } else {
+                if (asset.isccMetadata.acquire !== undefined
+                    && asset.isccMetadata.acquire !== null) {
+                    data.push(
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyAquire" className="pRowKey">Acquire</p>
+                            <p key="keyAquireValue" className="pRowValue"><a href={asset.isccMetadata.acquire} target="_blank">{asset.isccMetadata.acquire}</a></p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
+            }
+        } else {
+            if (asset.isccMetadata.acquire !== undefined
+                && asset.isccMetadata.acquire !== null) {
+                data.push(
+                    <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key="keyAquire" className="pRowKey">Acquire</p>
+                        <p key="keyAquireValue" className="pRowValue"><a href={asset.isccMetadata.acquire} target="_blank">{asset.isccMetadata.acquire}</a></p>
+                    </div>
+                );
+                rowCounter++;
+            }
         }
         if (asset.isccMetadata.liccium_plugins !== undefined) {
             if (asset.isccMetadata.liccium_plugins.iptc !== undefined) {
-                if (asset.isccMetadata.liccium_plugins.iptc.keywords !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.iptc.webstatementRights !== undefined
+                    && asset.isccMetadata.liccium_plugins.iptc.webstatementRights !== null) {
                     data.push(
-                        <div key="cro7" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyLicence" className="pRowKey">Licence</p>
+                            <p key="keyLicenceValue" className="pRowValue"><a href={asset.isccMetadata.liccium_plugins.iptc.webstatementRights} target="_blank">{asset.isccMetadata.liccium_plugins.iptc.webstatementRights}</a></p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
+            } else {
+                if (asset.isccMetadata.license !== undefined
+                    && asset.isccMetadata.license !== null) {
+                    data.push(
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyLicence" className="pRowKey">Licence</p>
+                            <p key="keyLicenceValue" className="pRowValue"><a href={asset.isccMetadata.license} target="_blank">{asset.isccMetadata.license}</a></p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
+            }
+        } else {
+            if (asset.isccMetadata.license !== undefined
+                && asset.isccMetadata.license !== null) {
+                data.push(
+                    <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key="keyLicence" className="pRowKey">Licence</p>
+                        <p key="keyLicenceValue" className="pRowValue"><a href={asset.isccMetadata.license} target="_blank">{asset.isccMetadata.license}</a></p>
+                    </div>
+                );
+                rowCounter++;
+            }
+        }
+
+        if (asset.isccMetadata.liccium_plugins !== undefined) {
+            if (asset.isccMetadata.liccium_plugins.iptc !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype !== undefined
+                    && asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype !== null) {
+                    data.push(
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyDigitalSourceType" className="pRowKey">Digital source type</p>
+                            <p key="keyDigitalSourceTypeValue" className="pRowValue">{this.getDigitalSourceTypeName(asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype)}</p>
+                        </div>
+                    );
+                    rowCounter++;
+                }
+                if (asset.isccMetadata.liccium_plugins.iptc.keywords !== undefined
+                    && asset.isccMetadata.liccium_plugins.iptc.keywords !== null) {
+                    data.push(
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
                             <p key="keyKeywords" className="pRowKey">Keywords</p>
                             <p key="keyKeywordsValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.keywords}</p>
                         </div>
                     );
                     rowCounter++;
                 }
-                if (asset.isccMetadata.liccium_plugins.iptc.creator !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.iptc.creator !== undefined
+                    && asset.isccMetadata.liccium_plugins.iptc.creator !== null) {
                     data.push(
-                        <div key="cro8" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
                             <p key="keyCreatorName" className="pRowKey">Creator name</p>
                             <p key="keyCreatorNameValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.creator}</p>
                         </div>
                     );
                     rowCounter++;
                 }
-                if (asset.isccMetadata.liccium_plugins.iptc.creditText !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.iptc.creditText !== undefined
+                    && asset.isccMetadata.liccium_plugins.iptc.creditText !== null) {
                     data.push(
-                        <div key="cro9" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
                             <p key="keyCreditLineName" className="pRowKey">Credit line</p>
                             <p key="keyCreditLineNameValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.creditText}</p>
                         </div>
                     );
                     rowCounter++;
                 }
-                if (asset.isccMetadata.liccium_plugins.iptc.copyrightNotice !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.iptc.rights !== undefined
+                    && asset.isccMetadata.liccium_plugins.iptc.rights !== null) {
                     data.push(
-                        <div key="cro10" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                            <p key="keyCopyrightNotice" className="pRowKey">Copyright Notice</p>
-                            <p key="keyCopyrightNoticeValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.copyrightNotice}</p>
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyRights" className="pRowKey">Rights</p>
+                            <p key="keyRightsValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.rights}</p>
                         </div>
                     );
                     rowCounter++;
                 }
-                if (asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.iptc.copyrightNotice !== undefined
+                    && asset.isccMetadata.liccium_plugins.iptc.copyrightNotice !== null) {
                     data.push(
-                        <div key="cro11" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                            <p key="keyDigitalSourceType" className="pRowKey">Digital Source Type</p>
-                            <p key="keyDigitalSourceTypeValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype}</p>
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyCopyrightNotice" className="pRowKey">Copyright notice</p>
+                            <p key="keyCopyrightNoticeValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.iptc.copyrightNotice}</p>
                         </div>
                     );
                     rowCounter++;
                 }
             }
             if (asset.isccMetadata.liccium_plugins.tdmai !== undefined) {
-                if (asset.isccMetadata.liccium_plugins.tdmai.TDMAI !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.tdmai.TDMAI !== undefined
+                    && asset.isccMetadata.liccium_plugins.tdmai.TDMAI !== null) {
                     data.push(
-                        <div key="cro12" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                            <p key="keyTDMAISummary" className="pRowKey">TDMAI Summary</p>
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyTDMAISummary" className="pRowKey">TDM·AI Summary</p>
                             <p key="keyTDMAISummaryValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.tdmai.TDMAI ? "Content may be used as AI training data." : "Content must not be used for AI training purposes."}</p>
                         </div>
                     );
                     rowCounter++;
                 }
-                if (asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL !== undefined
+                    && asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL !== null) {
                     data.push(
-                        <div key="cro13" className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                            <p key="keyTDMAIPolicyURL" className="pRowKey">TDMAI policy URL</p>
+                        <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                            <p key="keyTDMAIPolicyURL" className="pRowKey">TDM·AI policy</p>
                             <p key="keyTDMAIPolicyURLValue" className="pRowValue"><a href={asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL} target="_blank">{asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL}</a></p>
                         </div>
                     );
@@ -219,9 +344,22 @@ class RendererISCCRegistryDetail {
         let declarationsBtn = document.getElementById("declarationsBtn");
         this.clearControlsButtonStyle();
         this.setControlsButtonStyle(declarationsBtn);
+        let rowCounter = 0;
         let data = [];
+        let origin = asset.origin;
+        if (origin === "iscc-registry") {
+            data.push(
+                <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                    <p key="keyMetadata" className="pRowKey">Metadata</p>
+                    <p key="keyMetadataValue" className="pRowValue">
+                        <a href={asset.resourceMetadata.meta_url} target="_blank">{asset.resourceMetadata.meta_url}</a>
+                    </p>
+                </div>
+            );
+            rowCounter++;
+        }
         data.push(
-            <div key="cro0" className="contentRowOdd">
+            <div key="cro1" className="contentRowEven">
                 <p key="keyISCC" className="pRowKey">ISCC</p>
                 <button onClick={() => this.copyToClipboard(asset.isccMetadata.iscc)}>
                     <svg viewBox="64 64 896 896" focusable="false" data-icon="copy" width="12px" height="12px" fill="#000000" aria-hidden="true">
@@ -233,34 +371,26 @@ class RendererISCCRegistryDetail {
             </div>
         );
         data.push(
-            <div key="cro1" className="contentRowEven">
-                <p key="keyDeclarer" className="pRowKey">Metadata</p>
-                <p key="keyDeclarerValue" className="pRowValue">
-                    <a href={asset.resourceMetadata.meta_url} target="_blank">{asset.resourceMetadata.meta_url}</a>
-                </p>
-            </div>
-        );
-        data.push(
-            <div key="cro3" className="contentRowOdd">
-                <p key="keyDeclarationDate" className="pRowKey">Declaration Date</p>
+            <div key="cro2" className="contentRowOdd">
+                <p key="keyDeclarationDate" className="pRowKey">Declaration date</p>
                 <p key="keyDeclarationDateValue" className="pRowValue">{this.getFullDate(asset.resourceMetadata.timestamp)}</p>
             </div>
         );
         data.push(
-            <div key="cro4" className="contentRowEven">
+            <div key="cro3" className="contentRowEven">
                 <p key="keyMessage" className="pRowKey">Ledger</p>
                 <p key="keyMessageValue" className="pRowValue">Ethereum Goerli (eip155:5)</p>
             </div>
         );
         let href = "https://goerli.etherscan.io/tx/" + asset.resourceMetadata.txHash;
         data.push(
-            <div key="cro5" className="contentRowOdd">
+            <div key="cro4" className="contentRowOdd">
                 <p key="keyLedgerExplorer" className="pRowKey">Ledger explorer</p>
                 <p key="keyLedgerExplorerValue" className="pRowValue"><a href={href} target="_blank">{href}</a></p>
             </div>
         );
         data.push(
-            <div key="cro6" className="contentRowEven">
+            <div key="cro5" className="contentRowEven">
                 <p key="keyISCCId" className="pRowKey">ISCC-Registry</p>
                 <p key="keyISCCIdValue" className="pRowValue">
                     <a href={"https://testnet.iscc.id/registry/iscc_registry/isccid/?q=" + asset.resourceMetadata.isccId} target="_blank">{"https://testnet.iscc.id/registry/iscc_registry/isccid/?q=" + asset.resourceMetadata.isccId}</a>
@@ -268,13 +398,13 @@ class RendererISCCRegistryDetail {
             </div>
         );
         data.push(
-            <div key="cro7" className="contentRowOdd">
+            <div key="cro6" className="contentRowOdd">
                 <p key="keyRevision" className="pRowKey">Revision</p>
                 <p key="keyRevisionValue" className="pRowValue">{asset.resourceMetadata.revison}</p>
             </div>
         );
         data.push(
-            <div key="cro8" className="contentRowEven">
+            <div key="cro7" className="contentRowEven">
                 <p key="keyDeclarer" className="pRowKey">Declarer</p>
                 <button onClick={() => this.copyToClipboard(asset.resourceMetadata.declarer)}>
                     <svg viewBox="64 64 896 896" focusable="false" data-icon="copy" width="12px" height="12px" fill="#000000" aria-hidden="true">
@@ -286,7 +416,7 @@ class RendererISCCRegistryDetail {
             </div>
         );
         data.push(
-            <div key="cro9" className="contentRowOdd">
+            <div key="cro8" className="contentRowOdd">
                 <p key="keyRegistrar" className="pRowKey">Registrar</p>
                 <button onClick={() => this.copyToClipboard(asset.resourceMetadata.registrar)}>
                     <svg viewBox="64 64 896 896" focusable="false" data-icon="copy" width="12px" height="12px" fill="#000000" aria-hidden="true">
@@ -298,7 +428,7 @@ class RendererISCCRegistryDetail {
             </div>
         );
         data.push(
-            <div key="cro10" className="contentRowEven">
+            <div key="cro9" className="contentRowEven">
                 <p key="keyISCCId" className="pRowKey">ISCC-ID</p>
                 <button onClick={() => this.copyToClipboard(asset.resourceMetadata.isccId)}>
                     <svg viewBox="64 64 896 896" focusable="false" data-icon="copy" width="12px" height="12px" fill="#000000" aria-hidden="true">
@@ -311,7 +441,7 @@ class RendererISCCRegistryDetail {
         );
         let didIscc = "did:iscc:" + asset.resourceMetadata.isccId.toLowerCase();
         data.push(
-            <div key="cro11" className="contentRowOdd">
+            <div key="cro10" className="contentRowOdd">
                 <p key="keyISCCId" className="pRowKey">did:iscc</p>
                 <button onClick={() => this.copyToClipboard(didIscc)}>
                     <svg viewBox="64 64 896 896" focusable="false" data-icon="copy" width="12px" height="12px" fill="#000000" aria-hidden="true">
@@ -342,7 +472,7 @@ class RendererISCCRegistryDetail {
             }
             data.push(
                 <div key={"cro0" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                    <p key={"keyVerify" + i} className="pRowKey">{verificationType}</p>
+                    <p key={"keyVerify" + i} className="pRowKey">{this.getVerificationType(verificationType)}</p>
                     <p key={"keyVerifyValue" + i} className="pRowValue">
                         <a href={href} target="_blank">{handle}</a> &#8594; {asset.resourceMetadata.owner}
                     </p>
@@ -350,7 +480,7 @@ class RendererISCCRegistryDetail {
             );
             data.push(
                 <div key={"cro1" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                    <p key={"keyIssuanceDate" + i} className="pRowKey">Issuance Date</p>
+                    <p key={"keyIssuanceDate" + i} className="pRowKey">Issuance date</p>
                     <p key={"keyIssuanceDateValue" + i} className="pRowValue">{asset.credentials[i].issuanceDate.replace("T", " ").substring(0, asset.credentials[i].issuanceDate.length - 5)}</p> {/* convert utc string */}
                 </div>
             );
@@ -383,13 +513,13 @@ class RendererISCCRegistryDetail {
         let data = [];
         data.push(
             <div key="cro0" className="contentRowOdd">
-                <p key="keyFilename" className="pRowKey">Filename</p>
+                <p key="keyFilename" className="pRowKey">File name</p>
                 <p key="keyFilenameValue" className="pRowValue">{asset.isccMetadata.filename}</p>
             </div>
         );
         data.push(
             <div key="cro1" className="contentRowEven">
-                <p key="keyMediatype" className="pRowKey">Mediatype</p>
+                <p key="keyMediatype" className="pRowKey">Media type</p>
                 <p key="keyMediatypeValue" className="pRowValue">{asset.isccMetadata.mediatype}</p>
             </div>
         );
@@ -407,8 +537,8 @@ class RendererISCCRegistryDetail {
         );
         data.push(
             <div key="cro4" className="contentRowOdd">
-                <p key="keyFilesize" className="pRowKey">Filesize</p>
-                <p key="keyFilesizeValue" className="pRowValue">{asset.isccMetadata.filesize}</p>
+                <p key="keyFilesize" className="pRowKey">File size</p>
+                <p key="keyFilesizeValue" className="pRowValue">{this.calculateFileSize(asset.isccMetadata.filesize)}</p>
             </div>
         );
         this.setData(data);
