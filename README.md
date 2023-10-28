@@ -69,15 +69,15 @@ Thus, ISCC remains dependable, retaining its full range of capabilities even in 
 [Latest release](https://github.com/liccium/liccium-chrome-extension/releases/tag/v0.0.1)
 
 1. Download [liccium-chrome-extension-v0.0.1.zip](https://github.com/liccium/liccium-chrome-extension/releases/download/v0.0.1/liccium-chrome-extension-v0.0.1.zip) file.
-3. Extract the zip file.
-4. Place extracted folder in any location.  
-5. Start the Google Chrome browser.
-6. Go to your Extensions page by entering **_chrome://extensions/_** into your Chrome browser. 
-7. Enable the **_Developer mode_** on the top right.
-8. Click on **_Load unpacked_**.
-9. Select extracted **_liccium-chrome-extension-v0.0.1_** folder and enter. The folder _must not_ be deleted after extraction.
-10. Go to the Plugins settings and pin the Liccium Trust Engine browser extension.
-11. Please refresh browser window befor first use. 
+2. Extract the zip file.
+3. Place extracted folder in any location.  
+4. Start the Google Chrome browser.
+5. Go to your Extensions page by entering **_chrome://extensions/_** into your Chrome browser. 
+6. Enable the **_Developer mode_** on the top right.
+7. Click on **_Load unpacked_**.
+8. Select extracted **_liccium-chrome-extension-v0.0.1_** folder and enter. The folder _must not_ be deleted after extraction.
+9. Go to the Plugins settings and pin the Liccium Trust Engine browser extension.
+10. Please refresh browser window befor first use. 
 
 ## Liccium Browser Plugin - Terms of Service (ToS)
 
