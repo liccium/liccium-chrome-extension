@@ -39,3 +39,43 @@ At present, there are no declarations made on Mainnet blockchains.
 9. Select extracted **_liccium-chrome-extension-v0.0.1_** folder and enter.
 10. Go to the Plugins settings and pin the Liccium Trust Engine browser extension.
 
+## Liccium Browser Plugin - Terms of Service (ToS)
+
+This is the pre-release of the Liccium browser plugin and for testing purposes only!
+
+### Introduction
+
+Welcome to the Liccium Browser Plugin. By using our plugin, you agree to these Terms of Service. Please read them carefully.
+
+### Usage
+
+The Liccium Browser Plugin is designed to allow users to find and verify declarations of digital media content online. Any misuse or malicious use of the plugin is strictly prohibited.
+
+### Verification & Authenticity
+
+The Liccium Browser Plugin operates by capturing the URL of the online content and transmitting it to our server. This process facilitates the generation of an ISCC (International Standard Content Code) specific to the content in question. Post ISCC generation, the plugin queries the Liccium index to obtain relevant information. This index is rooted in content declarations on decentralized public blockchain networks. The derived information, including the ISCC and associated metadata, is then presented to the user, offering insights into the content's authenticity and declaration metadata.
+
+### Privacy
+
+We respect your privacy! The plugin does not collect any personal data unless explicitly provided by the user for specific purposes.
+
+### Limitation of Liability
+
+While we strive to provide accurate and timely information, there may be inadvertent technical or factual inaccuracies and typographical errors. We reserve the right to make corrections and changes to the plugin at any time without notice.
+
+### Updates
+
+We may update our plugin and these Terms of Service from time to time. It is your responsibility to check for updates regularly.
+
+### Termination
+
+We reserve the right to terminate or suspend access to our plugin for any user who violates these Terms of Service.
+
+### Governing Law
+
+These Terms of Service are governed by Dutch law.
+
+### Contact
+
+For any questions or concerns regarding these Terms of Service, please contact us at werk @t posth .me. By using the Liccium Browser Plugin, you agree to abide by these terms and conditions. If you do not agree with any of these terms, please do not use the plugin.
+
