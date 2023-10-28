@@ -83,7 +83,7 @@ The Liccium Browser Plugin operates by capturing the URL of the online content a
 
 ### Privacy
 
-We respect your privacy! The plugin does not collect any personal data unless explicitly provided by the user for specific purposes.
+We respect your privacy! The plugin does not collect any personal data. To generate the ISCC code, the URL of the content is provided temporarily to the ISCC generator service, hosted on our servers. No IP address, no URL, no content is stored!
 
 ### Limitation of Liability
 
