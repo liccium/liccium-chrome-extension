@@ -22,6 +22,8 @@ To test the plugin, you can use the following examples:
 
 [https://twitter.com/bildoperationen/status/1656312620129959942](https://twitter.com/bildoperationen/status/1656312620129959942)
 
+[https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r](https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r)
+
 ### Main declarations
 
 At present, there are no declarations made on Mainnet blockchains.  
