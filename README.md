@@ -57,7 +57,7 @@ Thus, ISCC remains dependable, retaining its full range of capabilities even in 
 
 1. Download [liccium-chrome-extension-v0.0.1.zip](https://github.com/liccium/liccium-chrome-extension/releases/download/v0.0.1/liccium-chrome-extension-v0.0.1.zip) file.
 3. Extract the zip file.
-4. Place extracted folder in any location.
+4. Place extracted folder in any location. Be aware that the folder _must not_ be deleted after extraction. 
 5. Start the Google Chrome browser.
 6. Go to your Extensions page by entering **_chrome://extensions/_** into your Chrome browser. 
 7. Enable the **_Developer mode_** on the top right.
