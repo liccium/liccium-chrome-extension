@@ -18,7 +18,7 @@ To test the plugin, you can use the following examples:
 
 ### Test declarations
  
-[https://twitter.com/posth/status/1658723442235961344](https://twitter.com/posth/status/1658723442235961344)
+[[https://twitter.com/posth/status/1658723442235961344](https://twitter.com/posth/status/1658723442235961344)](https://twitter.com/initials_art/status/1710308076958384552)
 
 [https://twitter.com/bildoperationen/status/1656312620129959942](https://twitter.com/bildoperationen/status/1656312620129959942)
 
