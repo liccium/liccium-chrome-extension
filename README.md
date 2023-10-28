@@ -41,7 +41,7 @@ At present, there are no declarations made on Mainnet blockchains.
 
 ## Liccium Browser Plugin - Terms of Service (ToS)
 
-This is the pre-release of the Liccium browser plugin and for testing purposes only!
+> **This is the pre-release of the Liccium browser plugin and for testing purposes only!**
 
 ### Introduction
 
