@@ -16,9 +16,9 @@ The plugin was developed by [Dominik Krakau](https://github.com/dkrakau) and [Se
 
 Go to any website and click on the extension icon to verify content on this page. 
 
-NOTE: Of course, you can only verify content that has been publicly declared by the creator, rightsholder, or any other entity. Currently only images are supported. In future releases you will be able to verify all media types and formats. 
+NOTE: Of course, you can only verify content that has been previously declared by a creator, rightsholder, or any other entity. Currently only images are supported. In future releases you will be able to verify all media types and formats. 
 
-To test the browser plugin, you can use the examples, below: 
+To test the browser plugin, you can use the examples of a few test declarations, below: 
  
 ## Test declarations
 
