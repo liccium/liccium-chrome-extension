@@ -105,7 +105,7 @@ Thus, ISCC remains dependable, retaining its full range of capabilities even in 
 
 > **This is the pre-release of the Liccium browser plugin and for testing purposes only!**
 
-By using our plugin, you agree to these Terms of Service. Please read them carefully.
+By using The plugin, you agree to these Terms of Service. Please read them carefully.
 
 ### Usage
 
@@ -113,11 +113,11 @@ The Liccium Browser Plugin is designed to allow users to find and verify declara
 
 ### Verification & Authenticity
 
-The Liccium Browser Plugin operates by capturing the URL of the online content and transmitting it to our server. This process facilitates the generation of an ISCC (International Standard Content Code) specific to the content in question. Post ISCC generation, the plugin queries the Liccium index to obtain relevant information. This index is rooted in content declarations on decentralized public blockchain networks. The derived information, including the ISCC and associated metadata, is then presented to the user, offering insights into the content's authenticity and declaration metadata.
+The Liccium Browser Plugin operates by capturing the URL of the online content and transmitting it to the server. This process facilitates the generation of an [ISCC code](https://iscc.codes) ([International Standard Content Code](https://www.iso.org/standard/77899.html)) specific to the content in question. Post ISCC generation, the plugin queries the Liccium index to obtain relevant information. This index is rooted in content declarations on decentralized public blockchain networks. The derived information, including the ISCC and associated metadata, is then presented to the user, offering insights into the content's authenticity and declaration metadata.
 
 ### Privacy
 
-We respect your privacy! The plugin does not collect any personal data. To generate the ISCC code, the URL of the content is provided temporarily to the ISCC generator service, hosted on our servers. No IP address, no URL, no content is stored!
+We respect your privacy! The plugin does not collect any personal data. To generate the ISCC code, the URL of the content is provided temporarily to the ISCC generator service, hosted on the servers. No IP address, no URL, no content is stored!
 
 ### Limitation of Liability
 
@@ -125,11 +125,11 @@ While we strive to provide accurate and timely information, there may be inadver
 
 ### Updates
 
-We may update our plugin and these Terms of Service from time to time. It is your responsibility to check for updates regularly.
+We may update the plugin and these Terms of Service from time to time. It is your responsibility to check for updates regularly.
 
 ### Termination
 
-We reserve the right to terminate or suspend access to our plugin for any user who violates these Terms of Service.
+We reserve the right to terminate or suspend access to the plugin for any user who violates these Terms of Service.
 
 ### Governing Law
 
