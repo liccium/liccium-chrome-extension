@@ -8,6 +8,10 @@ Overall, the Liccium browser plugin will provide a straightforward and effective
 
 <img width="600" alt="image" src="https://1543071982-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FKyPjnRgFAp1MzuOXKSXI%2Fuploads%2FokEGb9HJrYaL3kpZ0Nx6%2FBrowser%20plugin%20small.gif?alt=media&token=489e7ea6-1a6a-4fad-b18d-7af0b50eb3f4">
 
+## Credits
+
+The plugin was developed by [Dominik Krakau](https://github.com/dkrakau) and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science. 
+
 ## How to use the browser plugin
 
 Go to any website and click on the extension icon to verify content on this page. 
