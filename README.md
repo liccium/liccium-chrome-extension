@@ -1,39 +1,57 @@
-# Liccium Trust Engine Chrome Extension
+# Liccium Chrome Browser Extension
 
 The Liccium browser plugin will allow users to identify and verify declarations of digital media content online and perform a reverse-lookup of associated metadata, rights, and available or already acquired licences. 
 
-The plugin will draw information from the Liccium index, which is based on content declarations on decentralised public blockchain networks, providing users with additional details about the media content and related assets.  
+The plugin will draw information from decentralised registries, which are based on content declarations on decentralised public blockchain networks, providing users with additional details about the media content and related assets.  
 
 Overall, the Liccium browser plugin will provide a straightforward and effective way for users to verify the authenticity and accuracy of digital media content encountered while browsing the web, helping to establish trust in online publications, data, and information.
 
-![Liccium browser extension](https://1543071982-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FKyPjnRgFAp1MzuOXKSXI%2Fuploads%2FokEGb9HJrYaL3kpZ0Nx6%2FBrowser%20plugin%20small.gif?alt=media&token=489e7ea6-1a6a-4fad-b18d-7af0b50eb3f4)
+<img width="600" alt="image" src="https://1543071982-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FKyPjnRgFAp1MzuOXKSXI%2Fuploads%2FokEGb9HJrYaL3kpZ0Nx6%2FBrowser%20plugin%20small.gif?alt=media&token=489e7ea6-1a6a-4fad-b18d-7af0b50eb3f4">
 
-## Usage of the Liccium Trust Engine browser plugin
+## How to use the browser plugin
 
 Go to any website and click on the extension icon to verify content on this page. 
-NOTE: Currently only images are supported. 
+
+NOTE: Currently only images are supported. In future releases you will be able to verify all media types and formats. 
  
 ## Examples 
-To test the plugin, you can use the following examples: 
+To test the browser plugin, you can use the following examples: 
 
 ### Test declarations
 
 [https://twitter.com/bildoperationen/status/1656312620129959942](https://twitter.com/bildoperationen/status/1656312620129959942)
 
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/fea676a2-a9cc-4923-9446-6af2951a7bab">
+
 #### Declarations by two verified declarants
 
-[https://twitter.com/initials_art/status/1710308076958384552](https://twitter.com/initials_art/status/1710308076958384552)
+https://photos.com/featured/eye-of-horse-gabriella-nonino.html
 
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/3b2ab918-5523-4a96-ace5-badd816564df">
 
 #### Example of fake/manipulated content
 
 This example shows how to resolve the original declaration from manipulated content:
 
-[https://twitter.com/initials_art/status/1718227328239575353](https://twitter.com/initials_art/status/1718227328239575353)
+[https://twitter.com/spsth/status/1718594137702777111](https://twitter.com/spsth/status/1718594137702777111)
 
-This was the original declaration: [https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r](https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r)
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/76c923e0-be9a-4bfd-b9d0-3c7fc5c894b4">
 
-[https://twitter.com/posth/status/1658723442235961344](https://twitter.com/posth/status/1658723442235961344)
+This was the original declaration – spot the difference: 
+
+[https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r](https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r)  
+
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/77007693-2c89-45f5-a529-32d730b65f48">  
+
+This is the result of the reverse-lookup: 
+
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/a7216014-19d0-44a6-9f5a-9feb6b04503c">
+
+Another fake image; the browser plugin will lead you to the original content:
+
+[https://twitter.com/spsth/status/1718591647087251519](https://twitter.com/spsth/status/1718591647087251519)
+
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/ac863317-93b3-4624-bb24-137e1c708b1d">
 
 ### Main declarations
 
@@ -83,9 +101,7 @@ Thus, ISCC remains dependable, retaining its full range of capabilities even in 
 
 > **This is the pre-release of the Liccium browser plugin and for testing purposes only!**
 
-### Introduction
-
-Welcome to the Liccium Browser Plugin. By using our plugin, you agree to these Terms of Service. Please read them carefully.
+By using our plugin, you agree to these Terms of Service. Please read them carefully.
 
 ### Usage
 
