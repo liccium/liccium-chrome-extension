@@ -6,7 +6,7 @@ The plugin will draw information from decentralised registries, which are based 
 
 Overall, the Liccium browser plugin will provide a straightforward and effective way for users to verify the authenticity and accuracy of digital media content encountered while browsing the web, helping to establish trust in online publications, data, and information.
 
-<img width="600" alt="image" src="https://1543071982-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FKyPjnRgFAp1MzuOXKSXI%2Fuploads%2FokEGb9HJrYaL3kpZ0Nx6%2FBrowser%20plugin%20small.gif?alt=media&token=489e7ea6-1a6a-4fad-b18d-7af0b50eb3f4">
+<img width="400" alt="image" src="https://1543071982-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FKyPjnRgFAp1MzuOXKSXI%2Fuploads%2FokEGb9HJrYaL3kpZ0Nx6%2FBrowser%20plugin%20small.gif?alt=media&token=489e7ea6-1a6a-4fad-b18d-7af0b50eb3f4">
 
 ## Credits
 
@@ -40,7 +40,7 @@ This example shows how to resolve the original declaration from manipulated cont
 
 <img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/76c923e0-be9a-4bfd-b9d0-3c7fc5c894b4">
 
-This was the original declaration – spot the difference: 
+This was the original declaration – spot the difference :) 
 
 [https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r](https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r)  
 
