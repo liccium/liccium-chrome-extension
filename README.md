@@ -1,6 +1,6 @@
 # Liccium Chrome Browser Extension
 
-The Liccium browser plugin will allow users to identify and verify declarations of digital media content online and perform a reverse-lookup of associated metadata, rights, and available or already acquired licences. 
+The Liccium Chrome browser plugin will allow users to identify and verify declarations of digital media content online and perform a reverse-lookup of associated metadata, rights, and available or already acquired licences. 
 
 The plugin will draw information from decentralised registries, which are based on content declarations on decentralised public blockchain networks, providing users with additional details about the media content and related assets.  
 
@@ -12,28 +12,27 @@ Overall, the Liccium browser plugin will provide a straightforward and effective
 
 The plugin was developed by [Dominik Krakau](https://github.com/dkrakau) and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science. 
 
-## How to use the browser plugin
+## How to use the browser plugin?
 
 Go to any website and click on the extension icon to verify content on this page. 
 
-NOTE: Currently only images are supported. In future releases you will be able to verify all media types and formats. 
- 
-## Examples 
-To test the browser plugin, you can use the following examples: 
+NOTE: Of course, you can only verify content that has been publicly declared by the creator, rightsholder, or any other entity. Currently only images are supported. In future releases you will be able to verify all media types and formats. 
 
-### Test declarations
+To test the browser plugin, you can use the examples, below: 
+ 
+## Test declarations
 
 [https://twitter.com/bildoperationen/status/1656312620129959942](https://twitter.com/bildoperationen/status/1656312620129959942)
 
 <img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/fea676a2-a9cc-4923-9446-6af2951a7bab">
 
-#### Declarations by two verified declarants
+### Declarations by two verified declarants
 
 https://photos.com/featured/eye-of-horse-gabriella-nonino.html
 
 <img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/3b2ab918-5523-4a96-ace5-badd816564df">
 
-#### Example of fake/manipulated content
+### Example of fake/manipulated content
 
 This example shows how to resolve the original declaration from manipulated content:
 
@@ -57,37 +56,41 @@ Another fake image; the browser plugin will lead you to the original content:
 
 <img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/ac863317-93b3-4624-bb24-137e1c708b1d">
 
-### Main declarations
+### Declarations on mainnet
 
-At present, there are no declarations made on Mainnet blockchains.  
+At present, there are no declarations made on mainnet blockchains.
 
-## Liccium Trust Engine
+## How to make content declarations?
 
-The declarations are made through the Liccium app, which is presently in its private alpha phase. For those interested in experiencing the app firsthand and joining as early adopters, you're welcome to register and request an invite code at [Liccium.com](https://Liccium.com).
+The test declarations have been published with the Liccium app, which is presently in its private alpha phase. For those interested in experiencing and testing the app firsthand and joining as early adopters, you're welcome to register and request an invite code at [Liccium.com](https://Liccium.com).
 
-**Verifiable declarations**  
+## What is the Liccium Trust Engine?
+
+**1. Verifiable declarations**  
 
 With Liccium, content creators and rightsholders can digitally sign their original creative works and make publicly verifiable declarations of their original content.
 
 Liccium helps creators and rightsholders to generate, manage, and declare content-derived identifiers (ISCC codes) for digital media content. Using ISCC, they can inseparably bind verifiable claims – e.g. rights, license, and other product metadata – to the fingerprint of their digital content. 
 All declarations are automatically accessible via decentralised content registries, which allow users or machines to discover, identify, and verify the authenticity and integrity of digital media content and resolve rights, licenses, and other product metadata.
 
-**Creator attribution**
+**2. Creator attribution**
 
 Digital signatures and verifiable creator credentials increase trust in assertions, claims and the authenticity of the original content and help to sufficiently identify creators and rightsholders.
 
-**ISCC**
+**3. ISCC (International Standard Content Code)**
 
-Liccium is based on the International Standard Content Code (ISCC), a content-derived identifier, lightweight fingerprinting, and open identification system for digital media content of all media types (image, video, text, audio),  using cryptographic and similarity- preserving hashes to create a unique ID for each digital asset. 
+Liccium is based on the ([International Standard Content Code (ISCC)](https://www.iso.org/standard/77899.html)), a content-derived identifier, lightweight fingerprinting, and open identification system for digital media content of all media types (image, video, text, audio),  using cryptographic and similarity- preserving hashes to create a unique ID for each digital asset.  
 
-The ISCC is on its way to global recognition – after 5 years of work, in Q1/2024, ISCC is scheduled to become a universally approved ISO standard for decentralised digital content identification. 
+[Current status of the ISCC at ISO: Draft International Standard ISO/DIS 24138](https://www.iso.org/standard/77899.html)
 
-[Current status of the ISCC: Draft International Standard ISO/DIS 24138](https://www.iso.org/standard/77899.html)
+Using a novel standard for decentralised content identification, these claims inseparably stick with the content **without relying on watermarks or embedded metadata**. 
 
-Using a novel standard for decentralised content identification (ISCC), these claims inseparably stick with the content without relying on watermarks or embedded metadata. This empowers any user, system, or machine with access to the digital asset to independently generate an identical or similar ISCC code, enabling the identification, comparison, and matching of digital content while assessing its integrity and authenticity. 
-Thus, ISCC remains dependable, retaining its full range of capabilities even in scenarios where content is altered or manipulated, or when watermarks, steganographic data, or metadata is removed from the media asset.
+This empowers any user, system, or machine with access to the digital asset to independently generate an identical or similar ISCC code, enabling the identification, comparison, and matching of digital content while assessing its integrity and authenticity. Thus, ISCC remains dependable, retaining its full range of capabilities even in scenarios where content is altered or manipulated, or when watermarks, steganographic data, or metadata is removed from the media asset.
 
-## Installation instructions  
+## Installation instructions 
+
+Follow the instruction to install the browser plugin. 
+
 [Latest release](https://github.com/liccium/liccium-chrome-extension/releases/tag/v0.0.1)
 
 1. Download [liccium-chrome-extension-v0.0.1.zip](https://github.com/liccium/liccium-chrome-extension/releases/download/v0.0.1/liccium-chrome-extension-v0.0.1.zip) file.
