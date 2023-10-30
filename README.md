@@ -1,6 +1,6 @@
 # Liccium Chrome Browser Extension
 
-The Liccium Chrome browser plugin will allow users to identify and verify declarations of digital media content online and perform a reverse-lookup of associated metadata, rights, and available or already acquired licences. 
+The Liccium Chrome browser plugin allows users to identify and verify declarations of digital media content online and perform a reverse-lookup of associated metadata, rights, and available or already acquired licences. 
 
 The plugin will draw information from decentralised registries, which are based on content declarations on decentralised public blockchain networks, providing users with additional details about the media content and related assets.  
 
