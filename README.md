@@ -140,5 +140,5 @@ These Terms of Service are governed by Dutch law.
 
 ### Contact
 
-For any questions or concerns regarding these Terms of Service, please contact us at werk @t posth .me. By using the Liccium Browser Plugin, you agree to abide by these terms and conditions. If you do not agree with any of these terms, please do not use the plugin.
+For any questions or concerns regarding these Terms of Service, please contact us at werk at posth .me. By using the Liccium Browser Plugin, you agree to abide by these terms and conditions. If you do not agree with any of these terms, please do not use the plugin.
 
