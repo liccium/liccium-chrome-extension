@@ -38,6 +38,14 @@ const renderElements = (storage) => {
                     <option value={storage.serverUrls[2].url}>{storage.serverUrls[2].name}</option>
                 </select>
             </div>
+
+        </div>
+    );
+
+    elements.push(
+        <div className="about">
+            <a href="https://github.com/liccium/liccium-chrome-extension/tree/main#liccium-browser-plugin---terms-of-service-tos" target="_blank">Terms of Service</a>
+            <a href="https://liccium.com/contact/" target="_blank">Contact</a>
         </div>
     );
 

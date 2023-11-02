@@ -43,6 +43,7 @@
     font-weight: 600;
     font-size: 14px;
 }
+
 .clearBtn {
     border-radius: 7px 7px 7px 7px;
     border: 1px solid #c9c9c9;
@@ -53,6 +54,7 @@
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
 .clearBtn:hover {
     background-color: #46475d;
     color: white;
@@ -120,6 +122,7 @@ input[type="reset"] {
     height: 30px;
     width: 100%;
 }
+
 .searchInfoText {
     margin-left: 10px;
     font-size: 17px;
@@ -159,6 +162,7 @@ input[type="reset"] {
 .thumbnail {
     border: 0;
 }
+
 .thumbnail:hover {
     border: 0;
 }
@@ -189,10 +193,11 @@ input[type="reset"] {
 .title {
 
     margin: 0;
-
     width: 300px;
 
-    font-size: 20px;
+    font-size: 18px;
+    /* 20px FIX */
+
     font-weight: 500;
 
     overflow: hidden;
@@ -290,6 +295,28 @@ input[type="reset"] {
     border: 2px solid #b3001b;
 }
 
+.originalCreator {
+    margin: 0;
+    margin-left: 3px;
+
+    padding-right: 10px;
+
+    max-width: 114px;
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #46475d;
+    color: white;
+
+    border-radius: 15px 15px 15px 15px;
+    border: 2px solid #46475d;
+}
+
 .tagIcon {
     margin: 0;
     padding: 3px;
@@ -345,4 +372,49 @@ input[type="reset"] {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.tagTooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tagTooltip .tagtooltiptext {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(70, 71, 93, 0.9);
+    border: 1px solid #46475d;
+    color: #eeeeee;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 36px;
+
+    left: 50%;
+    margin-left: -70px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tagTooltip .tagtooltiptext::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #46475d transparent transparent transparent;
+    transform: rotateX(180deg);
+}
+
+.tagTooltip:hover .tagtooltiptext {
+    visibility: visible;
+    opacity: 1;
 }

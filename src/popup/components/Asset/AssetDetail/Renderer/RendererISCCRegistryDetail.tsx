@@ -111,7 +111,9 @@ class RendererISCCRegistryDetail {
         }
         controlButtons.push(<button key="assetBtn" id="assetBtn" className="controlsButton" onClick={() => this.renderAssetData(asset)} autoFocus>Asset</button>);
         controlButtons.push(<button key="isccBtn" id="isccBtn" className="controlsButton" onClick={() => this.renderISCCData(asset)}>ISCC</button>);
-        controlButtons.push(<button key="compareBtn" id="compareBtn" className="controlsButton" onClick={() => this.renderCompareData(iscc, asset)}>Compare</button>);
+        if (origin === "iscc-registry") {
+            controlButtons.push(<button key="compareBtn" id="compareBtn" className="controlsButton" onClick={() => this.renderCompareData(iscc, asset)}>Compare</button>);
+        }
 
         return controlButtons;
     }
@@ -173,7 +175,7 @@ class RendererISCCRegistryDetail {
             data.push(
                 <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
                     <p key="keyOriginal" className="pRowKey">Claim</p>
-                    <p key="keyOriginalValue" className="pRowValue">{asset.isccMetadata.original ? "Declared by original creator or rightsholder" : "Declarer does not claim to be the original creator or rightsholder"}</p>
+                    <p key="keyOriginalValue" className="pRowValue">{asset.isccMetadata.original ? "Declared by original creator or rightsholder" : "Declarer doesn't claim to be the original creator or rightsholder"}</p>
                 </div>
             );
             rowCounter++;

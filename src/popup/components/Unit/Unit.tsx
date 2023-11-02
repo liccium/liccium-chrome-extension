@@ -72,8 +72,15 @@ const Unit = ({ unit, iscc, asset }) => {
             comparisonDiv.push(divRows);
         }
 
-        let simularityPercentageText = (Math.ceil(matches * 100 / 64)) + "% similarity";
-        let simularityValueText =  "(" + distance + " bits of difference of the 64 bit hash)";
+
+        let simularityPercentageText = null;
+        let simularityValueText = null;
+        if (unitType === "INSTANCE") {
+            simularityPercentageText = ((Math.ceil(matches * 100 / 64)) === 100) ? "Exact same cryptographic hash" : "Entirely uncorrelated";
+        } else {
+            simularityPercentageText = (Math.ceil(matches * 100 / 64)) + "% similarity";
+            simularityValueText = "(" + distance + " bits of difference of the 64 bit hash)";
+        }
 
         comparisonDiv.push(
             <span key="tooltiptext" className="tooltiptext">

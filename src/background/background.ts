@@ -15,7 +15,7 @@ chrome.runtime.onInstalled.addListener(() => {
                     url: "http://iscc.if-is.net:8080/"
                 },
                 {
-                    name: "Test",
+                    name: "Development",
                     url: "http://localhost:8080/"
                 }
             ]

@@ -24,7 +24,7 @@ const Popup = () => {
     const serverUrls = {
         "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/": "Liccium",
         "http://iscc.if-is.net:8080/": "if(is)",
-        "http://localhost:8080/": "Test"
+        "http://localhost:8080/": "Development"
     }
 
     const clearStorage = () => {

@@ -48,8 +48,10 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                             </div>
                             <div key={"info" + index} className={"info"}>
                                 <p key={"date" + index} className={"date"}>{getDate(asset.resourceMetadata.timestamp)}</p>
-                                <div key={"address" + index} className={"infoTag"}>{getAddress(asset.resourceMetadata.declarer)}</div>
-
+                                <div className="tagTooltip">
+                                    <div key={"address" + index} className={"infoTag"}>{getAddress(asset.resourceMetadata.declarer)}</div>
+                                    <span className="tagtooltiptext">Declaring wallet</span>
+                                </div>
                             </div>
                         </div>
                         <div key={"vcIscc"} className={"vc"}>
@@ -69,20 +71,41 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
 
         console.log(asset.isccMetadata.liccium_plugins);
 
+        if (asset.isccMetadata.original !== undefined) {
+            if (asset.isccMetadata.original === true) {
+                tagElements.push(
+                    <div className="tagTooltip">
+                        <div key={"divOriginalCreator" + index} className={"originalCreator"}>
+                            <img className="tagIcon" src="creator-design-white.png" alt="Original Creator" />
+                            <p key={"tagNameTrue" + index} className="handle">Original</p>
+                        </div>
+                        <span className="tagtooltiptext">Declared by original creator or rightsholder</span>
+                    </div>
+
+                );
+            }
+        }
+
         if (asset.isccMetadata.liccium_plugins !== undefined) {
             if (asset.isccMetadata.liccium_plugins.tdmai !== undefined) {
                 if (asset.isccMetadata.liccium_plugins.tdmai.TDMAI) {
                     tagElements.push(
-                        <div key={"divTDMAITrue" + index} className={"verified"}>
-                            <img className="tagIcon" src="check_circle_FILL0_wght600_GRAD0_opsz48.png" alt="TDMAITrue" />
-                            <p key={"tagNameTrue" + index} className="handle">TDMAI</p>
+                        <div className="tagTooltip">
+                            <div key={"divTDMAITrue" + index} className={"verified"}>
+                                <img className="tagIcon" src="check_circle_FILL0_wght600_GRAD0_opsz48.png" alt="TDMAITrue" />
+                                <p key={"tagNameTrue" + index} className="handle">TDM·AI</p>
+                            </div>
+                            <span className="tagtooltiptext">Content may be used as AI training data</span>
                         </div>
                     );
                 } else {
                     tagElements.push(
-                        <div key={"divTDMAIFalse" + index} className={"unverified"}>
-                            <img className="tagIcon" src="cancel_FILL0_wght600_GRAD0_opsz48.png" alt="TDMAIFalse" />
-                            <p key={"tagNameFalse" + index} className="handle">TDMAI</p>
+                        <div className="tagTooltip">
+                            <div key={"divTDMAIFalse" + index} className={"unverified"}>
+                                <img className="tagIcon" src="cancel_FILL0_wght600_GRAD0_opsz48.png" alt="TDMAIFalse" />
+                                <p key={"tagNameFalse" + index} className="handle">TDM·AI</p>
+                            </div>
+                            <span className="tagtooltiptext">Content must not be used for AI training purposes</span>
                         </div>
                     );
                 }
@@ -94,15 +117,21 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
         if (credentials !== null) {
             for (let i = 0; i < credentials.length; i++) {
                 tagElements.push(
-                    <div key={"div" + index + "" + i} className={"verified"}>
-                        <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
-                        <p key={"verified" + index + "" + i} className="handle">{credentials[i].evidence.handle}</p>
+                    <div className="tagTooltip">
+                        <div key={"div" + index + "" + i} className={"verified"}>
+                            <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
+                            <p key={"verified" + index + "" + i} className="handle">{credentials[i].evidence.handle}</p>
+                        </div>
+                        <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain" : "Verified Twitter/X account"}</span>
                     </div>
                 );
             }
         } else {
             tagElements.push(
-                <p key={"verified" + index} className={"infoTag"}>unverified</p>
+                <div className="tagTooltip">
+                    <p key={"verified" + index} className={"infoTag"}>Unverified</p>
+                    <span className="tagtooltiptext">No certification provided</span>
+                </div>
             );
         }
 
@@ -111,12 +140,16 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
 
     const getDate = (timestamp) => {
 
+        console.log(timestamp);
+
         timestamp = "" + timestamp;
 
         timestamp = (("" + timestamp).length === 10) ? (parseInt(timestamp, 10) * 1000) : parseInt(timestamp, 10);
         let date = new Date(parseInt(timestamp, 10)).toISOString();
+        let utcString = date.split("T");
+        let time = utcString[1].split(":");
 
-        return date.split("T")[0];
+        return utcString[0] + " " + time[0] + ":" + time[1] + " (UTC)";
     }
 
     const getAddress = (address) => {
