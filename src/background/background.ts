@@ -13,6 +13,10 @@ chrome.runtime.onInstalled.addListener(() => {
                 {
                     name: "if(is)",
                     url: "http://iscc.if-is.net:8080/"
+                },
+                {
+                    name: "Test",
+                    url: "http://localhost:8080/"
                 }
             ]
         }
@@ -35,9 +39,6 @@ chrome.runtime.onConnect.addListener(function (port) {
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
 
-    /* console.log(info);
-    console.log(tab); */
-
     let pageUrl = info.pageUrl;
     let srcUrl = info.srcUrl;
     chrome.storage.local.remove(["pageUrl", "srcUrl", "iscc", "assets"]);
@@ -49,15 +50,4 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     /* chrome.action.setPopup({ tabId: tab.id, popup: "popup.html" });
     chrome.action.openPopup(); */
 });
-
-/* 
-// GEHT MIR AUF DEN PISS
-chrome.storage.onChanged.addListener((changes, namespace) => {
-    for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-      console.log(
-        `Storage key "${key}" in namespace "${namespace}" changed.`,
-        `Old value was "${oldValue}", new value is "${newValue}".`
-      );
-    }
-  }); */
 

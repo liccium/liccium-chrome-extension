@@ -23,7 +23,8 @@ const Popup = () => {
 
     const serverUrls = {
         "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/": "Liccium",
-        "http://iscc.if-is.net:8080/": "if(is)"
+        "http://iscc.if-is.net:8080/": "if(is)",
+        "http://localhost:8080/": "Test"
     }
 
     const clearStorage = () => {
@@ -32,9 +33,6 @@ const Popup = () => {
         setSrcUrl("");
         setIscc([]);
         setAssets([]);
-        /* setRenderType("Selection");
-        setRenderer([<Selection key="Selection0" setSrcUrl={setSrcUrl} setDomain={setDomain} />]); */
-        //window.close(); // close popup
     }
 
     const renderThumbnailWidth = (iscc, renderSize) => {
@@ -50,7 +48,6 @@ const Popup = () => {
     }
 
     const cropThumbnail = (size, renderSize) => {
-        // console.log(size + " - " + renderSize + " = " + (size - renderSize) + " / 2 = " + ((size - renderSize) / 2));
         return (size - renderSize) / 2;
     }
 
@@ -69,15 +66,11 @@ const Popup = () => {
             if (height > width) {
                 heightStyle = renderThumbnailHeight(iscc, renderSize);
                 widthStyle = renderSize;
-                // console.log("rheight: " + heightStyle + ", rwidth: " + widthStyle);
-                // console.log("clip-path: inset(" + cropThumbnail(heightStyle, renderSize) + "px 0px)");
                 clipPath = "inset(" + cropThumbnail(heightStyle, renderSize) + "px 0px)" // top right bottom left
                 margin = "margin: -" + cropThumbnail(heightStyle, renderSize) + "px 0px";
             } else {
                 heightStyle = renderSize;
                 widthStyle = renderThumbnailWidth(iscc, renderSize);
-                // console.log("rheight: " + heightStyle + ", rwidth: " + widthStyle);
-                // console.log("clip-path: inset(0px " + cropThumbnail(widthStyle, renderSize) + "px)");
                 clipPath = "inset(0px " + cropThumbnail(widthStyle, renderSize) + "px)" // top right bottom left
                 margin = "0px -" + cropThumbnail(widthStyle, renderSize) + "px";
             }
@@ -170,28 +163,6 @@ const Popup = () => {
     }
 
     const getISCCName = (pageUrl) => {
-
-        //    https://www.spiegel.de/geschichte/herfried-muenkler-zum-wagner-aufstand-ich-gehe-davon-aus-dass-die-russen-prigoschin-liquidieren-werden-a-0b45cd9c-c6de-4854-88c4-4cf9f5ac1ecf
-        //    https://www.amazon.de/Popul%C3%A4re-Kultur-Anhang-Schriften-Popkultur-ebook/dp/B08L3ZYSNH/ref=tmm_kin_swatch_0?_encoding=UTF8&qid=1688415204&sr=8-3
-        //    https://www.w-hs.de/
-        //    https://www.w-hs.de/forschungsinstitute/institut-fuer-internet-sicherheit/
-
-        /* 
-        // FIRST VISION
-        let pageUrlName = pageUrl.split("/")[2];
-        pageUrlName = pageUrlName.split(".");
-        pageUrlName = pageUrlName[pageUrlName.length - 2] + "." + pageUrlName[pageUrlName.length - 1];
-
-        let firstPath = pageUrl.split("/");
-        if (firstPath.length > 4) {
-            firstPath = "/" + firstPath[3];
-        } else {
-            firstPath = "";
-        }
-        return pageUrlName + firstPath;
-        */
-
-        // SECOND VISION
 
         let pageUrlSplit = pageUrl.split("/");
         let pageUrlName = "";
@@ -299,12 +270,13 @@ const Popup = () => {
 
         console.log("Fetching with Readable src url: " + srcUrlReadable);
 
+        console.log("SELECTED SERVER:");
+        console.log(serverUrl);
+
         // FETCH ISCC DATA
         let jsonIscc = [];
         let jsonAssets = [];
         try {
-            //jsonIscc = await fetch("http://localhost:8080/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            //let jsonExplain = await fetch("http://localhost:8080/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             jsonIscc = await fetch(serverUrl + "iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
             let jsonExplain = await fetch(serverUrl + "iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             // Put sourceUrl and units from explained ISCC in jsonIscc
@@ -313,11 +285,9 @@ const Popup = () => {
             jsonIscc[0].isccMetadata.units = jsonExplain.units;
 
             // FETCH ASSET DATA
-            //jsonAssets = await fetch("http://localhost:8080/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             jsonAssets = await fetch(serverUrl + "asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             // Put units from explained ISCC in jsonAssets
             for (let i = 0; i < jsonAssets.length; i++) {
-                //let jsonExplain = await fetch("http://localhost:8080/iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
                 let jsonExplain = await fetch(serverUrl + "iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
                 let assetUnits = jsonExplain.units;
                 jsonAssets[i].isccMetadata.units = assetUnits;
@@ -326,9 +296,8 @@ const Popup = () => {
             jsonAssets = sortVCs(jsonAssets);
 
             // ADD iscc and assets to CHROME STORAGE
-            chrome.storage.local.set({ iscc: jsonIscc }); // use callback in then to check if saved
-            chrome.storage.local.set({ assets: jsonAssets }); // use callback in then to check if saved
-
+            chrome.storage.local.set({ iscc: jsonIscc });
+            chrome.storage.local.set({ assets: jsonAssets });
             setIscc(jsonIscc);
             setAssets(jsonAssets);
 
@@ -338,7 +307,6 @@ const Popup = () => {
 
             console.error(err);
 
-            //window.alert("Reuqest with url http://localhost:8080 failed.");
             window.alert("Reuqest to " + serverUrls[serverUrl] + " failed.");
             chrome.storage.local.remove(["srcUrl"]);
             setSrcUrl("");
@@ -391,7 +359,7 @@ const Popup = () => {
         console.log("############## useEffekt Popup ############## ");
         console.log("serverUrl: " + serverUrl);
         console.log("pageUrl: " + pageUrl);
-        // console.log("srcUrl: " + srcUrl);
+        console.log("srcUrl: " + srcUrl);
         console.log("iscc: " + iscc.length);
         console.log(iscc);
         console.log("assets: " + assets.length);

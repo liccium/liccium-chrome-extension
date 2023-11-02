@@ -2,24 +2,15 @@ import React, { useEffect, useState } from 'react';
 import './AssetDetail.css';
 import RendererISCCRegistryDetail from './Renderer/RendererISCCRegistryDetail';
 
-/* type Props = {
-    assets: any[];
-    onItemClick?: (id: string) => void;
-};
- */
 const AssetDetail = ({ iscc, asset, createThumbnail, onItemClickHadler }) => {
 
     const [data, setData] = useState([]);
 
-    const [rendererISCCRegistryDetail, setRendererISCCRegistryDetail] = useState(new RendererISCCRegistryDetail({data, setData}));
+    const [rendererISCCRegistryDetail, setRendererISCCRegistryDetail] = useState(new RendererISCCRegistryDetail({ data, setData }));
 
     const renderControlButtons = (asset) => {
 
         let elements = [];
-
-        /* if(asset.origin === "iscc-registry") {
-            elements = rendererISCCRegistryDetail.renderControlButtons(asset);
-        } */
         elements = rendererISCCRegistryDetail.renderControlButtons(iscc, asset);
 
         return elements;
@@ -30,19 +21,19 @@ const AssetDetail = ({ iscc, asset, createThumbnail, onItemClickHadler }) => {
         let svg = backBtn.getElementsByTagName("svg")[0];
         let g = svg.getElementsByTagName("g")[0];
         let path = g.getElementsByTagName("path")[0];
-        path.setAttribute("fill","#46475d");
+        path.setAttribute("fill", "#46475d");
     }
     const lightSvg = (event) => {
         let backBtn = document.getElementsByClassName("backBtn")[0];
         let svg = backBtn.getElementsByTagName("svg")[0];
         let g = svg.getElementsByTagName("g")[0];
         let path = g.getElementsByTagName("path")[0];
-        path.setAttribute("fill","#ffffff");
+        path.setAttribute("fill", "#ffffff");
     }
 
     const renderRedirectBtn = (asset) => {
         let redirectBtn = [];
-        if(asset.isccMetadata.redirect !== null 
+        if (asset.isccMetadata.redirect !== null
             && asset.isccMetadata.redirect !== undefined) {
             redirectBtn.push(
                 <button key="redirectBtn" onClick={() => window.open(asset.isccMetadata.redirect)}>Redirect</button>
@@ -53,20 +44,14 @@ const AssetDetail = ({ iscc, asset, createThumbnail, onItemClickHadler }) => {
 
     useEffect(() => {
         console.log("useEffekt AssetDetail");
-        /* if(asset.origin === "iscc-registry") {
-            rendererISCCRegistryDetail.renderAssetData(0, asset);
-        } */
         rendererISCCRegistryDetail.renderMetadataData(asset);
     }, []);
 
     return (
-
-        // CHECK IF ISCC OR ASSET ??
-
         <div className="AssetDetail">
             <div className="head">
                 {createThumbnail("imgBoxDetails", asset.isccMetadata, 70)}
-               {/* <img className="thumbnail" src={asset.isccMetadata.thumbnail} alt="image" /> */}
+                {/* <img className="thumbnail" src={asset.isccMetadata.thumbnail} alt="image" /> */}
                 <div className="detailsBanner">
                     <p className="title">{asset.isccMetadata.name}</p>
                     {renderRedirectBtn(asset)}

@@ -9,7 +9,7 @@ const save = () => {
     chrome.storage.local.set({ selectedServerUrl: selectedServerUrl })
         .then(() => {
             window.alert("Settings saved.");
-        }); // use callback in then to check if saved
+        });
 }
 
 const getSelectedServerUrl = (event) => {
@@ -35,6 +35,7 @@ const renderElements = (storage) => {
                 <select className="serverUrls" onChange={getSelectedServerUrl} defaultValue={selectedServerUrl}>
                     <option value={storage.serverUrls[0].url}>{storage.serverUrls[0].name}</option>
                     <option value={storage.serverUrls[1].url}>{storage.serverUrls[1].name}</option>
+                    <option value={storage.serverUrls[2].url}>{storage.serverUrls[2].name}</option>
                 </select>
             </div>
         </div>

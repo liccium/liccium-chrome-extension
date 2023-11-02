@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Assets } from '../Assets';
+import React, { useEffect } from 'react';
 import './AssetList.css';
 
 const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStorage }) => {
@@ -37,7 +36,6 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
         );
 
         Array.prototype.map.call(assets, (asset, index) => {
-            // RENDERER!!!
             elements.push(
                 <div key={"asset" + index} className={index === 0 ? "asset assetFirst" : "asset"} onClick={(() => onItemClickHadler("" + index))}>
                     {createThumbnail("imgBoxList", asset.isccMetadata, renderSize)}
@@ -51,7 +49,7 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                             <div key={"info" + index} className={"info"}>
                                 <p key={"date" + index} className={"date"}>{getDate(asset.resourceMetadata.timestamp)}</p>
                                 <div key={"address" + index} className={"infoTag"}>{getAddress(asset.resourceMetadata.declarer)}</div>
-                                
+
                             </div>
                         </div>
                         <div key={"vcIscc"} className={"vc"}>
@@ -71,9 +69,9 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
 
         console.log(asset.isccMetadata.liccium_plugins);
 
-        if(asset.isccMetadata.liccium_plugins !== undefined) {
-            if(asset.isccMetadata.liccium_plugins.tdmai !== undefined) {
-                if(asset.isccMetadata.liccium_plugins.tdmai.TDMAI) {
+        if (asset.isccMetadata.liccium_plugins !== undefined) {
+            if (asset.isccMetadata.liccium_plugins.tdmai !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.tdmai.TDMAI) {
                     tagElements.push(
                         <div key={"divTDMAITrue" + index} className={"verified"}>
                             <img className="tagIcon" src="check_circle_FILL0_wght600_GRAD0_opsz48.png" alt="TDMAITrue" />
@@ -90,7 +88,7 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                 }
             }
         }
-        
+
 
         let credentials = asset.credentials;
         if (credentials !== null) {
@@ -106,7 +104,7 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
             tagElements.push(
                 <p key={"verified" + index} className={"infoTag"}>unverified</p>
             );
-        }        
+        }
 
         return tagElements;
     }
@@ -114,8 +112,6 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
     const getDate = (timestamp) => {
 
         timestamp = "" + timestamp;
-
-        // console.log("timestamp: " + timestamp + " length: " + timestamp.length + " result: " + ((timestamp.length === 10) ? parseInt(timestamp, 10) * 1000 : parseInt(timestamp, 10)));
 
         timestamp = (("" + timestamp).length === 10) ? (parseInt(timestamp, 10) * 1000) : parseInt(timestamp, 10);
         let date = new Date(parseInt(timestamp, 10)).toISOString();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Selection.css';
 
 const Selection = ({ setSrcUrl, setPageUrl }) => {
@@ -52,8 +52,6 @@ const Selection = ({ setSrcUrl, setPageUrl }) => {
     const renderImages = () => {
         let elements = [];
 
-        // console.log(imagesData);
-
         let renderHeight = 120;
         for (let i = 0; i < imagesData.length; i++) {
             let img = (
@@ -68,10 +66,6 @@ const Selection = ({ setSrcUrl, setPageUrl }) => {
     const rerenderWith = (width, height, renderHeight) => {
         return width / (height / renderHeight);
     }
-
-    /* useEffect(() => {
-
-    }, []); */
 
     return (
         <div className="Selection">
