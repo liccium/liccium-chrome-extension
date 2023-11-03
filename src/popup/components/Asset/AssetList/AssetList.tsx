@@ -71,22 +71,38 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
 
         console.log(asset.isccMetadata.liccium_plugins);
 
+        if (asset.isccMetadata.liccium_plugins.iptc !== undefined) {
+            if (asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype !== undefined) {
+                if (asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype === "digitalCapture"
+                    || asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype === "minorHumanEdits") {
+                    tagElements.push(
+                        <div className="tagTooltip">
+                            <div key={"divNoAITag" + index} className={"noAITag"}>
+                                <img className="tagIcon" src="noai.png" alt="NoAI" />
+                                <p key={"tagNameTrue" + index} className="handle">No·AI</p>
+                            </div>
+                            <span className="tagtooltiptext">Human generated content</span>
+                        </div>
+                    );
+                }
+            }
+        }
+
         if (asset.isccMetadata.original !== undefined) {
             if (asset.isccMetadata.original === true) {
                 tagElements.push(
                     <div className="tagTooltip">
                         <div key={"divOriginalCreator" + index} className={"originalCreator"}>
-                            <img className="tagIcon" src="creator-design-white.png" alt="Original Creator" />
+                            <img className="tagIcon" src="creator-icon-white.png" alt="Original Creator" />
                             <p key={"tagNameTrue" + index} className="handle">Original</p>
                         </div>
                         <span className="tagtooltiptext">Declared by original creator or rightsholder</span>
                     </div>
-
                 );
             }
         }
 
-        if (asset.isccMetadata.liccium_plugins !== undefined) {
+        /* if (asset.isccMetadata.liccium_plugins !== undefined) {
             if (asset.isccMetadata.liccium_plugins.tdmai !== undefined) {
                 if (asset.isccMetadata.liccium_plugins.tdmai.TDMAI) {
                     tagElements.push(
@@ -110,7 +126,7 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                     );
                 }
             }
-        }
+        } */
 
 
         let credentials = asset.credentials;
