@@ -22,9 +22,7 @@ To test the browser plugin, you can use the examples of a few test declarations,
  
 ## Test declarations
 
-[https://twitter.com/bildoperationen/status/1656312620129959942](https://twitter.com/bildoperationen/status/1656312620129959942)
-
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/fea676a2-a9cc-4923-9446-6af2951a7bab">
+[https://twitter.com/spsth](https://twitter.com/spsth)
 
 ### Declarations by two verified declarants
 
