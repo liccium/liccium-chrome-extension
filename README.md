@@ -12,6 +12,8 @@ Overall, the Liccium browser plugin will provide a straightforward and effective
 
 The plugin was developed by [Dominik Krakau](https://github.com/dkrakau) and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science. The backend technology is based on code, developed by [ISCC Foundation](https://github.com/iscc) and [Posth Werk](https://posth.me), co-funded by [Trublo.eu](https://Trublo.eu) and the European Union’s Horizon 2020 research and innovation programme grant agreement No. 957228.  
 
+<img width="200" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/d494868d-60c9-4ade-bb09-1f1df57bc538">
+
 ## How to use the browser plugin?
 
 Go to any website and click on the extension icon to verify content on this page. 
