@@ -26,9 +26,7 @@ To test the browser plugin, you can use the examples of a few test declarations,
 
 You can find verifiable content posted by this Twitter account:
 
-<a href="https://twitter.com/spsth" target="_blank">https://twitter.com/spsth</a>
-
-[https://twitter.com/spsth](https://twitter.com/spsth){:target="_blank"}
+[https://twitter.com/spsth](https://twitter.com/spsth)
 
 ### Declarations by two verified declarants
 
