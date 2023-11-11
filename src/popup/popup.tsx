@@ -22,8 +22,8 @@ const Popup = () => {
     const [selectedItemId, setSelectedItemId] = useState<string>("");
 
     const serverUrls = {
-        "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/": "Liccium",
-        "http://iscc.if-is.net:8080/": "if(is)",
+        "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/": "Liccium",  // plugin.liccium.app
+        "https://iscc.if-is.net:8080/": "if(is)",
         "http://localhost:8080/": "Development"
     }
 

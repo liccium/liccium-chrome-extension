@@ -86,6 +86,27 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                             </div>
                         );
                     }
+                    if (asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype === "trainedAlgorithmicMedia"
+                        || asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype === "compositeSynthetic"
+                        || asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype === "algorithmicMedia") {
+                        tagElements.push(
+                            <div className="tagTooltip">
+                                <div key={"divGenAITag" + index} className={"genAITag"}>
+                                    <img className="tagIcon" src="noai.png" alt="GenAI" />
+                                    <p key={"tagNameTrue" + index} className="handle">Gen·AI</p>
+                                </div>
+                                <span className="tagtooltiptext">
+                                    {(asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype === "trainedAlgorithmicMedia")
+                                        ? "Trained algorithmic media"
+                                        : (asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype === "compositeSynthetic")
+                                            ? "Composite including synthetic elements"
+                                            : (asset.isccMetadata.liccium_plugins.iptc.digitalsourcetype === "algorithmicMedia")
+                                                ? "Pure algorithmic media" : ""}
+                                </span>
+                            </div>
+                        );
+                    }
+
                 }
             }
         }
