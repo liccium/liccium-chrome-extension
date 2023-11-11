@@ -10,7 +10,9 @@ Overall, the Liccium browser plugin will provide a straightforward and effective
 
 ## Credits
 
-The plugin was developed by [Dominik Krakau](https://github.com/dkrakau) and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science. The backend technology is based on code, developed by [ISCC Foundation](https://github.com/iscc).  
+The plugin was developed by [Dominik Krakau](https://github.com/dkrakau) and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science. The backend technology is based on code, developed by [ISCC Foundation](https://github.com/iscc) and [Posth Werk](https://posth.me), co-funded by [Trublo.eu](https://Trublo.eu) and the European Union’s Horizon 2020 research and innovation programme grant agreement No. 957228.  
+
+<img width="200" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/d494868d-60c9-4ade-bb09-1f1df57bc538">
 
 ## How to use the browser plugin?
 
@@ -22,13 +24,14 @@ To test the browser plugin, you can use the examples of a few test declarations,
  
 ## Test declarations
 
-[https://twitter.com/bildoperationen/status/1656312620129959942](https://twitter.com/bildoperationen/status/1656312620129959942)
+You can find verifiable content posted by this Twitter account:
 
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/fea676a2-a9cc-4923-9446-6af2951a7bab">
+[https://twitter.com/spsth](https://twitter.com/spsth)
 
 ### Declarations by two verified declarants
 
-https://photos.com/featured/eye-of-horse-gabriella-nonino.html
+[https://photos.com/featured/eye-of-horse-gabriella-nonino.html](https://photos.com/featured/eye-of-horse-gabriella-nonino.html
+) 
 
 <img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/3b2ab918-5523-4a96-ace5-badd816564df">
 
