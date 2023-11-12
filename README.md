@@ -30,34 +30,46 @@ You can find verifiable content posted by this Twitter account:
 
 ### Declarations by two verified declarants
 
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/3b2ab918-5523-4a96-ace5-badd816564df">
+
 [https://photos.com/featured/eye-of-horse-gabriella-nonino.html](https://photos.com/featured/eye-of-horse-gabriella-nonino.html
 ) 
 
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/3b2ab918-5523-4a96-ace5-badd816564df">
+### Examples of fake/manipulated content
 
-### Example of fake/manipulated content
-
-This example shows how to resolve the original declaration from manipulated content:
-
-[https://twitter.com/spsth/status/1718594137702777111](https://twitter.com/spsth/status/1718594137702777111)
+These example shows how to resolve the original declaration from manipulated content:
 
 <img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/76c923e0-be9a-4bfd-b9d0-3c7fc5c894b4">
 
-This was the original declaration – spot the difference :) 
+[https://twitter.com/spsth/status/1718594137702777111](https://twitter.com/spsth/status/1718594137702777111)
 
-[https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r](https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r)  
+This was the original declaration – spot the difference :) 
 
 <img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/77007693-2c89-45f5-a529-32d730b65f48">  
 
+[https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r](https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r)  
+
 This is the result of the reverse-lookup: 
 
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/a7216014-19d0-44a6-9f5a-9feb6b04503c">
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/bf66b58f-ada1-4db3-bd82-81a0fd1d030b">
 
 Another fake image; the browser plugin will lead you to the original content:
 
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/39a5074b-fa3b-44eb-a0f7-0bd39007ea7a">
+
 [https://twitter.com/spsth/status/1718591647087251519](https://twitter.com/spsth/status/1718591647087251519)
 
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/ac863317-93b3-4624-bb24-137e1c708b1d">
+### Examples of AI generated content
+
+These example shows how to verify AI generated content: 
+
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/c2c576bc-e3b1-4a17-b2df-1128dfd8b7fd">
+
+[https://twitter.com/spsth/status/1723709427130257804](https://twitter.com/spsth/status/1723709427130257804)
+
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/8c9bbddf-e712-43cb-be47-2cf177fd0792">
+
+[https://twitter.com/spsth/status/1723712373431673208/photo/1](https://twitter.com/spsth/status/1723712373431673208/photo/1)
 
 ### Declarations on mainnet
 
