@@ -22,9 +22,9 @@ const Popup = () => {
     const [selectedItemId, setSelectedItemId] = useState<string>("");
 
     const serverUrls = {
-        "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/": "Liccium",  // plugin.liccium.app
-        "https://iscc.if-is.net:8080/": "if(is)",
-        "http://localhost:8080/": "Development"
+        "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080": "Liccium",  // plugin.liccium.app
+        "https://iscc.if-is.net": "if(is)",
+        "http://localhost:8080": "Development"
     }
 
     const clearStorage = () => {
@@ -277,18 +277,18 @@ const Popup = () => {
         let jsonIscc = [];
         let jsonAssets = [];
         try {
-            jsonIscc = await fetch(serverUrl + "iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            let jsonExplain = await fetch(serverUrl + "iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            jsonIscc = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
+            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             // Put sourceUrl and units from explained ISCC in jsonIscc
             jsonIscc[0].isccMetadata.name = getModeCapitalLetter(jsonIscc[0].isccMetadata.mode) + " from " + getISCCName(pageUrl);
             jsonIscc[0].isccMetadata.sourceUrl = srcUrl;
             jsonIscc[0].isccMetadata.units = jsonExplain.units;
 
             // FETCH ASSET DATA
-            jsonAssets = await fetch(serverUrl + "asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             // Put units from explained ISCC in jsonAssets
             for (let i = 0; i < jsonAssets.length; i++) {
-                let jsonExplain = await fetch(serverUrl + "iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+                let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
                 let assetUnits = jsonExplain.units;
                 jsonAssets[i].isccMetadata.units = assetUnits;
             }

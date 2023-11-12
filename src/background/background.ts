@@ -2,21 +2,21 @@ chrome.runtime.onInstalled.addListener(() => {
     console.log('I come from Background-Script.');
 
     chrome.storage.local.clear();
-    chrome.storage.local.set({ selectedServerUrl: "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/" });
+    chrome.storage.local.set({ selectedServerUrl: "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080" });
     chrome.storage.local.set(
         {
             serverUrls: [
                 {
                     name: "Liccium",
-                    url: "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080/"
+                    url: "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080"
                 },
                 {
                     name: "if(is)",
-                    url: "https://iscc.if-is.net:8080/"
+                    url: "https://iscc.if-is.net"
                 },
                 {
                     name: "Development",
-                    url: "http://localhost:8080/"
+                    url: "http://localhost:8080"
                 }
             ]
         }
