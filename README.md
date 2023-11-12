@@ -39,13 +39,13 @@ You can find verifiable content posted by this Twitter account:
 
 These example shows how to resolve the original declaration from manipulated content:
 
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/76c923e0-be9a-4bfd-b9d0-3c7fc5c894b4">
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/09ab9b0a-6423-4d81-a84d-e11463257ba1">
 
 [https://twitter.com/spsth/status/1718594137702777111](https://twitter.com/spsth/status/1718594137702777111)
 
 This was the original declaration – spot the difference :) 
 
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/77007693-2c89-45f5-a529-32d730b65f48">  
+<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/38632fdd-9f70-4bd9-adee-405e224487cf">  
 
 [https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r](https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r)  
 
