@@ -2,7 +2,7 @@ chrome.runtime.onInstalled.addListener(() => {
     console.log('I come from Background-Script.');
 
     chrome.storage.local.clear();
-    chrome.storage.local.set({ selectedServerUrl: "http://search.liccium.app" });
+    chrome.storage.local.set({ selectedServerUrl: "https://search.liccium.app" });
     chrome.storage.local.set(
         {
             serverUrls: [
