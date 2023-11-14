@@ -2,13 +2,13 @@ chrome.runtime.onInstalled.addListener(() => {
     console.log('I come from Background-Script.');
 
     chrome.storage.local.clear();
-    chrome.storage.local.set({ selectedServerUrl: "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080" });
+    chrome.storage.local.set({ selectedServerUrl: "http://search.liccium.app" });
     chrome.storage.local.set(
         {
             serverUrls: [
                 {
                     name: "Liccium",
-                    url: "http://ec2-18-192-61-198.eu-central-1.compute.amazonaws.com:8080"
+                    url: "https://search.liccium.app"
                 },
                 {
                     name: "if(is)",
@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener(() => {
                 },
                 {
                     name: "Development",
-                    url: "http://localhost:8080"
+                    url: "http://localhost"
                 }
             ]
         }
