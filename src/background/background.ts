@@ -24,13 +24,13 @@ chrome.runtime.onInstalled.addListener(() => {
 
     chrome.contextMenus.create({
         id: "image",
-        title: "Search image on Liccium",
+        title: "Search on Liccium",
         contexts: ["image"],
     });
 
     chrome.contextMenus.create({
         id: "link",
-        title: "Search link on Liccium",
+        title: "Search on Liccium",
         contexts: ["link"],
     });
 
