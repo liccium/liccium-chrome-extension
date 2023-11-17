@@ -18,6 +18,8 @@ const init = (() => {
         if (msg.action === 'getDOM') {
             // Call the specified callback, passing
             // the web-page's DOM content as argument
+
+
             // IMAGES
             let imagesMap = new Map();
             let imgTags = document.body.getElementsByTagName("img");
@@ -35,6 +37,15 @@ const init = (() => {
             imagesMap.forEach((value, key) => {
                 imagesArray.push(value);
             });
+
+            // PDFS
+            /* let linksMap = new Map();
+            let aTags = document.body.getElementsByTagName("a");
+            for (let i = 0; i < aTags.length; i++) {
+                if (aTags[i].href !== "") {
+                    linksMap.set(aTags[i].href, { "currentSrc": imgTags[i].currentSrc, "alt": imgTags[i].alt, "height": imgTags[i].height, "width": imgTags[i].width });
+                }
+            } */
 
             sendResponse({ pageUrl: pageUrl, imageData: imagesArray });
         }

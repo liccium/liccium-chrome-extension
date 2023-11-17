@@ -23,10 +23,36 @@ chrome.runtime.onInstalled.addListener(() => {
     );
 
     chrome.contextMenus.create({
-        id: "nns",
+        id: "image",
         title: "Search image on Liccium",
         contexts: ["image"],
     });
+
+    chrome.contextMenus.create({
+        id: "link",
+        title: "Search link on Liccium",
+        contexts: ["link"],
+    });
+
+    /* chrome.contextMenus.create({
+        title: "Liccium Trust Engine",
+        id: "parent",
+        contexts: ["selection"]
+    });
+
+    chrome.contextMenus.create({
+        title: "Search image on Liccium",
+        id: "image",
+        parentId: "parent",
+        contexts: ["image"]
+    });
+
+    chrome.contextMenus.create({
+        title: "Search link on Liccium",
+        id: "link",
+        parentId: "parent",
+        contexts: ["link"]
+    }); */
 });
 
 chrome.runtime.onConnect.addListener(function (port) {
@@ -39,15 +65,33 @@ chrome.runtime.onConnect.addListener(function (port) {
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
 
-    let pageUrl = info.pageUrl;
-    let srcUrl = info.srcUrl;
-    chrome.storage.local.remove(["pageUrl", "srcUrl", "iscc", "assets"]);
-    chrome.storage.local.set({ pageUrl: pageUrl });
-    chrome.storage.local.set({ srcUrl: srcUrl });
-    chrome.tabs.create({ url: "popup.html" });
+    console.log(info);
+
+    if (info.menuItemId === "image") {
+        let pageUrl = info.pageUrl;
+        let srcUrl = info.srcUrl;
+        chrome.storage.local.remove(["pageUrl", "srcUrl", "iscc", "assets"]);
+        chrome.storage.local.set({ pageUrl: pageUrl });
+        chrome.storage.local.set({ srcUrl: srcUrl });
+        chrome.tabs.create({ url: "popup.html" });
+        /* chrome.action.openPopup(); */
+    }
+
+    if (info.menuItemId === "link") {
+        let pageUrl = info.pageUrl;
+        let linkUrl = info.linkUrl;
+        chrome.storage.local.remove(["pageUrl", "srcUrl", "iscc", "assets"]);
+        chrome.storage.local.set({ pageUrl: pageUrl });
+        chrome.storage.local.set({ srcUrl: linkUrl });
+        chrome.tabs.create({ url: "popup.html" });
+        /* chrome.action.openPopup(); */
+    }
+
+
 
     // Not supported yet
-    /* chrome.action.setPopup({ tabId: tab.id, popup: "popup.html" });
-    chrome.action.openPopup(); */
+    //chrome.action.setPopup({ tabId: tab.id, popup: "popup.html" });
+
+    /* chrome.action.openPopup(); */
 });
 

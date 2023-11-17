@@ -287,11 +287,11 @@ const Popup = () => {
             // FETCH ASSET DATA
             jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             // Put units from explained ISCC in jsonAssets
-            for (let i = 0; i < jsonAssets.length; i++) {
+            /* for (let i = 0; i < jsonAssets.length; i++) {
                 let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
                 let assetUnits = jsonExplain.units;
                 jsonAssets[i].isccMetadata.units = assetUnits;
-            }
+            } */
 
             jsonAssets = sortVCs(jsonAssets);
 
@@ -316,7 +316,22 @@ const Popup = () => {
 
     function onItemClickHadler(id: string): void {
         console.log("clicked " + id);
-        setSelectedItemId(id);
+        if (id !== "" && id !== "iscc") {
+            fetch(serverUrl + "/iscc/explain?iscc=" + assets[id].isccMetadata.iscc.replace(":", "%3A"))
+                .then(response => response.json())
+                .then(jsonExplain => {
+
+                    let copyedAssets = [...assets];
+                    let copyedAsset = { ...assets[id] };
+                    copyedAsset.isccMetadata.units = jsonExplain.units;
+                    copyedAssets[id] = copyedAsset;
+
+                    setAssets(copyedAssets);
+                    setSelectedItemId(id);
+                });
+        } else {
+            setSelectedItemId(id);
+        }
     }
 
     useEffect(() => {
