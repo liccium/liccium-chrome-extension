@@ -285,13 +285,21 @@ const Popup = () => {
             jsonIscc[0].isccMetadata.units = jsonExplain.units;
 
             // FETCH ASSET DATA
-            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            if (serverUrl === "https://iscc.if-is.net" || serverUrl === "http://localhost") {
+                jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + jsonIscc[0].isccMetadata.mode).then(response => response.json());
+            } else if (serverUrl === "https://search.liccium.app") {
+                jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            }
+
             // Put units from explained ISCC in jsonAssets
             /* for (let i = 0; i < jsonAssets.length; i++) {
                 let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
                 let assetUnits = jsonExplain.units;
                 jsonAssets[i].isccMetadata.units = assetUnits;
             } */
+
+            console.log("ARRAY FROM NNS");
+            console.log(jsonAssets);
 
             jsonAssets = sortVCs(jsonAssets);
 

@@ -102,7 +102,7 @@ class RendererISCCRegistryDetail {
         let origin = asset.origin;
 
         controlButtons.push(<button key="MetadataBtn" id="metadataBtn" className="controlsButton" onClick={() => this.renderMetadataData(asset)}>Metadata</button>);
-        if (origin === "iscc-registry") {
+        if (origin === "isccRegistry") {
             controlButtons.push(<button key="declarationsBtn" id="declarationsBtn" className="controlsButton" onClick={() => this.renderDeclarationData(asset)}>Declaration</button>);
         }
         //console.log("CREDENTIALS: " + credentials);
@@ -111,7 +111,7 @@ class RendererISCCRegistryDetail {
         }
         controlButtons.push(<button key="assetBtn" id="assetBtn" className="controlsButton" onClick={() => this.renderAssetData(asset)} autoFocus>Asset</button>);
         controlButtons.push(<button key="isccBtn" id="isccBtn" className="controlsButton" onClick={() => this.renderISCCData(asset)}>ISCC</button>);
-        if (origin === "iscc-registry") {
+        if (origin === "isccRegistry") {
             controlButtons.push(<button key="compareBtn" id="compareBtn" className="controlsButton" onClick={() => this.renderCompareData(iscc, asset)}>Compare</button>);
         }
 
@@ -349,7 +349,7 @@ class RendererISCCRegistryDetail {
         let rowCounter = 0;
         let data = [];
         let origin = asset.origin;
-        if (origin === "iscc-registry") {
+        if (origin === "isccRegistry") {
             data.push(
                 <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
                     <p key="keyMetadata" className="pRowKey">Metadata</p>
