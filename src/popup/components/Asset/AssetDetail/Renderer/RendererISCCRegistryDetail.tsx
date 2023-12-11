@@ -322,7 +322,7 @@ class RendererISCCRegistryDetail {
                     && asset.isccMetadata.liccium_plugins.tdmai.TDMAI !== null) {
                     data.push(
                         <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                            <p key="keyTDMAISummary" className="pRowKey">TDM·AI Summary</p>
+                            <p key="keyTDMAISummary" className="pRowKey">AI opt-out</p> {/* TDM·AI Summary */}
                             <p key="keyTDMAISummaryValue" className="pRowValue">{asset.isccMetadata.liccium_plugins.tdmai.TDMAI ? "Content may be used as AI training data." : "Content must not be used for AI training purposes."}</p>
                         </div>
                     );
@@ -332,7 +332,7 @@ class RendererISCCRegistryDetail {
                     && asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL !== null) {
                     data.push(
                         <div key={"cro" + rowCounter} className={rowCounter % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                            <p key="keyTDMAIPolicyURL" className="pRowKey">TDM·AI policy</p>
+                            <p key="keyTDMAIPolicyURL" className="pRowKey">AI opt-out policy</p> {/* TDM·AI policy */}
                             <p key="keyTDMAIPolicyURLValue" className="pRowValue"><a href={asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL} target="_blank">{asset.isccMetadata.liccium_plugins.tdmai.TDMAI_policy_URL}</a></p>
                         </div>
                     );
