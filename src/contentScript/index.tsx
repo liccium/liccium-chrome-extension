@@ -32,6 +32,7 @@ const init = (() => {
                 }
             }
 
+
             let pageUrl = window.location.href;
             let imagesArray = [];
             imagesMap.forEach((value, key) => {
@@ -47,9 +48,25 @@ const init = (() => {
                 }
             } */
 
+            x();
             sendResponse({ pageUrl: pageUrl, imageData: imagesArray });
         }
     });
 });
+
+
+const x = () => {
+    let images = document.getElementsByTagName("img");
+    for (let i = 0; i < images.length; i++) {
+        let imgHeight = images[i].height;
+        let imageWidth = images[i].width;
+        if (imgHeight > 100 && imageWidth > 100) {
+            let imgSrc = images[i].currentSrc;
+            let div = images[i].parentElement.getElementsByTagName("div")[0];
+            div.innerHTML = "<p>IAMGE " + i + "</p>";
+        }
+    }
+
+};
 
 init();
