@@ -378,13 +378,22 @@ class RendererISCCRegistryDetail {
                 <p key="keyDeclarationDateValue" className="pRowValue">{this.getFullDate(asset.resourceMetadata.timestamp)}</p>
             </div>
         );
+        let ledger = (asset.resourceMetadata.chain.name === "GOERLI")
+            ? asset.resourceMetadata.chain.type + " " + asset.resourceMetadata.chain.name + " (eip155:5)"
+            : (asset.resourceMetadata.chain.name === "MUMBAI")
+                ? asset.resourceMetadata.chain.type + " " + asset.resourceMetadata.chain.name + " (eip155:80001)"
+                : "UNKNOWN";
         data.push(
             <div key="cro3" className="contentRowEven">
                 <p key="keyMessage" className="pRowKey">Ledger</p>
-                <p key="keyMessageValue" className="pRowValue">{asset.resourceMetadata.chain.type + " " + asset.resourceMetadata.chain.name}</p>
+                <p key="keyMessageValue" className="pRowValue">{ledger}</p>
             </div>
         );
-        let href = "https://goerli.etherscan.io/tx/" + asset.resourceMetadata.txHash;
+        let href = (asset.resourceMetadata.chain.name === "GOERLI")
+            ? "https://goerli.etherscan.io/tx/" + asset.resourceMetadata.txHash
+            : (asset.resourceMetadata.chain.name === "MUMBAI")
+                ? "https://mumbai.polygonscan.com/tx/" + asset.resourceMetadata.txHash
+                : "#";
         data.push(
             <div key="cro4" className="contentRowOdd">
                 <p key="keyLedgerExplorer" className="pRowKey">Ledger explorer</p>
