@@ -285,7 +285,7 @@ const Popup = () => {
             jsonIscc[0].isccMetadata.units = jsonExplain.units;
 
             // FETCH ASSET DATA
-            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + jsonIscc[0].isccMetadata.mode).then(response => response.json());
+            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + jsonIscc[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
 
             // Put units from explained ISCC in jsonAssets
             /* for (let i = 0; i < jsonAssets.length; i++) {
