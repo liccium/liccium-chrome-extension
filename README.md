@@ -106,9 +106,9 @@ This empowers any user, system, or machine with access to the digital asset to i
 
 Follow the instruction to install the browser plugin. 
 
-[Latest release](https://github.com/liccium/liccium-chrome-extension/releases/tag/v0.0.1)
+[Latest release](https://github.com/liccium/liccium-chrome-extension/releases/tag/v0.0.2)
 
-1. Download [liccium-chrome-extension-v0.0.1.zip](https://github.com/liccium/liccium-chrome-extension/releases/download/v0.0.1/liccium-chrome-extension-v0.0.1.zip) file.
+1. Download [liccium-chrome-extension-v0.0.2.zip](https://github.com/liccium/liccium-chrome-extension/releases/download/v0.0.2/liccium-chrome-extension-v0.0.2.zip) file.
 2. Extract the zip file.
 3. Place extracted folder in any location.  
 4. Start the Google Chrome browser.
