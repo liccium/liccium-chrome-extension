@@ -380,9 +380,11 @@ class RendererISCCRegistryDetail {
         );
         let ledger = (asset.resourceMetadata.chain.name === "GOERLI")
             ? asset.resourceMetadata.chain.type + " " + asset.resourceMetadata.chain.name + " (eip155:5)"
-            : (asset.resourceMetadata.chain.name === "MUMBAI")
-                ? asset.resourceMetadata.chain.type + " " + asset.resourceMetadata.chain.name + " (eip155:80001)"
-                : "UNKNOWN";
+            : (asset.resourceMetadata.chain.name === "SEPOLIA")
+                ? asset.resourceMetadata.chain.type + " " + asset.resourceMetadata.chain.name + " (eip155:5)"
+                : (asset.resourceMetadata.chain.name === "MUMBAI")
+                    ? asset.resourceMetadata.chain.type + " " + asset.resourceMetadata.chain.name + " (eip155:80001)"
+                    : "UNKNOWN";
         data.push(
             <div key="cro3" className="contentRowEven">
                 <p key="keyMessage" className="pRowKey">Ledger</p>
@@ -391,9 +393,11 @@ class RendererISCCRegistryDetail {
         );
         let href = (asset.resourceMetadata.chain.name === "GOERLI")
             ? "https://goerli.etherscan.io/tx/" + asset.resourceMetadata.txHash
-            : (asset.resourceMetadata.chain.name === "MUMBAI")
-                ? "https://mumbai.polygonscan.com/tx/" + asset.resourceMetadata.txHash
-                : "#";
+            : (asset.resourceMetadata.chain.name === "SEPOLIA")
+                ? "https://sepolia.etherscan.io/tx/" + asset.resourceMetadata.txHash
+                : (asset.resourceMetadata.chain.name === "MUMBAI")
+                    ? "https://mumbai.polygonscan.com/tx/" + asset.resourceMetadata.txHash
+                    : "#";
         data.push(
             <div key="cro4" className="contentRowOdd">
                 <p key="keyLedgerExplorer" className="pRowKey">Ledger explorer</p>
