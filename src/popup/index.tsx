@@ -10,7 +10,7 @@ const init = (() => {
     if (!rootContainer) {
         throw new Error("Can not find RootContainer");
     }
-    const root = createRoot(rootContainer);
+    const root = createRoot(rootContainer);//hdfuwehfewfw3
     root.render(<Popup />);//hallo
 });
 
