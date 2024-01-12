@@ -11,7 +11,7 @@ const init = (() => {
         throw new Error("Can not find RootContainer");
     }
     const root = createRoot(rootContainer);
-    root.render(<Popup />);
+    root.render(<Popup />);//hallo
 });
 
 init();
