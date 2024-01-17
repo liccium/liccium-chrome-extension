@@ -1,7 +1,7 @@
 name: Move assigned pull requests into Doing
 
 on:
-  pull_request:
+  issue:
     types: [assigned]
 
 jobs:
