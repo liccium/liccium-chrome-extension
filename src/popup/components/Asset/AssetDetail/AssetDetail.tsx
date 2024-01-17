@@ -12,6 +12,7 @@ const AssetDetail = ({ iscc, asset, createThumbnail, onItemClickHadler }) => {
 
         let elements = [];
         elements = rendererISCCRegistryDetail.renderControlButtons(iscc, asset);
+        // test 1
 
         return elements;
     }
