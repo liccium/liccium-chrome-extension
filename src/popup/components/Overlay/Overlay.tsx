@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import './Overlay.css';
 
 export const Overlay = () => {
 
+    const [boolOverlay, setBoolOverlay] = useState(false);
+    const [overlayStyle, setOverlayStyle] = useState({});
+    const [iconLicciumStyle, setIconLicciumStyle] = useState({});
+    const [imgSrc, setImageSrc] = useState("");
+
     //update Div-Position
-    let imgSrc;
     const updateDivPosition = (event) => {
         if (!boolOverlay) {
             if (event.target.tagName.toLowerCase() === 'img') {
@@ -15,53 +20,42 @@ export const Overlay = () => {
                 icon_liccium.style.top = (rect.top + window.scrollY + paddingFromTop) + 'px';
                 icon_liccium.style.left = (rect.left + window.scrollX + paddingFromLeft) + 'px';
                 icon_liccium.style.display = 'block';
-                imgSrc = event.target.src;
+                setImageSrc(event.target.src);
             }
         }
     };
     //Div hiden beim mouse-out
     const hideDiv = () => {
         if (!boolOverlay) {
-            icon_liccium.style.display = 'none';
-            //overlayElement.style.display = 'none';
+            setIconLicciumStyle({ display: "none" });
         }
     };
-    var boolOverlay = false;
-    //listener für clicks
-    icon_liccium.addEventListener('click', function () {
+
+    const displayOverlay = () => {
         console.log('click ' + imgSrc);
-
         /* overlayElement.classList.toggle('transition'); */
-
-
         if (!boolOverlay) {
-            overlayElement.style.display = 'block';
-            icon_liccium.style.background = 'none';
-            boolOverlay = true;
+            setOverlayStyle({ display: "block" });
+            setIconLicciumStyle({ display: "none" });
+            setBoolOverlay(true);
         } else {
-            overlayElement.style.display = 'none';
-            icon_liccium.style.background = 'rgba(255, 255, 255, 0.65)';
-            boolOverlay = false;
+            setOverlayStyle({ display: "none" });
+            setIconLicciumStyle({ background: "rgba(255, 255, 255, 0.65)" });
+            setBoolOverlay(false);
         }
-    });
+    };
 
-    //listener für hover-in über bilder
-    document.addEventListener('mouseover', updateDivPosition);
-    //listener für hover-out von bilder
-    document.addEventListener('mouseout', hideDiv);
 
-    overlayElement.addEventListener('mouseover', function () {
-        overlayElement.style.display = 'block';
-        //console.log('hover over div');
-    });
+    useEffect(() => {
+        //listener für hover-in über bilder
+        document.addEventListener('mouseover', updateDivPosition);
+        //listener für hover-out von bilder
+        document.addEventListener('mouseout', hideDiv);
+    }, []);
 
-    icon_liccium.addEventListener('mouseover', function () {
-        icon_liccium.style.display = 'block';
-        //console.log('hover over div');
-    });
     return (
         <>
-            <div className="ausklapp_overlay">
+            <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={() => setOverlayStyle({ display: "block" })}>
                 <div className="top">
                     <div className="headline">
                         <p>Caution advised</p>
@@ -87,7 +81,8 @@ export const Overlay = () => {
                 </div>
             </div>
 
-            <div className="icon-liccium">
+            <div
+                className="icon-liccium" style={iconLicciumStyle} onMouseOver={() => setIconLicciumStyle({ display: "block" })} onClick={() => displayOverlay()}>
                 <object type="image/svg+xml" data="chrome-extension://aoimmhoeflcknmcgapnpigjchoafhjpb/images/Liccium-Logo-black-on-transparent-1400.svg">
                 </object>
             </div>
