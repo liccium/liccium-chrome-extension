@@ -131,7 +131,7 @@ export const Overlay = () => {
                 </div>
                 <div className="bottom">
                     <div className="link">
-                        <a href="http://google.de">Verify content details</a>
+                        <a href="#" onClick={() => chrome.tabs.create({ url: "popup.html" })}>Verify content details</a>
                     </div>
                 </div>
             </div>
