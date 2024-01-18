@@ -32,5 +32,17 @@
         "contentScript.js"
       ]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/noai.png",
+        "images/warning.svg",
+        "images/Liccium-Logo-black-on-transparent-1400.svg"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    }
   ]
 }
