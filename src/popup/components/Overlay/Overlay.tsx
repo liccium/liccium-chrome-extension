@@ -7,35 +7,35 @@ export const Overlay = () => {
     const [imgSrc, setImageSrc] = useState('');
     const [overlayStyle, setOverlayStyle] = useState(
         {
-            "height": 156 + "px",
-            "width": 232 + "px",
-            "border-radius": 5 + "px",
-            "background": "rgba(255, 255, 255, 0.65)",
-            "box-shadow": "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
-            "flex-direction": "column",
-            "align-items": "center",
-            "justify-content": "center",
-            "margin": "0",
-            "position": "absolute",
-            "z-index": 10000,
-            "pointer-events": "auto",
-            "display": "none",
-            "opacity": "0.8",
-            "overflow": "hidden",
-            "text-align": "center"
+            height: 156 + "px",
+            width: 232 + "px",
+            borderRadius: 5 + "px",
+            background: "rgba(255, 255, 255, 0.65)",
+            boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "0",
+            position: "absolute",
+            zIndex: 10000,
+            pointerEvents: "auto",
+            display: "none",
+            opacity: "0.8",
+            overflow: "hidden",
+            textAlign: "center"
         } as React.CSSProperties
     );
     const [iconLicciumStyle, setIconLicciumStyle] = useState(
         {
-            "position": "absolute",
-            "margin": 0,
-            "width": 35 + "px",
-            "left": "0",
-            "border-radius": "5px",
-            "background": "rgba(255, 255, 255, 0.65)",
-            "box-shadow": "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
-            "z-index": "10001",
-            "display": "none"
+            position: "absolute",
+            margin: 0,
+            width: 35 + "px",
+            left: "0",
+            borderRadius: "5px",
+            background: "rgba(255, 255, 255, 0.65)",
+            boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
+            zIndex: "10001",
+            display: "none"
         } as React.CSSProperties
     );
 
@@ -116,13 +116,13 @@ export const Overlay = () => {
                         <p>Caution advised</p>
                     </div>
                     <div className="icon-warning">
-                        <object type="image/svg+xml" data="chrome-extension://aoimmhoeflcknmcgapnpigjchoafhjpb/images/warning.svg"></object>
+                        <object type="image/svg+xml" data="warning.svg"></object>
                     </div>
                 </div>
                 <div className="middle">
                     <div className="genAITag">
                         <div className="genAITag-icon">
-                            <img src="chrome-extension://aoimmhoeflcknmcgapnpigjchoafhjpb/images/noai.png" />
+                            <img src="noai.png" />
                         </div>
                         <div className="genAITag-text">
                             <p className="tagText">GEN AI</p>
@@ -131,7 +131,7 @@ export const Overlay = () => {
                 </div>
                 <div className="bottom">
                     <div className="link">
-                        <a href="#" onClick={() => chrome.tabs.create({ url: "popup.html" })}>Verify content details</a>
+                        <a href="http://google.de">Verify content details</a>
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@ export const Overlay = () => {
                     display: "block"
                 }))}
                 onClick={() => displayOverlay()}>
-                <object type="image/svg+xml" data="chrome-extension://aoimmhoeflcknmcgapnpigjchoafhjpb/images/Liccium-Logo-black-on-transparent-1400.svg">
+                <object type="image/svg+xml" data="Liccium-Logo-black-on-transparent-1400.svg">
                 </object>
             </div >
         </>
