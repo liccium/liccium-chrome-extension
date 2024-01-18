@@ -15,11 +15,15 @@ export const Overlay = () => {
                 let rect = event.target.getBoundingClientRect();
                 let paddingFromTop = 10;
                 let paddingFromLeft = 10;
-                setOverlayStyle({ top: (rect.top + window.scrollY + paddingFromTop) + 'px' });
-                setOverlayStyle({ left: (rect.left + window.scrollX + paddingFromLeft) + 'px' });
-                setIconLicciumStyle({ top: (rect.top + window.scrollY + paddingFromTop) + 'px' });
-                setIconLicciumStyle({ left: (rect.left + window.scrollX + paddingFromLeft) + 'px' });
-                setIconLicciumStyle({ display: 'block' })
+                setOverlayStyle({
+                    top: (rect.top + window.scrollY + paddingFromTop) + 'px',
+                    left: (rect.left + window.scrollX + paddingFromLeft) + 'px'
+                });
+                setIconLicciumStyle({
+                    top: (rect.top + window.scrollY + paddingFromTop) + 'px',
+                    left: (rect.left + window.scrollX + paddingFromLeft) + 'px',
+                    display: 'block'
+                });
                 setImageSrc(event.target.src);
             }
         }
