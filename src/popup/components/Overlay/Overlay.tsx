@@ -4,9 +4,40 @@ import './Overlay.css';
 export const Overlay = () => {
 
     const [boolOverlay, setBoolOverlay] = useState(false);
-    const [overlayStyle, setOverlayStyle] = useState({});
-    const [iconLicciumStyle, setIconLicciumStyle] = useState({});
     const [imgSrc, setImageSrc] = useState('');
+    const [overlayStyle, setOverlayStyle] = useState(
+        {
+            "height": 156 + "px",
+            "width": 232 + "px",
+            "border-radius": 5 + "px",
+            "background": "rgba(255, 255, 255, 0.65)",
+            "box-shadow": "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
+            "flex-direction": "column",
+            "align-items": "center",
+            "justify-content": "center",
+            "margin": "0",
+            "position": "absolute",
+            "z-index": 10000,
+            "pointer-events": "auto",
+            "display": "none",
+            "opacity": "0.8",
+            "overflow": "hidden",
+            "text-align": "center"
+        } as React.CSSProperties
+    );
+    const [iconLicciumStyle, setIconLicciumStyle] = useState(
+        {
+            "position": "absolute",
+            "margin": 0,
+            "width": 35 + "px",
+            "left": "0",
+            "border-radius": "5px",
+            "background": "rgba(255, 255, 255, 0.65)",
+            "box-shadow": "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
+            "z-index": "10001",
+            "display": "none"
+        } as React.CSSProperties
+    );
 
     //update Div-Position
     const updateDivPosition = (event) => {
@@ -15,15 +46,17 @@ export const Overlay = () => {
                 let rect = event.target.getBoundingClientRect();
                 let paddingFromTop = 10;
                 let paddingFromLeft = 10;
-                setOverlayStyle({
+                setOverlayStyle((prevState) => ({
+                    ...prevState,
                     top: (rect.top + window.scrollY + paddingFromTop) + 'px',
                     left: (rect.left + window.scrollX + paddingFromLeft) + 'px'
-                });
-                setIconLicciumStyle({
+                }));
+                setIconLicciumStyle((prevState) => ({
+                    ...prevState,
                     top: (rect.top + window.scrollY + paddingFromTop) + 'px',
                     left: (rect.left + window.scrollX + paddingFromLeft) + 'px',
                     display: 'block'
-                });
+                }));
                 setImageSrc(event.target.src);
             }
         }
@@ -31,7 +64,10 @@ export const Overlay = () => {
     //Div hiden beim mouse-out
     const hideDiv = () => {
         if (!boolOverlay) {
-            setIconLicciumStyle({ display: "none" });
+            setIconLicciumStyle((prevState) => ({
+                ...prevState,
+                display: "none"
+            }));
         }
     };
 
@@ -39,12 +75,24 @@ export const Overlay = () => {
         console.log('click ' + imgSrc);
         /* overlayElement.classList.toggle('transition'); */
         if (!boolOverlay) {
-            setOverlayStyle({ display: "block" });
-            setIconLicciumStyle({ display: "none" });
+            setOverlayStyle((prevState) => ({
+                ...prevState,
+                display: "block"
+            }));
+            setIconLicciumStyle((prevState) => ({
+                ...prevState,
+                display: "none"
+            }));
             setBoolOverlay(true);
         } else {
-            setOverlayStyle({ display: "none" });
-            setIconLicciumStyle({ background: "rgba(255, 255, 255, 0.65)" });
+            setOverlayStyle((prevState) => ({
+                ...prevState,
+                display: "none"
+            }));
+            setIconLicciumStyle((prevState) => ({
+                ...prevState,
+                background: "rgba(255, 255, 255, 0.65)"
+            }));
             setBoolOverlay(false);
         }
     };
@@ -59,7 +107,10 @@ export const Overlay = () => {
 
     return (
         <>
-            <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={() => setOverlayStyle({ display: "block" })}>
+            <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={() => setOverlayStyle((prevState) => ({
+                ...prevState,
+                display: "block"
+            }))}>
                 <div className="top">
                     <div className="headline">
                         <p>Caution advised</p>
@@ -86,10 +137,14 @@ export const Overlay = () => {
             </div>
 
             <div
-                className="icon-liccium" style={iconLicciumStyle} onMouseOver={() => setIconLicciumStyle({ display: "block" })} onClick={() => displayOverlay()}>
+                className="icon-liccium" style={iconLicciumStyle} onMouseOver={() => setIconLicciumStyle((prevState) => ({
+                    ...prevState,
+                    display: "block"
+                }))}
+                onClick={() => displayOverlay()}>
                 <object type="image/svg+xml" data="chrome-extension://aoimmhoeflcknmcgapnpigjchoafhjpb/images/Liccium-Logo-black-on-transparent-1400.svg">
                 </object>
-            </div>
+            </div >
         </>
     );
 }
