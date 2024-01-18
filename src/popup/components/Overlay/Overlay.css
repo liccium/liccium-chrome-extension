@@ -1,0 +1,152 @@
+/*Css klassen für aufklapp*/
+
+.ausklapp_overlay {
+    height: 156px;
+    width: 232px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    position: absolute;
+    z-index: 10000;
+    pointer-events: auto;
+    display: none;
+    opacity: 0.8;
+    overflow: hidden;
+    text-align: center;
+    /* border: 1px solid green; */
+}
+
+.transition {
+    height: 156px;
+    width: 232px;
+}
+
+.top,
+.middle,
+.bottom {
+    width: 100%;
+    position: absolute;
+    box-sizing: border-box;
+}
+
+
+.top {
+    top: 0px;
+    height: 50px;
+}
+
+.icon-liccium,
+.icon-warning,
+.headline {
+    position: absolute;
+    height: 35px;
+    top: 0;
+}
+
+.icon-liccium,
+.icon-warning,
+.genAITag-icon {
+    overflow: hidden;
+}
+
+.icon-liccium {
+    position: absolute;
+    margin: 0;
+    width: 35px;
+    left: 0;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    /* border: 1px solid red; */
+    z-index: 10001;
+    display: none;
+}
+
+.icon-liccium object {
+    width: 90%;
+    height: 90%;
+    pointer-events: none;
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.headline {
+    width: 150px;
+    margin: auto;
+    left: 35px;
+    right: 35px;
+}
+
+.icon-warning {
+    margin-right: auto;
+    width: 50px;
+    height: 50px;
+    right: 0;
+    /* pointer-events: none;
+    border: 1px solid red; */
+}
+
+.icon-warning object {
+    width: 80%;
+    height: 80%;
+    margin-top: 10%;
+    margin-right: 10%;
+}
+
+
+.middle {
+    top: 50px;
+    bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.genAITag {
+    width: 184px;
+    height: 56px;
+    border-radius: 25px;
+    border: 1px solid var(--white, #FFF);
+    background: #B3151B;
+    display: flex;
+    align-items: center;
+}
+
+.genAITag-icon {
+    width: 56px;
+    height: 56px;
+    pointer-events: none;
+    left: 0;
+}
+
+.genAITag-icon img {
+    width: 80%;
+    height: 80%;
+    margin-top: 10%;
+    margin-left: 10%;
+    display: block;
+}
+
+.genAITag-text {
+    flex: 1;
+    text-align: center;
+
+}
+
+
+.bottom {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+}
+
+.link {
+    height: 20px;
+    width: 250px;
+}
