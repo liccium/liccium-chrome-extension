@@ -6,7 +6,7 @@ export const Overlay = () => {
     const [boolOverlay, setBoolOverlay] = useState(false);
     const [overlayStyle, setOverlayStyle] = useState({});
     const [iconLicciumStyle, setIconLicciumStyle] = useState({});
-    const [imgSrc, setImageSrc] = useState("");
+    const [imgSrc, setImageSrc] = useState('');
 
     //update Div-Position
     const updateDivPosition = (event) => {
@@ -15,11 +15,11 @@ export const Overlay = () => {
                 let rect = event.target.getBoundingClientRect();
                 let paddingFromTop = 10;
                 let paddingFromLeft = 10;
-                overlayElement.style.top = (rect.top + window.scrollY + paddingFromTop) + 'px';
-                overlayElement.style.left = (rect.left + window.scrollX + paddingFromLeft) + 'px';
-                icon_liccium.style.top = (rect.top + window.scrollY + paddingFromTop) + 'px';
-                icon_liccium.style.left = (rect.left + window.scrollX + paddingFromLeft) + 'px';
-                icon_liccium.style.display = 'block';
+                setOverlayStyle({ top: (rect.top + window.scrollY + paddingFromTop) + 'px' });
+                setOverlayStyle({ left: (rect.left + window.scrollX + paddingFromLeft) + 'px' });
+                setIconLicciumStyle({ top: (rect.top + window.scrollY + paddingFromTop) + 'px' });
+                setIconLicciumStyle({ left: (rect.left + window.scrollX + paddingFromLeft) + 'px' });
+                setIconLicciumStyle({ display: 'block' })
                 setImageSrc(event.target.src);
             }
         }
