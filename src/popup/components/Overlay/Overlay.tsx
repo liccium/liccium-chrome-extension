@@ -3,11 +3,14 @@ import { GenAISvg } from './GenAISvg';
 import { LicciumIconSvg } from './LicciumIconSvg';
 import './Overlay.css';
 import { WarningSvg } from './WarningSvg';
+import Processing from '../Processing/Processing';
 
 export const Overlay = () => {
 
     const [boolOverlay, setBoolOverlay] = useState(false);
     const [imgSrc, setImageSrc] = useState();
+    const [isFetchingData, setIsFetchingData] = useState(false);
+    const [assets, setAssets] = useState([]);
     const [overlayStyle, setOverlayStyle] = useState(
         {
             height: 156 + "px",
@@ -91,6 +94,12 @@ export const Overlay = () => {
                 background: "none"
             }));
             setBoolOverlay(true);
+            setIsFetchingData(true);
+            fetchingData(imgSrc).then(assets => {
+                setAssets(assets);
+                setIsFetchingData(false);
+            });
+
         } else {
             setOverlayStyle((prevState) => ({
                 ...prevState,
@@ -104,25 +113,30 @@ export const Overlay = () => {
         }
     };
 
-    useEffect(() => {
+    const fetchingData = async (srcUrl) => {
+        // CONVERT SIGNS IN URL TO READABLE SIGNS
+        let srcUrlReadable = srcUrl.replaceAll("%", "%25");
+        srcUrlReadable = srcUrlReadable.replaceAll(":", "%3A");
+        srcUrlReadable = srcUrlReadable.replaceAll("/", "%2F");
+        srcUrlReadable = srcUrlReadable.replaceAll("?", "%3F");
+        srcUrlReadable = srcUrlReadable.replaceAll("&", "%26");
+        srcUrlReadable = srcUrlReadable.replaceAll("=", "%3D");
 
-        //listener für hover-in über bilder
-        document.addEventListener('mouseover', updateDivPosition);
-        //listener für hover-out von bilder
-        document.addEventListener('mouseout', hideDiv);
-
-        return () => {
-            document.removeEventListener('mouseover', updateDivPosition);
-            document.removeEventListener('mouseout', hideDiv);
+        console.log("Fetching with Readable src url: " + srcUrlReadable);
+        let assets = [];
+        try {
+            let isccJsonArray = await fetch("https://iscc.if-is.net" + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
+            assets = await fetch("https://iscc.if-is.net" + "/asset/nns?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + isccJsonArray[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
+        } catch {
+            window.alert("Request failed");
+            setIsFetchingData(false);
         }
-    }, [boolOverlay]);
+        return assets;
+    }
 
-    return (
-        <>
-            <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={() => setOverlayStyle((prevState) => ({
-                ...prevState,
-                display: "block"
-            }))}>
+    const renderResults = () => {
+        return (
+            <>
                 <div className="top">
                     <div className="headline">
                         <p>Caution advised</p>
@@ -146,8 +160,34 @@ export const Overlay = () => {
                         <a href="http://google.de">Verify content details</a>
                     </div>
                 </div>
-            </div>
+            </>
+        );
+    }
 
+
+    useEffect(() => {
+
+        //listener für hover-in über bilder
+        document.addEventListener('mouseover', updateDivPosition);
+        //listener für hover-out von bilder
+        document.addEventListener('mouseout', hideDiv);
+        console.log(assets);
+
+        return () => {
+            console.log('cleanUp');
+            document.removeEventListener('mouseover', updateDivPosition);
+            document.removeEventListener('mouseout', hideDiv);
+        }
+    }, [boolOverlay, isFetchingData]);
+
+    return (
+        <>
+            <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={() => setOverlayStyle((prevState) => ({
+                ...prevState,
+                display: "block"
+            }))}>
+                {isFetchingData ? <Processing /> : renderResults()}
+            </div>
             <div
                 className="icon-liccium" style={iconLicciumStyle} onMouseOver={() => setIconLicciumStyle((prevState) => ({
                     ...prevState,
@@ -156,6 +196,7 @@ export const Overlay = () => {
                 onClick={displayOverlay}>
                 <LicciumIconSvg />
             </div >
+
         </>
     );
 }
