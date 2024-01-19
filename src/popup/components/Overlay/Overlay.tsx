@@ -102,10 +102,16 @@ export const Overlay = () => {
 
 
     useEffect(() => {
+
         //listener für hover-in über bilder
         document.addEventListener('mouseover', updateDivPosition);
         //listener für hover-out von bilder
         document.addEventListener('mouseout', hideDiv);
+
+        return () => {
+            document.removeEventListener('mouseover', updateDivPosition);
+            document.removeEventListener('mouseover', hideDiv);
+        }
     }, []);
 
     return (
