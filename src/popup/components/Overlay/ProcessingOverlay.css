@@ -1,0 +1,45 @@
+.ProcessingOverlay {
+    width: 100%;
+    height: 100%;
+}
+
+.processingOverlayloading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+.processingOverlaylicciumIcon {
+    width: 75px;
+    height: 75px;
+}
+
+/* .loadingIcon {
+    width: 50px;
+    height: 50px;
+} */
+
+@media (prefers-reduced-motion: no-preference) {
+    .processingOverlaylicciumIcon {
+        animation: licciumIcon-spin infinite 1.5s linear;
+    }
+}
+
+@keyframes licciumIcon-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.processingOverlayloadingText {
+    margin-top: 5px;
+    color: black;
+    font-size: 15px;
+    font-weight: 600;
+}

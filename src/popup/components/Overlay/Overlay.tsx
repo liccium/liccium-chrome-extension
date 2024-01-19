@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { GenAISvg } from './GenAISvg';
 import { LicciumIconSvg } from './LicciumIconSvg';
 import './Overlay.css';
+import { ProcessingOverlay } from './ProcessingOverlay';
 import { WarningSvg } from './WarningSvg';
-import Processing from '../Processing/Processing';
 
 export const Overlay = () => {
 
@@ -134,7 +134,7 @@ export const Overlay = () => {
         return assets;
     }
 
-    const renderResults = () => {
+    const renderOverlayComponents = () => {
         return (
             <>
                 <div className="top">
@@ -186,7 +186,8 @@ export const Overlay = () => {
                 ...prevState,
                 display: "block"
             }))}>
-                {isFetchingData ? <Processing /> : renderResults()}
+                {/* <ProcessingOverlay /> */}
+                {isFetchingData ? <ProcessingOverlay /> : renderOverlayComponents()}
             </div>
             <div
                 className="icon-liccium" style={iconLicciumStyle} onMouseOver={() => setIconLicciumStyle((prevState) => ({
