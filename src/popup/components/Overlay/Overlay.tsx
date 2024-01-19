@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { GenAISvg } from './GenAISvg';
-import { LicciumIconSvg } from './LicciumIconSVG';
+import { LicciumIconSvg } from './LicciumIconSvg';
 import './Overlay.css';
-import { WaringSvg } from './WaringSVG';
+import { WaringSvg } from './WaringSvg';
 
 export const Overlay = () => {
 
