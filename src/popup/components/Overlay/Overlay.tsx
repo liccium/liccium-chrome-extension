@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { GenAISvg } from './GenAISvg';
 import { LicciumIconSvg } from './LicciumIconSvg';
 import './Overlay.css';
-import { WaringSvg } from './WaringSvg';
+import { WarningSvg } from './WarningSvg';
 
 export const Overlay = () => {
 
     const [boolOverlay, setBoolOverlay] = useState(false);
-    const [imgSrc, setImageSrc] = useState('');
+    const [imgSrc, setImageSrc] = useState();
     const [overlayStyle, setOverlayStyle] = useState(
         {
             height: 156 + "px",
@@ -44,8 +44,11 @@ export const Overlay = () => {
 
     //update Div-Position
     const updateDivPosition = (event) => {
+        console.log("(update) Show overlay: " + boolOverlay);
         if (!boolOverlay) {
-            if (event.target.tagName.toLowerCase() === 'img') {
+            if (event.target.tagName.toLowerCase() === 'img'
+                && event.target.width >= 100
+                && event.target.height >= 100) {
                 let rect = event.target.getBoundingClientRect();
                 let paddingFromTop = 10;
                 let paddingFromLeft = 10;
@@ -77,6 +80,7 @@ export const Overlay = () => {
     const displayOverlay = () => {
         console.log('click ' + imgSrc);
         /* overlayElement.classList.toggle('transition'); */
+        console.log("Show overlay: " + boolOverlay);
         if (!boolOverlay) {
             setOverlayStyle((prevState) => ({
                 ...prevState,
@@ -84,7 +88,7 @@ export const Overlay = () => {
             }));
             setIconLicciumStyle((prevState) => ({
                 ...prevState,
-                display: "none"
+                background: "none"
             }));
             setBoolOverlay(true);
         } else {
@@ -100,7 +104,6 @@ export const Overlay = () => {
         }
     };
 
-
     useEffect(() => {
 
         //listener für hover-in über bilder
@@ -110,9 +113,9 @@ export const Overlay = () => {
 
         return () => {
             document.removeEventListener('mouseover', updateDivPosition);
-            document.removeEventListener('mouseover', hideDiv);
+            document.removeEventListener('mouseout', hideDiv);
         }
-    }, []);
+    }, [boolOverlay]);
 
     return (
         <>
@@ -125,9 +128,7 @@ export const Overlay = () => {
                         <p>Caution advised</p>
                     </div>
                     <div className="icon-warning">
-                        <object type="image/svg+xml">
-                            <WaringSvg />
-                        </object>
+                        <WarningSvg />
                     </div>
                 </div>
                 <div className="middle">
@@ -152,10 +153,8 @@ export const Overlay = () => {
                     ...prevState,
                     display: "block"
                 }))}
-                onClick={() => displayOverlay()}>
-                <object type="image/svg+xml">
-                    <LicciumIconSvg />
-                </object>
+                onClick={displayOverlay}>
+                <LicciumIconSvg />
             </div >
         </>
     );
