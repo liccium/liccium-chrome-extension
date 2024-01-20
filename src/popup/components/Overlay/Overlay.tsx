@@ -11,6 +11,7 @@ export const Overlay = () => {
     const [imgSrc, setImageSrc] = useState();
     const [isFetchingData, setIsFetchingData] = useState(false);
     const [assets, setAssets] = useState([]);
+    const [boolGenAi, setBoolGenaAi] = useState(false);
     const [overlayStyle, setOverlayStyle] = useState(
         {
             height: 156 + "px",
@@ -47,7 +48,7 @@ export const Overlay = () => {
 
     //update Div-Position
     const updateDivPosition = (event) => {
-        console.log("(update) Show overlay: " + boolOverlay);
+        //console.log("(update) Show overlay: " + boolOverlay);
         if (!boolOverlay) {
             if (event.target.tagName.toLowerCase() === 'img'
                 && event.target.width >= 100
@@ -83,7 +84,7 @@ export const Overlay = () => {
     const displayOverlay = () => {
         console.log('click ' + imgSrc);
         /* overlayElement.classList.toggle('transition'); */
-        console.log("Show overlay: " + boolOverlay);
+        //console.log("Show overlay: " + boolOverlay);
         if (!boolOverlay) {
             setOverlayStyle((prevState) => ({
                 ...prevState,
@@ -98,6 +99,7 @@ export const Overlay = () => {
             fetchingData(imgSrc).then(assets => {
                 setAssets(assets);
                 setIsFetchingData(false);
+                isGenai(assets);
             });
 
         } else {
@@ -113,6 +115,18 @@ export const Overlay = () => {
         }
     };
 
+    //proof if at least one asset is genai
+    const isGenai = (assets) => {
+        for (let i = 0; i < assets.length; i++) {
+            if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "trainedAlgorithmicMedia"
+                || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "compositeSynthetic"
+                || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "algorithmicMedia") {
+                setBoolGenaAi(true);
+                break;
+            }
+        }
+    }
+
     const fetchingData = async (srcUrl) => {
         // CONVERT SIGNS IN URL TO READABLE SIGNS
         let srcUrlReadable = srcUrl.replaceAll("%", "%25");
@@ -123,6 +137,7 @@ export const Overlay = () => {
         srcUrlReadable = srcUrlReadable.replaceAll("=", "%3D");
 
         console.log("Fetching with Readable src url: " + srcUrlReadable);
+        setBoolGenaAi(false);
         let assets = [];
         try {
             let isccJsonArray = await fetch("https://iscc.if-is.net" + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
@@ -132,6 +147,21 @@ export const Overlay = () => {
             setIsFetchingData(false);
         }
         return assets;
+
+    }
+
+    const generateAiDiv = () => {
+        if (boolGenAi) {
+            console.log("idjidew" + boolGenAi);
+            return <><div className="genAITag">
+                <div className="genAITag-icon">
+                    <GenAISvg />
+                </div>
+                <div className="genAITag-text">
+                    <p className="tagText">GEN AI</p>
+                </div>
+            </div></>
+        }
     }
 
     const renderOverlayComponents = () => {
@@ -146,14 +176,7 @@ export const Overlay = () => {
                     </div>
                 </div>
                 <div className="middle">
-                    <div className="genAITag">
-                        <div className="genAITag-icon">
-                            <GenAISvg />
-                        </div>
-                        <div className="genAITag-text">
-                            <p className="tagText">GEN AI</p>
-                        </div>
-                    </div>
+                    {generateAiDiv()}
                 </div>
                 <div className="bottom">
                     <div className="link">
