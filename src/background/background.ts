@@ -21,6 +21,7 @@ chrome.runtime.onInstalled.addListener(() => {
             ]
         }
     );
+    chrome.storage.local.set({ displayOverlay: true });
 
     chrome.contextMenus.create({
         id: "image",
