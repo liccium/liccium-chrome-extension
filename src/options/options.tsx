@@ -4,16 +4,24 @@ import './options.css';
 
 let serverUrls = null;
 let selectedServerUrl = null;
+let displayOverlay = null;
 
 const save = () => {
-    chrome.storage.local.set({ selectedServerUrl: selectedServerUrl })
-        .then(() => {
-            window.alert("Settings saved.");
-        });
+    chrome.storage.local.set({
+        selectedServerUrl: selectedServerUrl,
+        displayOverlay: displayOverlay
+    }).then(() => {
+        window.alert("Settings saved.");
+    });
 }
+
 
 const getSelectedServerUrl = (event) => {
     selectedServerUrl = event.target.value;
+}
+
+const toggleDisplayOverlay = (event) => {
+    displayOverlay = event.target.checked;
 }
 
 const renderElements = (storage) => {
@@ -43,6 +51,22 @@ const renderElements = (storage) => {
     );
 
     elements.push(
+        <div key={"settingDisplayOverlay"} className={"setting"}>
+            <div className="settingKey">
+                <label>Display Overlay</label>
+            </div>
+            <div className="settingValue">
+                <label className="switch">
+                    {displayOverlay
+                        ? <input type="checkbox" onChange={toggleDisplayOverlay} defaultChecked />
+                        : <input type="checkbox" onChange={toggleDisplayOverlay} />}
+                    <span className="slider round" />
+                </label>
+            </div>
+        </div>
+    )
+
+    elements.push(
         <div className="about">
             <a href="https://github.com/liccium/liccium-chrome-extension/tree/main#liccium-browser-plugin---terms-of-service-tos" target="_blank">Terms of Service</a>
             <a href="https://liccium.com/contact/" target="_blank">Contact</a>
@@ -52,14 +76,17 @@ const renderElements = (storage) => {
     return elements;
 }
 
-chrome.storage.local.get(["selectedServerUrl", "serverUrls"]).then((storage) => {
+chrome.storage.local.get(["selectedServerUrl", "serverUrls", "displayOverlay"]).then((storage) => {
 
     console.log("---------- CHROME STORAGE -------->");
     console.log(storage);
 
-    if (storage.selectedServerUrl !== undefined && storage.serverUrls !== undefined) {
+    if (storage.selectedServerUrl !== undefined
+        && storage.serverUrls !== undefined
+        && storage.displayOverlay !== undefined) {
         serverUrls = storage.serverUrls;
         selectedServerUrl = storage.selectedServerUrl;
+        displayOverlay = storage.displayOverlay;
         const options = (
             <div className="Options">
                 <div className="optionsBanner">
