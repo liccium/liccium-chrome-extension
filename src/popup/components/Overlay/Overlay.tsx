@@ -7,11 +7,18 @@ import { WarningSvg } from './WarningSvg';
 
 export const Overlay = () => {
 
-    const [boolOverlay, setBoolOverlay] = useState(false);
-    const [imgSrc, setImageSrc] = useState();
-    const [isFetchingData, setIsFetchingData] = useState(false);
+    // chrome states
+    const [serverUrl, setServerUrl] = useState();
+    const [displayOverlay, setDisplayOverlay] = useState();
+    const [pageUrl, setPageUrl] = useState();
+    const [srcUrl, setSrcUrl] = useState();
+    const [iscc, setIscc] = useState();
     const [assets, setAssets] = useState([]);
+
+    // overlay states
+    const [boolOverlay, setBoolOverlay] = useState(false);
     const [boolGenAi, setBoolGenaAi] = useState(false);
+    const [isFetchingData, setIsFetchingData] = useState(false);
     const [overlayStyle, setOverlayStyle] = useState(
         {
             height: 156 + "px",
@@ -67,7 +74,7 @@ export const Overlay = () => {
                     left: (rect.left + window.scrollX + paddingFromLeft) + 'px',
                     display: 'block'
                 }));
-                setImageSrc(event.target.src);
+                setSrcUrl(event.target.src);
             }
         }
     };
@@ -81,8 +88,8 @@ export const Overlay = () => {
         }
     };
 
-    const displayOverlay = () => {
-        console.log('click ' + imgSrc);
+    const toggleOverlayVisibility = () => {
+        console.log('click ' + srcUrl);
         /* overlayElement.classList.toggle('transition'); */
         //console.log("Show overlay: " + boolOverlay);
         if (!boolOverlay) {
@@ -96,7 +103,7 @@ export const Overlay = () => {
             }));
             setBoolOverlay(true);
             setIsFetchingData(true);
-            fetchingData(imgSrc).then(assets => {
+            fetchingData(srcUrl).then(assets => {
                 setAssets(assets);
                 setIsFetchingData(false);
                 isGenai(assets);
@@ -140,8 +147,8 @@ export const Overlay = () => {
         setBoolGenaAi(false);
         let assets = [];
         try {
-            let isccJsonArray = await fetch("https://iscc.if-is.net" + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            assets = await fetch("https://iscc.if-is.net" + "/asset/nns?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + isccJsonArray[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
+            let isccJsonArray = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
+            assets = await fetch(serverUrl + "/asset/nns?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + isccJsonArray[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
         } catch {
             window.alert("Request failed");
             setIsFetchingData(false);
@@ -190,6 +197,41 @@ export const Overlay = () => {
 
     useEffect(() => {
 
+        chrome.storage.local.get(
+            [
+                "selectedServerUrl",
+                "displayOverlay",
+                "pageUrl",
+                "srcUrl",
+                "iscc",
+                "assets"
+            ]
+        ).then((storage) => {
+
+            console.log("---------- CHROME STORAGE -------->");
+            console.log(storage);
+
+            if (storage.selectedServerUrl !== undefined) {
+                setServerUrl(storage.selectedServerUrl);
+            }
+            if (storage.displayOverlay !== undefined) {
+                setDisplayOverlay(storage.displayOverlay);
+            }
+            if (storage.pageUrl !== undefined) {
+                setPageUrl(storage.pageUrl);
+            }
+            if (storage.srcUrl !== undefined) {
+                setSrcUrl(storage.srcUrl);
+            }
+            if (storage.iscc !== undefined) {
+                setIscc(storage.iscc);
+            }
+            if (storage.assets !== undefined) {
+                setAssets(storage.assets);
+            }
+
+        });
+
         //listener für hover-in über bilder
         document.addEventListener('mouseover', updateDivPosition);
         //listener für hover-out von bilder
@@ -205,22 +247,23 @@ export const Overlay = () => {
 
     return (
         <>
-            <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={() => setOverlayStyle((prevState) => ({
-                ...prevState,
-                display: "block"
-            }))}>
-                {/* <ProcessingOverlay /> */}
-                {isFetchingData ? <ProcessingOverlay /> : renderOverlayComponents()}
-            </div>
-            <div
-                className="icon-liccium" style={iconLicciumStyle} onMouseOver={() => setIconLicciumStyle((prevState) => ({
+            {displayOverlay && <>
+                <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={() => setOverlayStyle((prevState) => ({
                     ...prevState,
                     display: "block"
-                }))}
-                onClick={displayOverlay}>
-                <LicciumIconSvg />
-            </div >
-
+                }))}>
+                    {/* <ProcessingOverlay /> */}
+                    {isFetchingData ? <ProcessingOverlay /> : renderOverlayComponents()}
+                </div>
+                <div
+                    className="icon-liccium" style={iconLicciumStyle} onMouseOver={() => setIconLicciumStyle((prevState) => ({
+                        ...prevState,
+                        display: "block"
+                    }))}
+                    onClick={toggleOverlayVisibility}>
+                    <LicciumIconSvg />
+                </div >
+            </>}
         </>
     );
 }
