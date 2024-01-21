@@ -29,8 +29,9 @@ const Popup = () => {
 
     const clearStorage = () => {
         console.log("Clearing storage");
-        chrome.storage.local.remove(["pageUrl", "srcUrl", "iscc", "assets"]);
+        chrome.storage.local.remove(["pageUrl", "srcUrl", "iscc", "assets", "renderType"]);
         setSrcUrl("");
+        setRenderType("");
         setIscc([]);
         setAssets([]);
     }
