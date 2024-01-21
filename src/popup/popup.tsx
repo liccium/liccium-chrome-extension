@@ -311,7 +311,7 @@ const Popup = () => {
 
             console.error(err);
 
-            window.alert("Reuqest to " + serverUrls[serverUrl] + " failed.");
+            window.alert("Request to " + serverUrls[serverUrl] + " failed.");
             chrome.storage.local.remove(["srcUrl"]);
             setSrcUrl("");
         }
@@ -340,6 +340,8 @@ const Popup = () => {
 
     useEffect(() => {
 
+
+        console.log("popup useeffect");
         document.title = "Liccium Trust Engine";
 
         chrome.runtime.connect({ name: "popup" }); // connect to content script
@@ -350,7 +352,8 @@ const Popup = () => {
                 "pageUrl",
                 "srcUrl",
                 "iscc",
-                "assets"
+                "assets",
+                "renderType"
             ]
         ).then((storage) => {
 
@@ -371,6 +374,9 @@ const Popup = () => {
             }
             if (storage.assets !== undefined) {
                 setAssets(storage.assets);
+            }
+            if (storage.renderType !== undefined) {
+                setRenderType(storage.renderType);
             }
 
         });
