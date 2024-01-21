@@ -22,6 +22,7 @@ chrome.runtime.onInstalled.addListener(() => {
         }
     );
     chrome.storage.local.set({ displayOverlay: true });
+    chrome.storage.local.set({ renderType: "" });
 
     chrome.contextMenus.create({
         id: "image",
@@ -94,5 +95,15 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     //chrome.action.setPopup({ tabId: tab.id, popup: "popup.html" });
 
     /* chrome.action.openPopup(); */
+
+
+});
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log(request);
+    console.log(sender);
+    if (request.openPopupTab) {
+        chrome.tabs.create({ url: "popup.html" });
+    }
 });
 
