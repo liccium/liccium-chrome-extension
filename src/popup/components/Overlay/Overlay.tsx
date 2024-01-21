@@ -8,12 +8,17 @@ import { WarningSvg } from './WarningSvg';
 export const Overlay = () => {
 
     // chrome states
-    const [serverUrl, setServerUrl] = useState();
+    const [serverUrl, setServerUrl] = useState("");
     const [displayOverlay, setDisplayOverlay] = useState();
-    const [pageUrl, setPageUrl] = useState();
-    const [srcUrl, setSrcUrl] = useState();
-    const [iscc, setIscc] = useState();
+    const [pageUrl, setPageUrl] = useState("");
+    const [srcUrl, setSrcUrl] = useState("");
+    const [iscc, setIscc] = useState([]);
     const [assets, setAssets] = useState([]);
+    const serverUrls = {
+        "https://search.liccium.app": "Liccium",  // plugin.liccium.app
+        "https://iscc.if-is.net": "if(is)",
+        "http://localhost": "Development"
+    }
 
     // overlay states
     const [boolOverlay, setBoolOverlay] = useState(false);
@@ -103,12 +108,6 @@ export const Overlay = () => {
             }));
             setBoolOverlay(true);
             setIsFetchingData(true);
-            fetchingData(srcUrl).then(assets => {
-                setAssets(assets);
-                setIsFetchingData(false);
-                isGenai(assets);
-            });
-
         } else {
             setOverlayStyle((prevState) => ({
                 ...prevState,
@@ -135,6 +134,7 @@ export const Overlay = () => {
     }
 
     const fetchingData = async (srcUrl) => {
+        console.log('in fetchingData' + srcUrl);
         // CONVERT SIGNS IN URL TO READABLE SIGNS
         let srcUrlReadable = srcUrl.replaceAll("%", "%25");
         srcUrlReadable = srcUrlReadable.replaceAll(":", "%3A");
@@ -145,16 +145,133 @@ export const Overlay = () => {
 
         console.log("Fetching with Readable src url: " + srcUrlReadable);
         setBoolGenaAi(false);
-        let assets = [];
+        let currentPageUrl = window.location.href;
+        let jsonAssets = [];
+        let jsonIscc = [];
         try {
             let isccJsonArray = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            assets = await fetch(serverUrl + "/asset/nns?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + isccJsonArray[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
-        } catch {
-            window.alert("Request failed");
-            setIsFetchingData(false);
-        }
-        return assets;
+            console.log(isccJsonArray);
+            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            console.log(jsonExplain);
+            // Put sourceUrl and units from explained ISCC in jsonIscc
+            isccJsonArray[0].isccMetadata.name = getModeCapitalLetter(isccJsonArray[0].isccMetadata.mode) + " from " + getISCCName(currentPageUrl);
+            isccJsonArray[0].isccMetadata.sourceUrl = srcUrl;
+            isccJsonArray[0].isccMetadata.units = jsonExplain.units;
+            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + isccJsonArray[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
 
+            jsonAssets = sortVCs(jsonAssets);
+
+            // ADD iscc and assets to CHROME STORAGE
+            chrome.storage.local.set({ pageUrl: currentPageUrl });
+            chrome.storage.local.set({ iscc: jsonIscc });
+            chrome.storage.local.set({ assets: jsonAssets });
+            chrome.storage.local.set({ renderType: "Assets" });
+            setIscc(jsonIscc);
+            setAssets(jsonAssets);
+            setPageUrl(currentPageUrl);
+            setIsFetchingData(false);
+            isGenai(jsonAssets);
+
+        } catch (err) {
+            console.error(err);
+            setIsFetchingData(false);
+            window.alert("Request to " + serverUrls[serverUrl] + " failed.");
+            chrome.storage.local.remove(["srcUrl"]);
+            setSrcUrl("");
+        }
+
+    }
+
+    const getISCCName = (pageUrl) => {
+
+        let pageUrlSplit = pageUrl.split("/");
+        let pageUrlName = "";
+
+        console.log("TESTING SHIT");
+        console.log(pageUrlSplit);
+
+        if (pageUrlSplit.length === 4 && pageUrlSplit[3] === "") {
+            pageUrlName = pageUrlSplit[2];
+        } else {
+            for (let i = 2; i < pageUrlSplit.length; i++) {
+                console.log("before: " + pageUrlName);
+                if (i === pageUrlSplit.length - 1) {
+                    pageUrlName = pageUrlName + pageUrlSplit[i];
+                } else {
+                    pageUrlName = pageUrlName + pageUrlSplit[i] + "/";
+                }
+                console.log("after: " + pageUrlName);
+            }
+        }
+        let www = pageUrlName.substring(0, 4);
+
+        console.log("TESTING SHIT");
+        console.log(pageUrlName);
+        console.log(www);
+        if (www === "www.") {
+            pageUrlName = pageUrlName.substring(4, pageUrlName.length);
+        }
+        console.log(pageUrlName);
+
+
+        return pageUrlName;
+    }
+
+    const getModeCapitalLetter = (mode) => {
+        return String.fromCharCode((mode.charCodeAt(0) - 32)) + mode.substring(1, mode.length);
+    }
+
+    const sortVCs = (assets) => {
+
+        console.log("UNSORTED ASSETS:");
+        console.log(assets);
+
+        let assetsSortedVCs = [];
+
+        let assetVCs = [];
+
+        // First: insert assets with VCs
+        for (let i = 0; i < assets.length; i++) {
+            if (assets[i].credentials !== null) {
+                assetVCs.push(assets[i]);
+            }
+        }
+
+        // Second: sort VCs by length
+        console.log("VC ASSETS:");
+        console.log(assetVCs);
+        let index = 0;
+        let maxLength = 0;
+        let maxIndex = 0;
+        while (assetVCs.length > 0) {
+            if (assetVCs[index].credentials.length >= maxLength) {
+                maxLength = assetVCs[index].credentials.length;
+                maxIndex = index;
+            }
+            index++;
+
+            if (index === assetVCs.length) {
+                assetsSortedVCs.push(assetVCs[maxIndex]);
+                assetVCs.splice(maxIndex, 1);
+                index = 0;
+                maxIndex = 0;
+                maxLength = 0;
+            }
+        }
+        console.log("SORTED VCS ASSETS:");
+        console.log(assetsSortedVCs);
+
+        // Thired: insert assets without VCs
+        for (let i = 0; i < assets.length; i++) {
+            if (assets[i].credentials === null) {
+                assetsSortedVCs.push(assets[i]);
+            }
+        }
+
+        console.log("SORTED ASSETS:");
+        console.log(assetsSortedVCs);
+
+        return assetsSortedVCs;
     }
 
     const generateAiDiv = () => {
@@ -187,16 +304,25 @@ export const Overlay = () => {
                 </div>
                 <div className="bottom">
                     <div className="link">
-                        <a href="http://google.de">Verify content details</a>
+                        <a href="#" onClick={() => openPopupTab()}>Verify content details</a>
                     </div>
                 </div>
             </>
         );
     }
 
+    const openPopupTab = () => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, { openPopupTab: true }).then(response => {
+            });
+        });
+    }
+
 
     useEffect(() => {
 
+
+        console.log("overlay useeffect");
         chrome.storage.local.get(
             [
                 "selectedServerUrl",
@@ -237,6 +363,11 @@ export const Overlay = () => {
         //listener für hover-out von bilder
         document.addEventListener('mouseout', hideDiv);
         console.log(assets);
+
+        if (boolOverlay) {
+            console.log(srcUrl);
+            fetchingData(srcUrl);
+        }
 
         return () => {
             console.log('cleanUp');
