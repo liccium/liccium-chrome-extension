@@ -147,9 +147,9 @@ export const Overlay = () => {
         setBoolGenaAi(false);
         let currentPageUrl = window.location.href;
         let jsonAssets = [];
-        let jsonIscc = [];
+        let isccJsonArray = [];
         try {
-            let isccJsonArray = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
+            isccJsonArray = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
             console.log(isccJsonArray);
             let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             console.log(jsonExplain);
@@ -163,12 +163,14 @@ export const Overlay = () => {
 
             // ADD iscc and assets to CHROME STORAGE
             chrome.storage.local.set({ pageUrl: currentPageUrl });
-            chrome.storage.local.set({ iscc: jsonIscc });
+            chrome.storage.local.set({ srcUrl: srcUrl });
+            chrome.storage.local.set({ iscc: isccJsonArray });
             chrome.storage.local.set({ assets: jsonAssets });
             chrome.storage.local.set({ renderType: "Assets" });
-            setIscc(jsonIscc);
+            setIscc(isccJsonArray);
             setAssets(jsonAssets);
             setPageUrl(currentPageUrl);
+            setSrcUrl(srcUrl);
             setIsFetchingData(false);
             isGenai(jsonAssets);
 
