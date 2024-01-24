@@ -22,7 +22,9 @@ export const Overlay = () => {
 
     // overlay states
     const [boolOverlay, setBoolOverlay] = useState(false);
+    const [boolNoAi, setBoolNoAi] = useState(false);
     const [boolGenAi, setBoolGenaAi] = useState(false);
+    const [boolNoDeclaration, setBoolNoDeclaration] = useState(false);
     const [isFetchingData, setIsFetchingData] = useState(false);
     const [overlayStyle, setOverlayStyle] = useState(
         {
@@ -122,19 +124,29 @@ export const Overlay = () => {
     };
 
     //proof if at least one asset is genai
-    const isGenai = (assets) => {
+    const isGenaiOrNoAi = (assets) => {
+        if (assets.length === 0) {
+            setBoolNoDeclaration(true);
+        }
         for (let i = 0; i < assets.length; i++) {
             if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "trainedAlgorithmicMedia"
                 || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "compositeSynthetic"
                 || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "algorithmicMedia") {
                 setBoolGenaAi(true);
+                console.log("GEN-AI GEFUNDEN");
+                break;
+            } else if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "digitalCapture"
+                || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "minorHumanEdits") {
+                setBoolNoAi(true);
+                console.log("NO-AI GEFUNDEN");
                 break;
             }
         }
     }
 
+
     const fetchingData = async (srcUrl) => {
-        console.log('in fetchingData' + srcUrl);
+        // console.log('in fetchingData' + srcUrl);
         // CONVERT SIGNS IN URL TO READABLE SIGNS
         let srcUrlReadable = srcUrl.replaceAll("%", "%25");
         srcUrlReadable = srcUrlReadable.replaceAll(":", "%3A");
@@ -143,16 +155,18 @@ export const Overlay = () => {
         srcUrlReadable = srcUrlReadable.replaceAll("&", "%26");
         srcUrlReadable = srcUrlReadable.replaceAll("=", "%3D");
 
-        console.log("Fetching with Readable src url: " + srcUrlReadable);
+        // console.log("Fetching with Readable src url: " + srcUrlReadable);
         setBoolGenaAi(false);
+        setBoolNoAi(false);
+        setBoolNoDeclaration(false);
         let currentPageUrl = window.location.href;
         let jsonAssets = [];
         let isccJsonArray = [];
         try {
             isccJsonArray = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            console.log(isccJsonArray);
+            // console.log(isccJsonArray);
             let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
-            console.log(jsonExplain);
+            // console.log(jsonExplain);
             // Put sourceUrl and units from explained ISCC in jsonIscc
             isccJsonArray[0].isccMetadata.name = getModeCapitalLetter(isccJsonArray[0].isccMetadata.mode) + " from " + getISCCName(currentPageUrl);
             isccJsonArray[0].isccMetadata.sourceUrl = srcUrl;
@@ -172,7 +186,7 @@ export const Overlay = () => {
             setPageUrl(currentPageUrl);
             setSrcUrl(srcUrl);
             setIsFetchingData(false);
-            isGenai(jsonAssets);
+            isGenaiOrNoAi(jsonAssets);
 
         } catch (err) {
             console.error(err);
@@ -189,31 +203,31 @@ export const Overlay = () => {
         let pageUrlSplit = pageUrl.split("/");
         let pageUrlName = "";
 
-        console.log("TESTING SHIT");
-        console.log(pageUrlSplit);
+        // console.log("TESTING SHIT");
+        // console.log(pageUrlSplit);
 
         if (pageUrlSplit.length === 4 && pageUrlSplit[3] === "") {
             pageUrlName = pageUrlSplit[2];
         } else {
             for (let i = 2; i < pageUrlSplit.length; i++) {
-                console.log("before: " + pageUrlName);
+                // console.log("before: " + pageUrlName);
                 if (i === pageUrlSplit.length - 1) {
                     pageUrlName = pageUrlName + pageUrlSplit[i];
                 } else {
                     pageUrlName = pageUrlName + pageUrlSplit[i] + "/";
                 }
-                console.log("after: " + pageUrlName);
+                // console.log("after: " + pageUrlName);
             }
         }
         let www = pageUrlName.substring(0, 4);
 
-        console.log("TESTING SHIT");
-        console.log(pageUrlName);
-        console.log(www);
+        // console.log("TESTING SHIT");
+        // console.log(pageUrlName);
+        // console.log(www);
         if (www === "www.") {
             pageUrlName = pageUrlName.substring(4, pageUrlName.length);
         }
-        console.log(pageUrlName);
+        // console.log(pageUrlName);
 
 
         return pageUrlName;
@@ -225,8 +239,8 @@ export const Overlay = () => {
 
     const sortVCs = (assets) => {
 
-        console.log("UNSORTED ASSETS:");
-        console.log(assets);
+        // console.log("UNSORTED ASSETS:");
+        // console.log(assets);
 
         let assetsSortedVCs = [];
 
@@ -240,8 +254,8 @@ export const Overlay = () => {
         }
 
         // Second: sort VCs by length
-        console.log("VC ASSETS:");
-        console.log(assetVCs);
+        // console.log("VC ASSETS:");
+        // console.log(assetVCs);
         let index = 0;
         let maxLength = 0;
         let maxIndex = 0;
@@ -260,8 +274,8 @@ export const Overlay = () => {
                 maxLength = 0;
             }
         }
-        console.log("SORTED VCS ASSETS:");
-        console.log(assetsSortedVCs);
+        // console.log("SORTED VCS ASSETS:");
+        // console.log(assetsSortedVCs);
 
         // Thired: insert assets without VCs
         for (let i = 0; i < assets.length; i++) {
@@ -270,39 +284,75 @@ export const Overlay = () => {
             }
         }
 
-        console.log("SORTED ASSETS:");
-        console.log(assetsSortedVCs);
+        // console.log("SORTED ASSETS:");
+        // console.log(assetsSortedVCs);
 
         return assetsSortedVCs;
     }
 
-    const generateAiDiv = () => {
-        if (boolGenAi) {
-            console.log("idjidew" + boolGenAi);
-            return <><div className="genAITag">
-                <div className="genAITag-icon">
-                    <GenAISvg />
+    const generateMiddleDiv = () => {
+        if (boolNoDeclaration) {
+            return <>
+                <p>NO DECLARATION FOUND</p>
+            </>
+        } else if (boolGenAi) {
+            return <>
+                <div className="genAITag">
+                    <div className="genAITag-icon">
+                        <GenAISvg />
+                    </div>
+                    <div className="genAITag-text">
+                        <p className="tagText">GEN AI</p>
+                    </div>
+                </div></>
+        } else if (boolNoAi) {
+            return <>
+                <div className="noAITag">
+                    <div className="noAITag-icon">
+                        <GenAISvg />
+                    </div>
+                    <div className="noAITag-text">
+                        <p className="tagText">No AI</p>
+                    </div>
                 </div>
-                <div className="genAITag-text">
-                    <p className="tagText">GEN AI</p>
-                </div>
-            </div></>
+            </>
         }
     }
+
+    const generateHeadline = () => {
+        if (boolGenAi) {
+            return <>
+                <p>Caution advised</p>
+            </>
+        } else if (boolNoAi) {
+            return <>
+                <p>Human-Gen</p>
+            </>
+        }
+    }
+
+    const generateWarningIcon = () => {
+        if (boolGenAi) {
+            return <>
+                <WarningSvg />
+            </>
+        }
+    }
+
 
     const renderOverlayComponents = () => {
         return (
             <>
                 <div className="top">
                     <div className="headline">
-                        <p>Caution advised</p>
+                        {generateHeadline()}
                     </div>
                     <div className="icon-warning">
-                        <WarningSvg />
+                        {generateWarningIcon()}
                     </div>
                 </div>
                 <div className="middle">
-                    {generateAiDiv()}
+                    {generateMiddleDiv()}
                 </div>
                 <div className="bottom">
                     <div className="link">
@@ -324,7 +374,7 @@ export const Overlay = () => {
     useEffect(() => {
 
 
-        console.log("overlay useeffect");
+        // console.log("overlay useeffect");
         chrome.storage.local.get(
             [
                 "selectedServerUrl",
@@ -336,8 +386,8 @@ export const Overlay = () => {
             ]
         ).then((storage) => {
 
-            console.log("---------- CHROME STORAGE -------->");
-            console.log(storage);
+            // console.log("---------- CHROME STORAGE -------->");
+            // console.log(storage);
 
             if (storage.selectedServerUrl !== undefined) {
                 setServerUrl(storage.selectedServerUrl);
@@ -367,12 +417,12 @@ export const Overlay = () => {
         console.log(assets);
 
         if (boolOverlay) {
-            console.log(srcUrl);
+            // console.log(srcUrl);
             fetchingData(srcUrl);
         }
 
         return () => {
-            console.log('cleanUp');
+            // console.log('cleanUp');
             document.removeEventListener('mouseover', updateDivPosition);
             document.removeEventListener('mouseout', hideDiv);
         }
