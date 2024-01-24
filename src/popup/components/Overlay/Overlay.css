@@ -63,9 +63,10 @@
     /* border: 1px solid red; */
     z-index: 10001;
     display: none;
+    align-items:center;
 }
 
-.icon-liccium object {
+.icon-liccium svg {
     width: 90%;
     height: 90%;
     pointer-events: none;
@@ -74,10 +75,13 @@
 }
 
 .headline {
-    width: 150px;
+    width: 232px;
+    height: 50px;
     margin: auto;
-    left: 35px;
-    right: 35px;
+}
+
+.headline p {
+    margin-top: 5%;
 }
 
 .icon-warning {
@@ -85,11 +89,10 @@
     width: 50px;
     height: 50px;
     right: 0;
-    /* pointer-events: none;
-    border: 1px solid red; */
+    top: 0;
 }
 
-.icon-warning object {
+.icon-warning svg {
     width: 80%;
     height: 80%;
     margin-top: 10%;
@@ -121,21 +124,28 @@
     pointer-events: none;
     left: 0;
     display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
+
 }
 
-.genAITag-icon img {
+.genAITag-icon svg {
     width: 80%;
     height: 80%;
-    margin-top: 10%;
-    margin-left: 10%;
+    /* margin-top: 10%;
+    margin-left: 10%; */
     display: block;
 }
 
 .genAITag-text {
     flex: 1;
     text-align: center;
+}
 
+.genAITag-text p {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .noAITag {
