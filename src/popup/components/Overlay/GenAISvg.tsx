@@ -5,18 +5,17 @@ export const GenAISvg = () => {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
-            width="35px"
-            height="35px"
             // viewBox="0 0 300 300"
-            style={
+             style={
                 {
                     shapeRendering: "geometricPrecision",
                     textRendering: "geometricPrecision",
                     fillRule: "evenodd",
                     clipRule: "evenodd"
                 }
-            }>
-            <g transform="scale(0.1)">
+            } 
+            >
+            <g transform="scale(0.15)">
                 <path
                     style={{ opacity: 1 }}
                     fill="#fefffe"
