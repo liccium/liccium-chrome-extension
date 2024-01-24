@@ -106,7 +106,8 @@ export const Overlay = () => {
             }));
             setIconLicciumStyle((prevState) => ({
                 ...prevState,
-                background: "none"
+                background: "none",
+                boxShadow: "none"
             }));
             setBoolOverlay(true);
             setIsFetchingData(true);
@@ -117,7 +118,8 @@ export const Overlay = () => {
             }));
             setIconLicciumStyle((prevState) => ({
                 ...prevState,
-                background: "rgba(255, 255, 255, 0.65)"
+                background: "rgba(255, 255, 255, 0.65)",
+                boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
             }));
             setBoolOverlay(false);
         }
