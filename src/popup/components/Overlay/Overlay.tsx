@@ -60,6 +60,17 @@ export const Overlay = () => {
         } as React.CSSProperties
     );
 
+    const [middleContent, setMiddleContent] = useState(
+        {
+            width: 184 + "px",
+            height: 56 + "px",
+            borderRadius: 25 + "px",
+            border: "1px solid var(--white, #FFF)",
+            /* background: "#B3151B", */
+            display: "flex",
+            alignItems: "center"
+        }as React.CSSProperties
+    )
     //update Div-Position
     const updateDivPosition = (event) => {
         //console.log("(update) Show overlay: " + boolOverlay);
@@ -122,8 +133,11 @@ export const Overlay = () => {
                 boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
             }));
             setBoolOverlay(false);
+            setIsFetchingData(false);
         }
     };
+
+ 
 
     //proof if at least one asset is genai
     const isGenaiOrNoAi = (assets) => {
@@ -134,7 +148,9 @@ export const Overlay = () => {
             if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "trainedAlgorithmicMedia"
                 || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "compositeSynthetic"
                 || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "algorithmicMedia") {
+                console.log(boolGenAi);    
                 setBoolGenaAi(true);
+                console.log(boolGenAi);
                 console.log("GEN-AI GEFUNDEN");
                 break;
             } else if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "digitalCapture"
@@ -144,6 +160,9 @@ export const Overlay = () => {
                 break;
             }
         }
+        console.log("vor midcontent");
+        midContent();
+        console.log("nach midcontent");
     }
 
 
@@ -187,8 +206,14 @@ export const Overlay = () => {
             setAssets(jsonAssets);
             setPageUrl(currentPageUrl);
             setSrcUrl(srcUrl);
-            setIsFetchingData(false);
             isGenaiOrNoAi(jsonAssets);
+            setIsFetchingData(false);
+            console.log("isccJsonArray: " + isccJsonArray);
+            console.log("jsonAssets: " + jsonAssets);
+            console.log("currentPageUrl: " + currentPageUrl);
+            console.log("srcUrl: " + srcUrl);
+            console.log("jsonAssets: " + jsonAssets);
+            
 
         } catch (err) {
             console.error(err);
@@ -292,33 +317,41 @@ export const Overlay = () => {
         return assetsSortedVCs;
     }
 
-    const generateMiddleDiv = () => {
+    var generateStatText = "";
+    const midContent = () => {
+        console.log("midcontent! " + boolGenAi + "");
         if (boolNoDeclaration) {
-            return <>
-                <p>NO DECLARATION FOUND</p>
-            </>
+            console.log("noDec");
+            
         } else if (boolGenAi) {
-            return <>
-                <div className="genAITag">
-                    <div className="genAITag-icon">
-                        <GenAISvg />
-                    </div>
-                    <div className="genAITag-text">
-                        <p className="tagText">GEN AI</p>
-                    </div>
-                </div></>
+            console.log("genAI");
+            generateStatText = "GEN AI";
+            setMiddleContent((prevState) => ({
+                ...prevState,
+                backgroundColor: "#B3151B"
+            }));
         } else if (boolNoAi) {
-            return <>
-                <div className="noAITag">
-                    <div className="noAITag-icon">
+            console.log("noAI");
+            generateStatText = "NO AI";
+            setMiddleContent((prevState) => ({
+                ...prevState,
+                backgroundColor: "#7E5C7E"
+            }));
+        }
+    } 
+
+    const generateMiddleDiv = () => {
+
+        return <>
+            <div className="generateStat" style={middleContent}>
+                    <div className="generateStat-icon">
                         <GenAISvg />
                     </div>
-                    <div className="noAITag-text">
-                        <p className="tagText">No AI</p>
+                    <div className="generateStat-text">
+                        <p className="tagText">{generateStatText}</p>
                     </div>
-                </div>
-            </>
-        }
+            </div>
+        </>
     }
 
     const generateHeadline = () => {
@@ -355,6 +388,7 @@ export const Overlay = () => {
                 </div>
                 <div className="middle">
                     {generateMiddleDiv()}
+                    
                 </div>
                 <div className="bottom">
                     <div className="link">
@@ -416,9 +450,11 @@ export const Overlay = () => {
         document.addEventListener('mouseover', updateDivPosition);
         //listener für hover-out von bilder
         document.addEventListener('mouseout', hideDiv);
+        console.log("ASSETS:");
         console.log(assets);
 
-        if (boolOverlay) {
+        if (boolOverlay && isFetchingData) {
+            console.log("fetching");
             // console.log(srcUrl);
             fetchingData(srcUrl);
         }
