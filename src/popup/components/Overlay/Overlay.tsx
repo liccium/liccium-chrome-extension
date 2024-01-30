@@ -28,8 +28,8 @@ export const Overlay = () => {
     const [isFetchingData, setIsFetchingData] = useState(false);
     const [overlayStyle, setOverlayStyle] = useState(
         {
-            height: 156 + "px",
-            width: 232 + "px",
+            height: 140 + "px",
+            width: 200 + "px",
             borderRadius: 5 + "px",
             background: "rgba(255, 255, 255, 0.65)",
             boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
@@ -62,12 +62,13 @@ export const Overlay = () => {
 
     const [middleContent, setMiddleContent] = useState(
         {
-            width: 184 + "px",
-            height: 56 + "px",
+            width: 130 + "px",
+            height: 40 + "px",
             borderRadius: 25 + "px",
             border: "1px solid var(--white, #FFF)",
             /* background: "#B3151B", */
             display: "flex",
+            marginLeft: 20 + "px",
             alignItems: "center"
         }as React.CSSProperties
     )

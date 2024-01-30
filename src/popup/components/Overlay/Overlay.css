@@ -1,7 +1,7 @@
 /*Css klassen für aufklapp*/
 .ausklapp_overlay {
-    height: 156px;
-    width: 232px;
+    height: 140px;
+    width: 200px;
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.65);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset;
@@ -35,14 +35,13 @@
 
 .top {
     top: 0px;
-    height: 50px;
+    height: 40px;
 }
 
 .icon-liccium,
 .icon-warning,
 .headline {
     position: absolute;
-    height: 35px;
     top: 0;
 }
 
@@ -75,37 +74,47 @@
 }
 
 .headline {
-    width: 232px;
-    height: 50px;
+    width: 200px;
+    height: 40px;
     margin: auto;
+    /* border: 1px solid green; */
 }
 
 .headline p {
     margin-top: 5%;
+    margin-left: 5%;
+    color: #000;
+    text-align: center;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 550;
+    line-height: normal;
 }
 
 .icon-warning {
     margin-right: auto;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     right: 0;
     top: 0;
+    /* border: 1px solid red;  */
 }
 
 .icon-warning svg {
     width: 80%;
     height: 80%;
-    margin-top: 10%;
-    margin-right: 10%;
+    margin-top: 20%;
 }
 
 
 .middle {
-    top: 50px;
-    bottom: 40px;
+    top: 40px;
+    bottom: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* border: 1px solid green; */
 }
 
 /* .generateStat {
@@ -119,8 +128,8 @@
 } */
 
 .generateStat-icon {
-    width: 56px;
-    height: 56px;
+    width: 50px;
+    height: 40px;
     pointer-events: none;
     left: 0;
     display: flex;
@@ -131,10 +140,10 @@
 }
 
 .generateStat-icon svg {
-    width: 80%;
-    height: 80%;
-    /* margin-top: 10%;
-    margin-left: 10%; */
+    width: 100%;
+    height: 100%;
+    /* margin-top: 10%;*/
+    margin-left: 10%; 
     display: block;
 }
 
@@ -150,7 +159,7 @@
 
 
 .bottom {
-    height: 40px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -160,4 +169,13 @@
 .link {
     height: 20px;
     width: 250px;
+    /* color: #000; */
+    /* text-align: center; */
+    margin-left: 20px;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    /* text-decoration-line: underline;  */
 }
