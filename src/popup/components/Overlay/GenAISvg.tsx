@@ -15,7 +15,7 @@ export const GenAISvg = () => {
                 }
             } 
             >
-            <g transform="scale(0.15)">
+            <g transform="scale(0.13)">
                 <path
                     style={{ opacity: 1 }}
                     fill="#fefffe"
