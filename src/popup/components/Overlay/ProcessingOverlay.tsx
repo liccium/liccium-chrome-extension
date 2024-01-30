@@ -10,7 +10,7 @@ export const ProcessingOverlay = () => {
                 <div className="processingOverlaylicciumIcon">
                     <LicciumIconSvg />
                 </div>
-                <p className="processingOverlayloadingText">Generating ISCC, searching for declarations.</p>
+                <p className="processingOverlayloadingText">Generating ISCC,<br />searching for declarations.</p>
             </div>
         </div>
     );
