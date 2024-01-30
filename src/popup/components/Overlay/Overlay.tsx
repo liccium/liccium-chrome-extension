@@ -120,8 +120,12 @@ export const Overlay = () => {
                 background: "none",
                 boxShadow: "none"
             }));
+            console.log("in toggleOverlay: " + boolOverlay);
             setBoolOverlay(true);
+            console.log("in toggleOverlay: " + boolOverlay);
             setIsFetchingData(true);
+            //console.log("fetching");
+            //fetchingData(srcUrl);
         } else {
             setOverlayStyle((prevState) => ({
                 ...prevState,
@@ -132,7 +136,9 @@ export const Overlay = () => {
                 background: "rgba(255, 255, 255, 0.65)",
                 boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
             }));
+            console.log("in toggleOverlay: " + boolOverlay);
             setBoolOverlay(false);
+            console.log("in toggleOverlay: " + boolOverlay);
             setIsFetchingData(false);
         }
     };
@@ -148,9 +154,9 @@ export const Overlay = () => {
             if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "trainedAlgorithmicMedia"
                 || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "compositeSynthetic"
                 || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "algorithmicMedia") {
-                console.log(boolGenAi);    
+                console.log("isGenOrHum: " + boolGenAi);    
                 setBoolGenaAi(true);
-                console.log(boolGenAi);
+                console.log("isGenOrHum: " + boolGenAi);
                 console.log("GEN-AI GEFUNDEN");
                 break;
             } else if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "digitalCapture"
@@ -160,9 +166,9 @@ export const Overlay = () => {
                 break;
             }
         }
-        console.log("vor midcontent");
+        /* console.log("vor midcontent");
         midContent();
-        console.log("nach midcontent");
+        console.log("nach midcontent"); */
     }
 
 
@@ -177,7 +183,9 @@ export const Overlay = () => {
         srcUrlReadable = srcUrlReadable.replaceAll("=", "%3D");
 
         // console.log("Fetching with Readable src url: " + srcUrlReadable);
+        console.log("in fetch: " + boolGenAi);
         setBoolGenaAi(false);
+        console.log("in fetch: " + boolGenAi);
         setBoolNoAi(false);
         setBoolNoDeclaration(false);
         let currentPageUrl = window.location.href;
@@ -206,13 +214,8 @@ export const Overlay = () => {
             setAssets(jsonAssets);
             setPageUrl(currentPageUrl);
             setSrcUrl(srcUrl);
-            isGenaiOrNoAi(jsonAssets);
-            setIsFetchingData(false);
-            console.log("isccJsonArray: " + isccJsonArray);
-            console.log("jsonAssets: " + jsonAssets);
-            console.log("currentPageUrl: " + currentPageUrl);
-            console.log("srcUrl: " + srcUrl);
-            console.log("jsonAssets: " + jsonAssets);
+            //isGenaiOrNoAi(jsonAssets);
+            
             
 
         } catch (err) {
@@ -221,6 +224,11 @@ export const Overlay = () => {
             window.alert("Request to " + serverUrls[serverUrl] + " failed.");
             chrome.storage.local.remove(["srcUrl"]);
             setSrcUrl("");
+        }finally {
+            setIsFetchingData(false);
+            /* setBoolGenaAi(true); */
+            /* console.log("assets: " + jsonAssets.length)
+            isGenaiOrNoAi(jsonAssets); */
         }
 
     }
@@ -453,11 +461,17 @@ export const Overlay = () => {
         console.log("ASSETS:");
         console.log(assets);
 
-        if (boolOverlay && isFetchingData) {
-            console.log("fetching");
-            // console.log(srcUrl);
+        if (isFetchingData) {
+            console.log("fetching2");
             fetchingData(srcUrl);
+        } else if (boolOverlay && assets.length != 0){
+            console.log("assets: " + assets.length)
+            isGenaiOrNoAi(assets);
+            console.log("vor midcontent");
+            midContent();
+            console.log("nach midcontent");
         }
+
 
         return () => {
             // console.log('cleanUp');
