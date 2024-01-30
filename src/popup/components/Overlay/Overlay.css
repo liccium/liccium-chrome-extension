@@ -128,7 +128,7 @@
 } */
 
 .generateStat-icon {
-    width: 50px;
+    width: 45px;
     height: 40px;
     pointer-events: none;
     left: 0;
@@ -142,8 +142,8 @@
 .generateStat-icon svg {
     width: 100%;
     height: 100%;
-    /* margin-top: 10%;*/
-    margin-left: 10%; 
+    margin-top: 15%;
+    margin-left: 15%; 
     display: block;
 }
 
@@ -153,8 +153,15 @@
 }
 
 .generateStat-text p {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 12px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    color: var(--white, #FFF);
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }
 
 

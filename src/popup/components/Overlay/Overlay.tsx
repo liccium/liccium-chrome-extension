@@ -66,7 +66,7 @@ export const Overlay = () => {
 
     const [middleContent, setMiddleContent] = useState(
         {
-            width: 130 + "px",
+            width: 125 + "px",
             height: 40 + "px",
             borderRadius: 25 + "px",
             border: "1px solid var(--white, #FFF)",
