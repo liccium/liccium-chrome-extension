@@ -24,6 +24,7 @@ export const Overlay = () => {
     }
 
     // overlay states
+    const [noDecOrNoAiOrGenAi, setnoDecOrNoAiOrGenAi] = useState("0");
     const [generateStatText, setGenerateStatText] = useState("");
     const [boolOverlay, setBoolOverlay] = useState(false);
     const [boolNoAi, setBoolNoAi] = useState(false);
@@ -145,6 +146,7 @@ export const Overlay = () => {
             setBoolOverlay(false);
             console.log("in toggleOverlay: " + boolOverlay);
             setIsFetchingData(false);
+            setnoDecOrNoAiOrGenAi("0");
         }
     };
 
@@ -153,7 +155,8 @@ export const Overlay = () => {
     //proof if at least one asset is genai
     const isGenaiOrNoAi = (assets) => {
         if (assets.length === 0) {
-            setBoolNoDeclaration(true);
+            // setBoolNoDeclaration(true);
+            setnoDecOrNoAiOrGenAi("0");
         }
         for (let i = 0; i < assets.length; i++) {
             if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "trainedAlgorithmicMedia"
@@ -169,6 +172,7 @@ export const Overlay = () => {
                     ...prevState,
                     backgroundColor: "#B3151B"
                 }));
+                setnoDecOrNoAiOrGenAi("1");
                 break;
             } else if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "digitalCapture"
                 || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "minorHumanEdits") {
@@ -180,12 +184,10 @@ export const Overlay = () => {
                     ...prevState,
                     backgroundColor: "#7E5C7E"
                 }));
+                setnoDecOrNoAiOrGenAi("2");
                 break;
             }
         }
-        /* console.log("vor midcontent");
-        midContent();
-        console.log("nach midcontent"); */
     }
 
 
@@ -201,10 +203,11 @@ export const Overlay = () => {
 
         // console.log("Fetching with Readable src url: " + srcUrlReadable);
         console.log("in fetch: " + boolGenAi);
-        setBoolGenaAi(false);
+        // setBoolGenaAi(false);
         console.log("in fetch: " + boolGenAi);
-        setBoolNoAi(false);
-        setBoolNoDeclaration(false);
+        // setBoolNoAi(false);
+        // setBoolNoDeclaration(false);
+        setnoDecOrNoAiOrGenAi("0");
         let currentPageUrl = window.location.href;
         let jsonAssets = [];
         let isccJsonArray = [];
@@ -347,24 +350,32 @@ export const Overlay = () => {
 
     const generateMiddleDiv = () => {
 
-        return <>
-            <div className="generateStat" style={middleContent}>
-                <div className="generateStat-icon">
-                    <GenAISvg />
+
+        if (noDecOrNoAiOrGenAi === "0") {
+            return <>
+                <p>no Declaration found</p>
+            </>
+        } else if (noDecOrNoAiOrGenAi === "1" || noDecOrNoAiOrGenAi === "2") {
+            return <>
+                <div className="generateStat" style={middleContent}>
+                    <div className="generateStat-icon">
+                        <GenAISvg />
+                    </div>
+                    <div className="generateStat-text">
+                        <p className="tagText">{generateStatText}</p>
+                    </div>
                 </div>
-                <div className="generateStat-text">
-                    <p className="tagText">{generateStatText}</p>
-                </div>
-            </div>
-        </>
+            </>
+        }
+
     }
 
     const generateHeadline = () => {
-        if (boolGenAi) {
+        if (noDecOrNoAiOrGenAi === "1") {
             return <>
                 <p>Caution advised</p>
             </>
-        } else if (boolNoAi) {
+        } else if (noDecOrNoAiOrGenAi === "2") {
             return <>
                 <p>Human-Gen</p>
             </>
@@ -372,9 +383,22 @@ export const Overlay = () => {
     }
 
     const generateWarningIcon = () => {
-        if (boolGenAi) {
+        if (noDecOrNoAiOrGenAi === "1") {
             return <>
                 <WarningSvg />
+            </>
+        }
+    }
+
+    const generateBotttomDiv = () => {
+        if (noDecOrNoAiOrGenAi === "0") {
+            return <>
+            </>
+        } else {
+            return <>
+                <div className="link">
+                    <a href="#" onClick={() => openPopupTab()}>Verify content details</a>
+                </div>
             </>
         }
     }
@@ -393,12 +417,9 @@ export const Overlay = () => {
                 </div>
                 <div className="middle">
                     {generateMiddleDiv()}
-
                 </div>
                 <div className="bottom">
-                    <div className="link">
-                        <a href="#" onClick={() => openPopupTab()}>Verify content details</a>
-                    </div>
+                    {generateBotttomDiv()}
                 </div>
             </>
         );
