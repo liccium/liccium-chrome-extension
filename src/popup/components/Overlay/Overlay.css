@@ -62,7 +62,7 @@
     /* border: 1px solid red; */
     z-index: 10001;
     display: none;
-    align-items:center;
+    align-items: center;
 }
 
 .icon-liccium svg {
@@ -143,7 +143,7 @@
     width: 100%;
     height: 100%;
     margin-top: 15%;
-    margin-left: 15%; 
+    margin-left: 15%;
     display: block;
 }
 
@@ -185,4 +185,57 @@
     font-weight: 400;
     line-height: normal;
     /* text-decoration-line: underline;  */
+}
+
+.tagTooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tagTooltip .tagtooltiptext {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(70, 71, 93, 0.9);
+    border: 1px solid #46475d;
+    color: #eeeeee;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 36px;
+
+    left: 50%;
+    margin-left: -70px;
+    margin-top: 7px;
+    opacity: 0;
+    transition: opacity 0.3s;
+
+}
+
+.tagTooltip .tagtooltiptext::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #46475d transparent transparent transparent;
+    transform: rotateX(180deg);
+}
+
+.tagTooltip:hover .tagtooltiptext {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: none;
+
+}
+
+.noDec {
+    font-family: Inter, sans-serif;
 }
