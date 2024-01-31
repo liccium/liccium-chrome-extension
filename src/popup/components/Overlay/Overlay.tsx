@@ -75,6 +75,7 @@ export const Overlay = () => {
             /* background: "#B3151B", */
             display: "flex",
             marginLeft: 20 + "px",
+            marginTop: 10 + "px",
             alignItems: "center"
         } as React.CSSProperties
     )
