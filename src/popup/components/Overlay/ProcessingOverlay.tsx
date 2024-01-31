@@ -1,5 +1,4 @@
 import React from 'react';
-import { LoadCycleSvg } from './LoadCycleSvg';
 import './ProcessingOverlay.css';
 
 export const ProcessingOverlay = () => {
