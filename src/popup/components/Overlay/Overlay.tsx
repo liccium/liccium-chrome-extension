@@ -34,7 +34,7 @@ export const Overlay = () => {
     const [isFetchingData, setIsFetchingData] = useState(false);
     const [overlayStyle, setOverlayStyle] = useState(
         {
-            height: 140 + "px",
+            height: 36.75 + "px",
             width: 200 + "px",
             borderRadius: 5 + "px",
             background: "rgba(255, 255, 255, 0.65)",
@@ -63,6 +63,7 @@ export const Overlay = () => {
             boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
             zIndex: "10001",
             display: "none"
+            // border: "1px solid red"
         } as React.CSSProperties
     );
 
@@ -382,8 +383,9 @@ export const Overlay = () => {
         }
     }
     const generateHeadline = () => {
-        if (noDecOrNoAiOrGenAi == 0 || noDecOrNoAiOrGenAi == 3) {
+        if (noDecOrNoAiOrGenAi == 0) {
             return <>
+                <p><span className='red-circle'>0</span> Declaration(s)</p>
             </>
         }
         else if (noDecOrNoAiOrGenAi == 1) {
@@ -427,16 +429,13 @@ export const Overlay = () => {
                     <div className="headline">
                         {generateHeadline()}
                     </div>
-                    <div className="icon-warning">
-                        {generateWarningIcon()}
-                    </div>
                 </div>
-                <div className="middle">
+                {/* <div className="middle">
                     {generateMiddleDiv()}
                 </div>
                 <div className="bottom">
                     {generateBotttomDiv()}
-                </div>
+                </div> */}
             </>
         );
     }

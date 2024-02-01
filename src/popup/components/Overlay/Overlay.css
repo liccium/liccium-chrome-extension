@@ -35,7 +35,8 @@
 
 .top {
     top: 0px;
-    height: 40px;
+    height: 36.75px;
+    /* border: 1px solid red; */
 }
 
 .icon-liccium,
@@ -74,15 +75,15 @@
 }
 
 .headline {
-    width: 200px;
-    height: 40px;
+    width: 100%;
+    height: 100%;
     margin: auto;
     /* border: 1px solid green; */
 }
 
 .headline p {
-    margin-top: 5%;
-    margin-left: 5%;
+    margin-top: 3%;
+    margin-left: 10%;
     color: #000;
     text-align: center;
     font-family: "Noto Sans", sans-serif;
@@ -91,6 +92,7 @@
     font-weight: 550;
     line-height: normal;
 }
+
 
 .icon-warning {
     margin-right: auto;
@@ -238,4 +240,18 @@
 
 .noDec {
     font-family: Inter, sans-serif;
+}
+
+.red-circle {
+    display: inline-block;
+    width: 25px;
+    /* Ändere die Breite des Kreises nach Bedarf */
+    height: 25px;
+    /* Ändere die Höhe des Kreises nach Bedarf */
+    border-radius: 50%;
+    background-color: #B3151B;
+    text-align: center;
+    line-height: 25px;
+    /* Passe die line-height an die Höhe des Kreises an */
+    color: white;
 }
