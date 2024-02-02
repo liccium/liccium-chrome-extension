@@ -383,7 +383,7 @@ export const Overlay = () => {
             </>
         } else {
             return <>
-                <p><span className='red-circle'>{assets.length}</span> Declaration(s)&nbsp;&nbsp;<ShieldSvg /></p>
+                <p><span className='red-circle'>{assets.length}</span> <a href='#'>Declaration(s)</a>&nbsp;&nbsp;<ShieldSvg /></p>
             </>
         }
 

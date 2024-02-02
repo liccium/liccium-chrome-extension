@@ -271,3 +271,7 @@
         transform: rotate(360deg);
     }
 }
+
+a {
+    color: rgb(0, 0, 0);
+}
