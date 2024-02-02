@@ -6,16 +6,16 @@ export const GenAISvg = () => {
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
             // viewBox="0 0 300 300"
-             style={
+            style={
                 {
                     shapeRendering: "geometricPrecision",
                     textRendering: "geometricPrecision",
                     fillRule: "evenodd",
-                    clipRule: "evenodd"
+                    clipRule: "evenodd",
                 }
-            } 
-            >
-            <g transform="scale(0.11)">
+            }
+        >
+            <g transform="scale(0.07)">
                 <path
                     style={{ opacity: 1 }}
                     fill="#fefffe"
