@@ -122,15 +122,6 @@ export const Overlay = () => {
         /* overlayElement.classList.toggle('transition'); */
         //console.log("Show overlay: " + boolOverlay);
         if (!boolOverlay) {
-            setOverlayStyle((prevState) => ({
-                ...prevState,
-                display: "block"
-            }));
-            setIconLicciumStyle((prevState) => ({
-                ...prevState,
-                background: "none",
-                boxShadow: "none"
-            }));
             console.log("in toggleOverlay: " + boolOverlay);
             setBoolOverlay(true);
             console.log("in toggleOverlay: " + boolOverlay);
@@ -496,9 +487,18 @@ export const Overlay = () => {
         if (isFetchingData) {
             console.log("fetching2");
             fetchingData(srcUrl);
-        } else if (boolOverlay && assets.length != 0) {
+        } else if (boolOverlay) {
             console.log("assets: " + assets.length)
             isGenaiOrNoAi(assets);
+            setOverlayStyle((prevState) => ({
+                ...prevState,
+                display: "block"
+            }));
+            setIconLicciumStyle((prevState) => ({
+                ...prevState,
+                background: "none",
+                boxShadow: "none"
+            }));
         }
 
 
