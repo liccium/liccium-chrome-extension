@@ -9,7 +9,7 @@ import { ShieldSvg } from './ShieldSvg';
 export const Overlay = () => {
 
 
-
+    const [iconRotation, setIconRotation] = useState(0);
 
     // chrome states
     const [serverUrl, setServerUrl] = useState("");
@@ -511,23 +511,39 @@ export const Overlay = () => {
 
     return (
         <>
-            {displayOverlay && <>
-                <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={() => setOverlayStyle((prevState) => ({
-                    ...prevState,
-                    display: "block"
-                }))}>
-                    {/* <ProcessingOverlay /> */}
-                    {isFetchingData ? <ProcessingOverlay /> : renderOverlayComponents()}
-                </div>
-                <div
-                    className="icon-liccium" style={iconLicciumStyle} onMouseOver={() => setIconLicciumStyle((prevState) => ({
+            {displayOverlay && (
+                <>
+                    <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={() => setOverlayStyle((prevState) => ({
                         ...prevState,
                         display: "block"
-                    }))}
-                    onClick={toggleOverlayVisibility}>
-                    <LicciumIconSvg />
-                </div >
-            </>}
+                    }))}>
+                        {isFetchingData ? <ProcessingOverlay /> : renderOverlayComponents()}
+                    </div>
+
+                    {/* Conditionally render the icon based on isFetchingData */}
+                    {isFetchingData ? (
+                        <div
+                            className="icon-liccium-loading"
+                            style={{ ...iconLicciumStyle, transform: `rotate(${iconRotation}deg)` }}
+                        >
+                            <LicciumIconSvg />
+                        </div>
+                    ) : (
+                        <div
+                            className="icon-liccium"
+                            style={iconLicciumStyle}
+                            onMouseOver={() => setIconLicciumStyle((prevState) => ({
+                                ...prevState,
+                                display: "block"
+                            }))}
+                            onClick={toggleOverlayVisibility}
+                        >
+                            <LicciumIconSvg />
+                        </div>
+                    )}
+                </>
+            )}
         </>
     );
+
 }

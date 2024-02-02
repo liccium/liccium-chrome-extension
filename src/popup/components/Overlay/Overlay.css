@@ -255,3 +255,19 @@
     /* Passe die line-height an die Höhe des Kreises an */
     color: white;
 }
+
+/* Add a loading class for the rotating effect */
+.icon-liccium-loading {
+    animation: rotate 1s linear infinite;
+}
+
+/* Define the rotation animation */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
