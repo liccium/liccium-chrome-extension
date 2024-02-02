@@ -4,6 +4,7 @@ import { LicciumIconSvg } from './LicciumIconSvg';
 import './Overlay.css';
 import { ProcessingOverlay } from './ProcessingOverlay';
 import { WarningSvg } from './WarningSvg';
+import { ShieldSvg } from './ShieldSvg';
 
 export const Overlay = () => {
 
@@ -62,22 +63,23 @@ export const Overlay = () => {
             background: "rgba(255, 255, 255, 0.65)",
             boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
             zIndex: "10001",
-            display: "none"
+            display: "none",
             // border: "1px solid red"
         } as React.CSSProperties
     );
 
     const [middleContent, setMiddleContent] = useState(
         {
-            width: 125 + "px",
-            height: 40 + "px",
+            width: 110 + "px",
+            height: 25 + "px",
             borderRadius: 25 + "px",
             border: "1px solid var(--white, #FFF)",
             /* background: "#B3151B", */
             display: "flex",
             marginLeft: 20 + "px",
             marginTop: 10 + "px",
-            alignItems: "center"
+            alignItems: "center",
+            // border: "1px solid red"
         } as React.CSSProperties
     )
     //update Div-Position
@@ -138,7 +140,8 @@ export const Overlay = () => {
         } else {
             setOverlayStyle((prevState) => ({
                 ...prevState,
-                display: "none"
+                display: "none",
+                height: 36.75 + "px"
             }));
             setIconLicciumStyle((prevState) => ({
                 ...prevState,
@@ -163,19 +166,21 @@ export const Overlay = () => {
     const isGenaiOrNoAi = (assets) => {
         console.log("LÄNGGEEEEEEEEEE: " + assets.length);
         if (assets.length === 0) {
-            // setBoolNoDeclaration(true);
             setnoDecOrNoAiOrGenAi(0);
-            console.log("###########fweffwef###########");
         }
         for (let i = 0; i < assets.length; i++) {
             if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "trainedAlgorithmicMedia"
                 || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "compositeSynthetic"
                 || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "algorithmicMedia") {
-                // setBoolGenaAi(true);
-                setGenerateStatText("GEN AI");
+                setGenerateStatText("Gen-AI");
                 setMiddleContent((prevState) => ({
                     ...prevState,
                     backgroundColor: "#B3151B"
+                }));
+                console.log("####");
+                setOverlayStyle((prevState) => ({
+                    ...prevState,
+                    height: 73.5 + 'px',
                 }));
                 setnoDecOrNoAiOrGenAi(1);
                 setMediaType(assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype);
@@ -183,7 +188,6 @@ export const Overlay = () => {
                 break;
             } else if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "digitalCapture"
                 || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "minorHumanEdits") {
-                // setBoolNoAi(true);
                 setGenerateStatText("NO AI");
                 setMiddleContent((prevState) => ({
                     ...prevState,
@@ -191,6 +195,10 @@ export const Overlay = () => {
                 }));
                 setnoDecOrNoAiOrGenAi(2);
                 setMediaType("Human generated content");
+                setOverlayStyle((prevState) => ({
+                    ...prevState,
+                    height: 73.5 + 'px',
+                }));
                 break;
             } else {
                 setnoDecOrNoAiOrGenAi(3);
@@ -359,44 +367,35 @@ export const Overlay = () => {
 
     const generateMiddleDiv = () => {
 
-        console.log(noDecOrNoAiOrGenAi)
-        if (noDecOrNoAiOrGenAi == 0) {
+        if (noDecOrNoAiOrGenAi == 1) {
+
             return <>
-                <p className='noDec'>no Declaration found</p>
-            </>
-        } else if (noDecOrNoAiOrGenAi == 3) {
-            return <>
-            </>
-        } else {
-            return <>
-                <div className="generateStat tagTooltip" style={middleContent}>
+                <div className="generateStat" style={middleContent}>
                     <div className="generateStat-icon">
                         <GenAISvg />
                     </div>
                     <div className="generateStat-text">
                         <p className="tagText">{generateStatText}</p>
                     </div>
-                    <span className="tagtooltiptext">{mediaType}</span>
+                    {/* <span className="tagtooltiptext">{mediaType}</span> */}
                 </div>
             </>
-
         }
+
+
+
     }
     const generateHeadline = () => {
-        if (noDecOrNoAiOrGenAi == 0) {
+        if (assets.length == 0) {
             return <>
-                <p><span className='red-circle'>0</span> Declaration(s)</p>
-            </>
-        }
-        else if (noDecOrNoAiOrGenAi == 1) {
-            return <>
-                <p>Caution advised</p>
+                <p><span className='red-circle'>{assets.length}</span> Declaration(s)</p>
             </>
         } else {
             return <>
-                <p>Human-Gen</p>
+                <p><span className='red-circle'>{assets.length}</span> Declaration(s)&nbsp;&nbsp;<ShieldSvg /></p>
             </>
         }
+
     }
 
     const generateWarningIcon = () => {
@@ -430,10 +429,10 @@ export const Overlay = () => {
                         {generateHeadline()}
                     </div>
                 </div>
-                {/* <div className="middle">
+                <div className="middle">
                     {generateMiddleDiv()}
                 </div>
-                <div className="bottom">
+                {/* <div className="bottom">
                     {generateBotttomDiv()}
                 </div> */}
             </>
