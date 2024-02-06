@@ -83,11 +83,11 @@
 
 .headline p {
     margin-top: 3%;
-    margin-left: 10%;
+    margin-left: 15%;
     color: #000;
     text-align: center;
     font-family: "Noto Sans", sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 550;
     line-height: normal;
@@ -127,6 +127,11 @@
     background: #B3151B;
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    margin-top: 0px;
+    /* border: 1px solid green; */
+
 }
 
 .generateStat-icon {

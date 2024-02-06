@@ -36,7 +36,7 @@ export const Overlay = () => {
     const [overlayStyle, setOverlayStyle] = useState(
         {
             height: 36.75 + "px",
-            width: 200 + "px",
+            width: 190 + "px",
             borderRadius: 5 + "px",
             background: "rgba(255, 255, 255, 0.65)",
             boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
@@ -74,9 +74,10 @@ export const Overlay = () => {
             height: 25 + "px",
             borderRadius: 25 + "px",
             border: "1px solid var(--white, #FFF)",
+            // border: "1px solid red",
             /* background: "#B3151B", */
             display: "flex",
-            marginLeft: 20 + "px",
+            marginLeft: 17 + "px",
             marginTop: 10 + "px",
             alignItems: "center",
             // border: "1px solid red"
@@ -379,11 +380,11 @@ export const Overlay = () => {
     const generateHeadline = () => {
         if (assets.length == 0) {
             return <>
-                <p><span className='red-circle'>{assets.length}</span> Declaration(s)</p>
+                <p>Declaration(s) <span className='red-circle'>{assets.length}</span> </p>
             </>
         } else {
             return <>
-                <p><span className='red-circle'>{assets.length}</span> <a href='#'>Declaration(s)</a>&nbsp;&nbsp;<ShieldSvg /></p>
+                <p><a href='#'>Declaration(s)</a> <span className='red-circle'>{assets.length}</span> </p>
             </>
         }
 
