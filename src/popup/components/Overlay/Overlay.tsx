@@ -85,7 +85,6 @@ export const Overlay = () => {
     )
     //update Div-Position
     const updateDivPosition = (event) => {
-        //console.log("(update) Show overlay: " + boolOverlay);
         if (!boolOverlay) {
             if (event.target.tagName.toLowerCase() === 'img'
                 && event.target.width >= 100
@@ -120,15 +119,9 @@ export const Overlay = () => {
 
     const toggleOverlayVisibility = () => {
         console.log('click ' + srcUrl);
-        /* overlayElement.classList.toggle('transition'); */
-        //console.log("Show overlay: " + boolOverlay);
         if (!boolOverlay) {
-            console.log("in toggleOverlay: " + boolOverlay);
             setBoolOverlay(true);
-            console.log("in toggleOverlay: " + boolOverlay);
             setIsFetchingData(true);
-            //console.log("fetching");
-            //fetchingData(srcUrl);
         } else {
             setOverlayStyle((prevState) => ({
                 ...prevState,
@@ -140,15 +133,10 @@ export const Overlay = () => {
                 background: "rgba(255, 255, 255, 0.65)",
                 boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
             }));
-            console.log("in toggleOverlay: " + boolOverlay);
             setBoolOverlay(false);
-            console.log("in toggleOverlay: " + boolOverlay);
             setIsFetchingData(false);
             setnoDecOrNoAiOrGenAi(4);
             setMediaType("");
-            console.log("################");
-            console.log(mediaType);
-            console.log("############");
         }
     };
 
@@ -156,7 +144,6 @@ export const Overlay = () => {
 
     //proof if at least one asset is genai
     const isGenaiOrNoAi = (assets) => {
-        console.log("LÄNGGEEEEEEEEEE: " + assets.length);
         if (assets.length === 0) {
             setnoDecOrNoAiOrGenAi(0);
         }
@@ -201,7 +188,6 @@ export const Overlay = () => {
 
 
     const fetchingData = async (srcUrl) => {
-        // console.log('in fetchingData' + srcUrl);
         // CONVERT SIGNS IN URL TO READABLE SIGNS
         let srcUrlReadable = srcUrl.replaceAll("%", "%25");
         srcUrlReadable = srcUrlReadable.replaceAll(":", "%3A");
@@ -210,21 +196,14 @@ export const Overlay = () => {
         srcUrlReadable = srcUrlReadable.replaceAll("&", "%26");
         srcUrlReadable = srcUrlReadable.replaceAll("=", "%3D");
 
-        // console.log("Fetching with Readable src url: " + srcUrlReadable);
-        console.log("in fetch: " + boolGenAi);
-        // setBoolGenaAi(false);
-        console.log("in fetch: " + boolGenAi);
-        // setBoolNoAi(false);
-        // setBoolNoDeclaration(false);
         setnoDecOrNoAiOrGenAi(0);
         let currentPageUrl = window.location.href;
         let jsonAssets = [];
         let isccJsonArray = [];
         try {
             isccJsonArray = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            // console.log(isccJsonArray);
             let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
-            // console.log(jsonExplain);
+
             // Put sourceUrl and units from explained ISCC in jsonIscc
             isccJsonArray[0].isccMetadata.name = getModeCapitalLetter(isccJsonArray[0].isccMetadata.mode) + " from " + getISCCName(currentPageUrl);
             isccJsonArray[0].isccMetadata.sourceUrl = srcUrl;
@@ -243,9 +222,6 @@ export const Overlay = () => {
             setAssets(jsonAssets);
             setPageUrl(currentPageUrl);
             setSrcUrl(srcUrl);
-            //isGenaiOrNoAi(jsonAssets);
-
-
 
         } catch (err) {
             console.error(err);
@@ -255,9 +231,6 @@ export const Overlay = () => {
             setSrcUrl("");
         } finally {
             setIsFetchingData(false);
-            /* setBoolGenaAi(true); */
-            /* console.log("assets: " + jsonAssets.length)
-            isGenaiOrNoAi(jsonAssets); */
         }
 
     }
@@ -266,9 +239,6 @@ export const Overlay = () => {
 
         let pageUrlSplit = pageUrl.split("/");
         let pageUrlName = "";
-
-        // console.log("TESTING SHIT");
-        // console.log(pageUrlSplit);
 
         if (pageUrlSplit.length === 4 && pageUrlSplit[3] === "") {
             pageUrlName = pageUrlSplit[2];
@@ -292,7 +262,6 @@ export const Overlay = () => {
             pageUrlName = pageUrlName.substring(4, pageUrlName.length);
         }
         // console.log(pageUrlName);
-
 
         return pageUrlName;
     }
@@ -358,9 +327,7 @@ export const Overlay = () => {
 
 
     const generateMiddleDiv = () => {
-
         if (noDecOrNoAiOrGenAi == 1) {
-
             return <>
                 <div className="generateStat" style={middleContent}>
                     <div className="generateStat-icon">
@@ -373,10 +340,8 @@ export const Overlay = () => {
                 </div>
             </>
         }
-
-
-
     }
+
     const generateHeadline = () => {
         if (assets.length == 0) {
             return <>
@@ -399,7 +364,6 @@ export const Overlay = () => {
     }
 
     const generateBotttomDiv = () => {
-
         if (noDecOrNoAiOrGenAi == 0 || noDecOrNoAiOrGenAi == 3) {
             return <>
             </>
@@ -411,7 +375,6 @@ export const Overlay = () => {
             </>
         }
     }
-
 
     const renderOverlayComponents = () => {
         return (
@@ -440,9 +403,6 @@ export const Overlay = () => {
 
 
     useEffect(() => {
-
-
-        // console.log("overlay useeffect");
         chrome.storage.local.get(
             [
                 "selectedServerUrl",
@@ -482,14 +442,11 @@ export const Overlay = () => {
         document.addEventListener('mouseover', updateDivPosition);
         //listener für hover-out von bilder
         document.addEventListener('mouseout', hideDiv);
-        console.log("ASSETS:");
-        console.log(assets);
+        console.log("ASSETS:" + assets);
 
         if (isFetchingData) {
-            console.log("fetching2");
             fetchingData(srcUrl);
         } else if (boolOverlay) {
-            console.log("assets: " + assets.length)
             isGenaiOrNoAi(assets);
             setOverlayStyle((prevState) => ({
                 ...prevState,
@@ -501,7 +458,6 @@ export const Overlay = () => {
                 boxShadow: "none"
             }));
         }
-
 
         return () => {
             // console.log('cleanUp');
