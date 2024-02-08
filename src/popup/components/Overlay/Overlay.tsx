@@ -49,7 +49,6 @@ export const Overlay = () => {
             zIndex: 10000,
             pointerEvents: "auto",
             display: "none",
-            opacity: "0.8",
             overflow: "hidden",
             textAlign: "center"
         } as React.CSSProperties
@@ -78,7 +77,8 @@ export const Overlay = () => {
             border: "1px solid var(--white, #FFF)",
             display: "flex",
 
-            alignItems: "center"
+            alignItems: "center",
+            background: "rgba(0, 0, 0, 1)"
             // border: "1px solid red",
             /* background: "#B3151B", 
             justifyContent: "center",
@@ -159,6 +159,7 @@ export const Overlay = () => {
         // console.log(assets[0].isccMetadata.isccContentCode);
         // console.log(assets[1].isccMetadata.isccContentCode);
 
+
         if (assets.length >= 1) {
             for (let i = 0; i < assets.length; i++) {
                 if (assets[i].isccMetadata.isccContentCode == iscc[0].isccMetadata.units[1].iscc_unit
@@ -170,74 +171,83 @@ export const Overlay = () => {
                     matchedAssets.push(assets[i]);
                 } else {
                     console.log(i + "declaration not matched");
+
                 }
             }
-            for (let i = 1; i < matchedAssets.length; i++) {
-                if (matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype !=
-                    matchedAssets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype) {
-                    console.log("tags for matched assets not equal");
-                    break;
-                } else {
+
+            if (matchedAssets.length != 0) {
+                let matchedAssetsEqual = true;
+                if (matchedAssets.length > 1) {
+                    for (let i = 1; i < matchedAssets.length; i++) {
+                        console.log("TEST!!!!!");
+                        if (matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype !=
+                            matchedAssets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype) {
+                            console.log("tags for matched assets not equal");
+                            matchedAssetsEqual = false;
+                            break;
+                        }
+                    }
+                }
+                let allAssetsEquals = true;
+                if (matchedAssetsEqual) {
                     for (let i = 0; i < assets.length; i++) {
                         if (matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype !=
                             assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype) {
                             console.log("tags for all assets not euqal");
-                        } else {
-                            console.log("show tag");
+                            allAssetsEquals = false;
+                            break;
                         }
+                    }
+                    if (allAssetsEquals) {
+                        console.log("show tag");
+                        isGenaiOrNoAi(matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype);
                     }
                 }
             }
+
         } else {
             console.log("n==0");
+            setnoDecOrNoAiOrGenAi(0);
         }
-
 
         console.log("matchedAssets " + matchedAssets.length);
     }
 
 
     //proof if at least one asset is genai
-    const isGenaiOrNoAi = (assets) => {
-        if (assets.length === 0) {
-            setnoDecOrNoAiOrGenAi(0);
-        }
-        for (let i = 0; i < assets.length; i++) {
-            if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "trainedAlgorithmicMedia"
-                || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "compositeSynthetic"
-                || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "algorithmicMedia") {
-                setGenerateStatText("Gen-AI");
-                setMiddleContent((prevState) => ({
-                    ...prevState,
-                    backgroundColor: "#B3151B"
-                }));
-                console.log("####");
-                setOverlayStyle((prevState) => ({
-                    ...prevState,
-                    height: 73.5 + 'px',
-                }));
-                setnoDecOrNoAiOrGenAi(1);
-                setMediaType(assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype);
-                console.log(assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype);
-                break;
-            } else if (assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "digitalCapture"
-                || assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype === "minorHumanEdits") {
-                setGenerateStatText("NO AI");
-                setMiddleContent((prevState) => ({
-                    ...prevState,
-                    backgroundColor: "#7E5C7E"
-                }));
-                setnoDecOrNoAiOrGenAi(2);
-                setMediaType("Human generated content");
-                setOverlayStyle((prevState) => ({
-                    ...prevState,
-                    height: 73.5 + 'px',
-                }));
-                break;
-            } else {
-                setnoDecOrNoAiOrGenAi(3);
-                break;
-            }
+    const isGenaiOrNoAi = (digitalsourcetypeString) => {
+        if (digitalsourcetypeString === "trainedAlgorithmicMedia"
+            || digitalsourcetypeString === "compositeSynthetic"
+            || digitalsourcetypeString === "algorithmicMedia") {
+            setGenerateStatText("Gen-AI");
+            setMiddleContent((prevState) => ({
+                ...prevState,
+                background: "rgba(179, 21, 27, 1)"
+            }));
+            console.log("####");
+            setOverlayStyle((prevState) => ({
+                ...prevState,
+                height: 73.5 + 'px',
+            }));
+            setnoDecOrNoAiOrGenAi(1);
+            setMediaType(digitalsourcetypeString);
+
+        } else if (digitalsourcetypeString === "digitalCapture"
+            || digitalsourcetypeString === "minorHumanEdits") {
+            setGenerateStatText("NO AI");
+            setMiddleContent((prevState) => ({
+                ...prevState,
+                background: "rgba(126, 92, 126, 1)"
+            }));
+            setnoDecOrNoAiOrGenAi(2);
+            setMediaType("Human generated content");
+            setOverlayStyle((prevState) => ({
+                ...prevState,
+                height: 73.5 + 'px',
+            }));
+
+        } else {
+            setnoDecOrNoAiOrGenAi(3);
         }
     }
 
@@ -387,19 +397,19 @@ export const Overlay = () => {
 
 
     const generateMiddleDiv = () => {
-        if (noDecOrNoAiOrGenAi == 1) {
-            return <>
-                <div className="generateStat" style={middleContent}>
-                    <div className="generateStat-icon">
-                        <GenAISvg />
-                    </div>
-                    <div className="generateStat-text">
-                        <p className="tagText">{generateStatText}</p>
-                    </div>
-                    {/* <span className="tagtooltiptext">{mediaType}</span> */}
+        // if (noDecOrNoAiOrGenAi == 1) {
+        return <>
+            <div className="generateStat" style={middleContent}>
+                <div className="generateStat-icon">
+                    <GenAISvg />
                 </div>
-            </>
-        }
+                <div className="generateStat-text">
+                    <p className="tagText">{generateStatText}</p>
+                </div>
+                {/* <span className="tagtooltiptext">{mediaType}</span> */}
+            </div>
+        </>
+        // }
     }
 
     const generateHeadline = () => {
@@ -415,26 +425,26 @@ export const Overlay = () => {
 
     }
 
-    const generateWarningIcon = () => {
-        if (noDecOrNoAiOrGenAi == 1) {
-            return <>
-                <WarningSvg />
-            </>
-        }
-    }
+    // const generateWarningIcon = () => {
+    //     if (noDecOrNoAiOrGenAi == 1) {
+    //         return <>
+    //             <WarningSvg />
+    //         </>
+    //     }
+    // }
 
-    const generateBotttomDiv = () => {
-        if (noDecOrNoAiOrGenAi == 0 || noDecOrNoAiOrGenAi == 3) {
-            return <>
-            </>
-        } else {
-            return <>
-                <div className="link">
-                    <a href="#" onClick={() => openPopupTab()}>Verify content details</a>
-                </div>
-            </>
-        }
-    }
+    // const generateBotttomDiv = () => {
+    //     if (noDecOrNoAiOrGenAi == 0 || noDecOrNoAiOrGenAi == 3) {
+    //         return <>
+    //         </>
+    //     } else {
+    //         return <>
+    //             <div className="link">
+    //                 <a href="#" onClick={() => openPopupTab()}>Verify content details</a>
+    //             </div>
+    //         </>
+    //     }
+    // }
 
     const renderOverlayComponents = () => {
         return (
@@ -507,7 +517,6 @@ export const Overlay = () => {
         if (isFetchingData) {
             fetchingData(srcUrl);
         } else if (boolOverlay) {
-            isGenaiOrNoAi(assets);
             isEqualAndhasCredential(assets);
             setOverlayStyle((prevState) => ({
                 ...prevState,

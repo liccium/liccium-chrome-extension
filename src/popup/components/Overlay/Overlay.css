@@ -13,7 +13,7 @@
     z-index: 10000;
     pointer-events: auto;
     display: none;
-    opacity: 0.8;
+    opacity: 1.0;
     overflow: hidden;
     text-align: center;
     /* border: 1px solid green; */
@@ -131,6 +131,8 @@
     margin-right: 20px;
     margin-top: 0px;
      border: 1px solid green; */
+    background: rgba(0, 0, 0, 1);
+    opacity: 1.0;
     position: absolute;
     display: flex;
     align-items: center;
@@ -138,7 +140,7 @@
     height: 25px;
     border-radius: 25px;
     border: 1px solid var(--white, #FFF);
-    
+
     /* text-align: center; */
 
 }
@@ -175,12 +177,12 @@
 }
 
 .generateStat-text p {
-/*    margin-right: 20px;
+    /*    margin-right: 20px;
     top: 10px;
     right: 10px;*/
 
     margin-top: 3px;
-    margin-bottom: 0px; 
+    margin-bottom: 0px;
     color: var(--white, #FFF);
     font-family: Source sans Pro, sans-serif;
     font-size: 14px;
