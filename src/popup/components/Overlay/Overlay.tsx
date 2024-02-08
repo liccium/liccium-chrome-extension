@@ -146,6 +146,27 @@ export const Overlay = () => {
 
 
 
+    const isEqualAndhasCredential = (assets) => {
+        console.log("Es folgt unser Bild");
+        console.log(iscc);
+        console.log("Es folgen die Assets");
+        console.log(assets);
+
+        // console.log(iscc[0].isccMetadata.units[1].iscc_unit);
+        // console.log(assets[0].isccMetadata.isccContentCode);
+        // console.log(assets[1].isccMetadata.isccContentCode);
+
+        for (let i = 0; i < assets.length; i++) {
+            if (assets[i].isccMetadata.isccContentCode == iscc[0].isccMetadata.units[1].iscc_unit
+                && assets[i].credentials != undefined
+                && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype != undefined) {
+                console.log("is equal");
+                console.log("has credentials");
+                console.log("has tag");
+            }
+        }
+    }
+
     //proof if at least one asset is genai
     const isGenaiOrNoAi = (assets) => {
         if (assets.length === 0) {
@@ -208,14 +229,19 @@ export const Overlay = () => {
             isccJsonArray = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
             let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
 
+
+
             // Put sourceUrl and units from explained ISCC in jsonIscc
             isccJsonArray[0].isccMetadata.name = getModeCapitalLetter(isccJsonArray[0].isccMetadata.mode) + " from " + getISCCName(currentPageUrl);
             isccJsonArray[0].isccMetadata.sourceUrl = srcUrl;
             isccJsonArray[0].isccMetadata.units = jsonExplain.units;
+            console.log(isccJsonArray[0]);
             jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + isccJsonArray[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
 
-            jsonAssets = sortVCs(jsonAssets);
 
+
+            jsonAssets = sortVCs(jsonAssets);
+            console.log(jsonAssets);
             // ADD iscc and assets to CHROME STORAGE
             chrome.storage.local.set({ pageUrl: currentPageUrl });
             chrome.storage.local.set({ srcUrl: srcUrl });
@@ -452,6 +478,7 @@ export const Overlay = () => {
             fetchingData(srcUrl);
         } else if (boolOverlay) {
             isGenaiOrNoAi(assets);
+            isEqualAndhasCredential(assets);
             setOverlayStyle((prevState) => ({
                 ...prevState,
                 display: "block"
