@@ -18,6 +18,7 @@ export const Overlay = () => {
     const [srcUrl, setSrcUrl] = useState("");
     const [iscc, setIscc] = useState([]);
     const [assets, setAssets] = useState([]);
+    // const [matchedAssets, setMatchedAssets] = useState([]);
     const serverUrls = {
         "https://search.liccium.app": "Liccium",  // plugin.liccium.app
         "https://iscc.if-is.net": "if(is)",
@@ -76,14 +77,14 @@ export const Overlay = () => {
             borderRadius: 25 + "px",
             border: "1px solid var(--white, #FFF)",
             display: "flex",
-            
+
             alignItems: "center"
             // border: "1px solid red",
             /* background: "#B3151B", 
             justifyContent: "center",
             marginLeft: 22 + "px",
             marginTop: 10 + "px",*/
-            
+
             // border: "1px solid red"
         } as React.CSSProperties
     )
@@ -146,7 +147,9 @@ export const Overlay = () => {
 
 
 
+
     const isEqualAndhasCredential = (assets) => {
+        let matchedAssets = [];
         console.log("Es folgt unser Bild");
         console.log(iscc);
         console.log("Es folgen die Assets");
@@ -156,16 +159,43 @@ export const Overlay = () => {
         // console.log(assets[0].isccMetadata.isccContentCode);
         // console.log(assets[1].isccMetadata.isccContentCode);
 
-        for (let i = 0; i < assets.length; i++) {
-            if (assets[i].isccMetadata.isccContentCode == iscc[0].isccMetadata.units[1].iscc_unit
-                && assets[i].credentials != undefined
-                && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype != undefined) {
-                console.log("is equal");
-                console.log("has credentials");
-                console.log("has tag");
+        if (assets.length >= 1) {
+            for (let i = 0; i < assets.length; i++) {
+                if (assets[i].isccMetadata.isccContentCode == iscc[0].isccMetadata.units[1].iscc_unit
+                    && assets[i].credentials != undefined
+                    && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype != undefined) {
+                    console.log("is equal");
+                    console.log("has credentials");
+                    console.log("has tag");
+                    matchedAssets.push(assets[i]);
+                } else {
+                    console.log(i + "declaration not matched");
+                }
             }
+            for (let i = 1; i < matchedAssets.length; i++) {
+                if (matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype !=
+                    matchedAssets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype) {
+                    console.log("tags for matched assets not equal");
+                    break;
+                } else {
+                    for (let i = 0; i < assets.length; i++) {
+                        if (matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype !=
+                            assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype) {
+                            console.log("tags for all assets not euqal");
+                        } else {
+                            console.log("show tag");
+                        }
+                    }
+                }
+            }
+        } else {
+            console.log("n==0");
         }
+
+
+        console.log("matchedAssets " + matchedAssets.length);
     }
+
 
     //proof if at least one asset is genai
     const isGenaiOrNoAi = (assets) => {
