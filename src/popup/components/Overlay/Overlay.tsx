@@ -70,16 +70,20 @@ export const Overlay = () => {
 
     const [middleContent, setMiddleContent] = useState(
         {
+            position: "absolute",
             width: 105 + "px",
             height: 25 + "px",
             borderRadius: 25 + "px",
             border: "1px solid var(--white, #FFF)",
-            // border: "1px solid red",
-            /* background: "#B3151B", */
             display: "flex",
+            
+            alignItems: "center"
+            // border: "1px solid red",
+            /* background: "#B3151B", 
+            justifyContent: "center",
             marginLeft: 22 + "px",
-            marginTop: 10 + "px",
-            alignItems: "center",
+            marginTop: 10 + "px",*/
+            
             // border: "1px solid red"
         } as React.CSSProperties
     )

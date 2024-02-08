@@ -112,15 +112,15 @@
 
 .middle {
     top: 40px;
-    bottom: 25px;
+    bottom: 0px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    /* border: 1px solid green; */
+    /*align-items: center;
+    border: 1px solid green; */
 }
 
 .generateStat {
-    width: 184px;
+    /*width: 184px;
     height: 56px;
     border-radius: 25px;
     border: 1px solid var(--white, #FFF);
@@ -130,39 +130,57 @@
     justify-content: center;
     margin-right: 20px;
     margin-top: 0px;
-    /* border: 1px solid green; */
+     border: 1px solid green; */
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 105px;
+    height: 25px;
+    border-radius: 25px;
+    border: 1px solid var(--white, #FFF);
+    
+    /* text-align: center; */
 
 }
 
 .generateStat-icon {
     width: 40px;
-    height: 40px;
-    pointer-events: none;
-    left: 0;
+    height: 25px;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
+    pointer-events: none;
 }
 
 .generateStat-icon svg {
     width: 100%;
     height: 100%;
-    margin-top: 45%;
+    margin-top: 10%;
     margin-left: 25%;
     display: block;
 }
 
 .generateStat-text {
-    flex: 1;
-    text-align: center;
+    position: absolute;
+    height: 25px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 40px;
+    display: flex;
 }
 
 .generateStat-text p {
-    margin-top: 12px;
-    margin-right: 20px;
-    margin-bottom: 10px;
+/*    margin-right: 20px;
+    top: 10px;
+    right: 10px;*/
+
+    margin-top: 3px;
+    margin-bottom: 0px; 
     color: var(--white, #FFF);
     font-family: Source sans Pro, sans-serif;
     font-size: 14px;
