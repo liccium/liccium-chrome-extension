@@ -111,7 +111,7 @@
 
 
 .middle {
-    top: 40px;
+    top: 36.5px;
     bottom: 0px;
     display: flex;
     justify-content: center;
@@ -138,15 +138,17 @@
     align-items: center;
     width: 105px;
     height: 25px;
-    border-radius: 25px;
-    border: 1px solid var(--white, #FFF);
+    border-radius: 15px 15px 15px 15px;
+    /* border: 2px solid #B3011B; */
+
+    /* border: 1px solid var(--white, #FFF); */
 
     /* text-align: center; */
 
 }
 
 .generateStat-icon {
-    width: 40px;
+    width: 25px;
     height: 25px;
     top: 0px;
     bottom: 0px;
@@ -156,23 +158,25 @@
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    /* border: 1px solid blue; */
 }
 
 .generateStat-icon svg {
     width: 100%;
     height: 100%;
-    margin-top: 10%;
-    margin-left: 25%;
     display: block;
+    /* border: 1px solid green; */
+    margin-top: 5px;
+    margin-left: 3.5px;
 }
 
 .generateStat-text {
     position: absolute;
     height: 25px;
-    top: 0px;
+    top: 2.5px;
     bottom: 0px;
     right: 0px;
-    left: 40px;
+    left: 26px;
     display: flex;
 }
 
@@ -181,14 +185,16 @@
     top: 10px;
     right: 10px;*/
 
-    margin-top: 3px;
+    margin-top: 6px;
     margin-bottom: 0px;
     color: var(--white, #FFF);
-    font-family: Source sans Pro, sans-serif;
-    font-size: 14px;
-    font-style: ormal;
-    font-weight: semibold;
-    line-height: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 9pt;
+    font-weight: 400;
+    /* line-height: normal; */
+    /* overflow: hidden; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 
@@ -236,11 +242,9 @@
     top: 36px;
 
     left: 50%;
-    margin-left: -70px;
-    margin-top: 7px;
+    margin-left: -85px;
     opacity: 0;
     transition: opacity 0.3s;
-
 }
 
 .tagTooltip .tagtooltiptext::after {
@@ -259,8 +263,6 @@
 .tagTooltip:hover .tagtooltiptext {
     visibility: visible;
     opacity: 1;
-    pointer-events: none;
-
 }
 
 .noDec {

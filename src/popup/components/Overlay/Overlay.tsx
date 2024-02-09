@@ -71,10 +71,10 @@ export const Overlay = () => {
     const [middleContent, setMiddleContent] = useState(
         {
             position: "absolute",
-            width: 105 + "px",
-            height: 25 + "px",
+            width: 74 + "px",
+            height: 28 + "px",
             borderRadius: 25 + "px",
-            border: "1px solid var(--white, #FFF)",
+            // border: "1px solid var(--white, #FFF)",
             display: "flex",
 
             alignItems: "center",
@@ -219,7 +219,7 @@ export const Overlay = () => {
         if (digitalsourcetypeString === "trainedAlgorithmicMedia"
             || digitalsourcetypeString === "compositeSynthetic"
             || digitalsourcetypeString === "algorithmicMedia") {
-            setGenerateStatText("Gen-AI");
+            setGenerateStatText("Gen·AI");
             setMiddleContent((prevState) => ({
                 ...prevState,
                 background: "rgba(179, 21, 27, 1)"
@@ -234,7 +234,7 @@ export const Overlay = () => {
 
         } else if (digitalsourcetypeString === "digitalCapture"
             || digitalsourcetypeString === "minorHumanEdits") {
-            setGenerateStatText("NO AI");
+            setGenerateStatText("No·AI");
             setMiddleContent((prevState) => ({
                 ...prevState,
                 background: "rgba(126, 92, 126, 1)"
@@ -399,7 +399,7 @@ export const Overlay = () => {
     const generateMiddleDiv = () => {
         // if (noDecOrNoAiOrGenAi == 1) {
         return <>
-            <div className="generateStat" style={middleContent}>
+            <div className="generateStat tagTooltip" style={middleContent}>
                 <div className="generateStat-icon">
                     <GenAISvg />
                 </div>
