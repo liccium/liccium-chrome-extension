@@ -130,6 +130,25 @@ export const Overlay = () => {
             setIsFetchingData(true);
         } else {
             chrome.storage.local.clear(); // Hier wird der Chrome-Speicher geleert
+            chrome.storage.local.set({ selectedServerUrl: "https://search.liccium.app" });
+            chrome.storage.local.set(
+                {
+                    serverUrls: [
+                        {
+                            name: "Liccium",
+                            url: "https://search.liccium.app"
+                        },
+                        {
+                            name: "if(is)",
+                            url: "https://iscc.if-is.net"
+                        },
+                        {
+                            name: "Development",
+                            url: "http://localhost"
+                        }
+                    ]
+                }
+            );
             setOverlayStyle((prevState) => ({
                 ...prevState,
                 display: "none",
@@ -144,6 +163,7 @@ export const Overlay = () => {
             setIsFetchingData(false);
             setnoDecOrNoAiOrGenAi(4);
             setMediaType("");
+            setGenerateMiddle(false);
         }
     };
 
