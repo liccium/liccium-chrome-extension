@@ -34,6 +34,7 @@ export const Overlay = () => {
     const [boolGenAi, setBoolGenaAi] = useState(false);
     const [boolNoDeclaration, setBoolNoDeclaration] = useState(false);
     const [isFetchingData, setIsFetchingData] = useState(false);
+    const [generateMiddle, setGenerateMiddle] = useState(false);
     const [overlayStyle, setOverlayStyle] = useState(
         {
             height: 36.75 + "px",
@@ -49,7 +50,7 @@ export const Overlay = () => {
             zIndex: 10000,
             pointerEvents: "auto",
             display: "none",
-            overflow: "hidden",
+            overflow: "visible",
             textAlign: "center"
         } as React.CSSProperties
     );
@@ -149,6 +150,7 @@ export const Overlay = () => {
 
 
     const isEqualAndhasCredential = (assets) => {
+        setGenerateMiddle(false);
         let matchedAssets = [];
         console.log("Es folgt unser Bild");
         console.log(iscc);
@@ -200,6 +202,7 @@ export const Overlay = () => {
                     }
                     if (allAssetsEquals) {
                         console.log("show tag");
+                        setGenerateMiddle(true);
                         isGenaiOrNoAi(matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype);
                     }
                 }
@@ -219,6 +222,7 @@ export const Overlay = () => {
         if (digitalsourcetypeString === "trainedAlgorithmicMedia"
             || digitalsourcetypeString === "compositeSynthetic"
             || digitalsourcetypeString === "algorithmicMedia") {
+
             setGenerateStatText("Gen·AI");
             setMiddleContent((prevState) => ({
                 ...prevState,
@@ -230,7 +234,12 @@ export const Overlay = () => {
                 height: 73.5 + 'px',
             }));
             setnoDecOrNoAiOrGenAi(1);
-            setMediaType(digitalsourcetypeString);
+            setMediaType((digitalsourcetypeString === "trainedAlgorithmicMedia")
+                ? "Trained algorithmic media"
+                : (digitalsourcetypeString === "compositeSynthetic")
+                    ? "Composite including synthetic elements"
+                    : (digitalsourcetypeString === "algorithmicMedia")
+                        ? "Pure algorithmic media" : "");
 
         } else if (digitalsourcetypeString === "digitalCapture"
             || digitalsourcetypeString === "minorHumanEdits") {
@@ -406,7 +415,7 @@ export const Overlay = () => {
                 <div className="generateStat-text">
                     <p className="tagText">{generateStatText}</p>
                 </div>
-                {/* <span className="tagtooltiptext">{mediaType}</span> */}
+                <span className="tagtooltiptext">{mediaType}</span>
             </div>
         </>
         // }
@@ -454,9 +463,14 @@ export const Overlay = () => {
                         {generateHeadline()}
                     </div>
                 </div>
-                <div className="middle">
-                    {generateMiddleDiv()}
-                </div>
+                {generateMiddle ? (
+                    <div className="middle">
+                        {generateMiddleDiv()}
+                    </div>
+                ) : (
+                    <></>
+                )}
+
                 {/* <div className="bottom">
                     {generateBotttomDiv()}
                 </div> */}

@@ -14,7 +14,7 @@
     pointer-events: auto;
     display: none;
     opacity: 1.0;
-    overflow: hidden;
+    overflow: visible;
     text-align: center;
     /* border: 1px solid green; */
 }
@@ -139,6 +139,7 @@
     width: 105px;
     height: 25px;
     border-radius: 15px 15px 15px 15px;
+    overflow: visible;
     /* border: 2px solid #B3011B; */
 
     /* border: 1px solid var(--white, #FFF); */
@@ -190,10 +191,13 @@
     margin-bottom: 12px;
     color: var(--white, #FFF);
     font-family: 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;/* Arial, Helvetica, sans-serif; */
-    font-size: 13px; /*9pt;*/
-    font-weight: 600; /*400;*/
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    /* Arial, Helvetica, sans-serif; */
+    font-size: 13px;
+    /*9pt;*/
+    font-weight: 600;
+    /*400;*/
     /* line-height: normal; */
     /* overflow: hidden; */
     white-space: nowrap;
@@ -232,7 +236,7 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
     font-weight: 400;
-    visibility: hidden;
+    visibility: visible;
     width: 120px;
     background-color: rgba(70, 71, 93, 0.9);
     border: 1px solid #46475d;
