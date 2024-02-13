@@ -129,6 +129,7 @@ export const Overlay = () => {
             setBoolOverlay(true);
             setIsFetchingData(true);
         } else {
+            chrome.storage.local.clear(); // Hier wird der Chrome-Speicher geleert
             setOverlayStyle((prevState) => ({
                 ...prevState,
                 display: "none",
