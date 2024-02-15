@@ -27,7 +27,6 @@ export const Overlay = () => {
 
     // overlay states
     const [mediaType, setMediaType] = useState("");
-    const [noDecOrNoAiOrGenAi, setnoDecOrNoAiOrGenAi] = useState(4);
     const [generateStatText, setGenerateStatText] = useState("");
     const [boolOverlay, setBoolOverlay] = useState(false);
     const [boolNoAi, setBoolNoAi] = useState(false);
@@ -54,7 +53,7 @@ export const Overlay = () => {
             overflow: "visible",
             textAlign: "center"
         } as React.CSSProperties
-    );
+    )
     const [iconLicciumStyle, setIconLicciumStyle] = useState(
         {
             position: "absolute",
@@ -68,7 +67,7 @@ export const Overlay = () => {
             display: "none",
             // border: "1px solid red"
         } as React.CSSProperties
-    );
+    )
 
     const [middleContent, setMiddleContent] = useState(
         {
@@ -78,15 +77,8 @@ export const Overlay = () => {
             borderRadius: 25 + "px",
             // border: "1px solid var(--white, #FFF)",
             display: "flex",
-
             alignItems: "center",
             background: "rgba(0, 0, 0, 1)"
-            // border: "1px solid red",
-            /* background: "#B3151B", 
-            justifyContent: "center",
-            marginLeft: 22 + "px",
-            marginTop: 10 + "px",*/
-
             // border: "1px solid red"
         } as React.CSSProperties
     )
@@ -106,7 +98,7 @@ export const Overlay = () => {
                 setSrcUrl(event.target.src);
             }
         }
-    };
+    }
 
     const updateOverlayPos = (rect) => {
         let paddingFromTop = 10;
@@ -127,17 +119,7 @@ export const Overlay = () => {
     const setDocumentPos = (event) => {
         let rect = event.target.getBoundingClientRect();
         setDokumentRect(rect);
-    };
-
-    //Div hiden beim mouse-out
-    const hideDiv = () => {
-        if (!boolOverlay) {
-            setIconLicciumStyle((prevState) => ({
-                ...prevState,
-                display: "none"
-            }));
-        }
-    };
+    }
 
     const toggleOverlayVisibility = () => {
         console.log('click ' + srcUrl);
@@ -158,20 +140,18 @@ export const Overlay = () => {
             }));
             setBoolOverlay(false);
             setIsFetchingData(false);
-            setnoDecOrNoAiOrGenAi(4);
             setMediaType("");
             setGenerateMiddle(false);
         }
-    };
+    }
 
     const clear = () => {
-        //chrome.storage.local.clear(); // Hier wird der Chrome-Speicher geleert
         chrome.storage.local.remove(["selectedServerUrl",
-        /* "displayOverlay", */
-        "pageUrl",
-        "srcUrl",
-        "iscc",
-        "assets"]);
+            "pageUrl",
+            "srcUrl",
+            "iscc",
+            "assets"
+        ]);
         chrome.storage.local.set({ selectedServerUrl: "https://search.liccium.app" });
         chrome.storage.local.set(
             {
@@ -191,30 +171,18 @@ export const Overlay = () => {
                 ]
             }
         );
-    };
+    }
 
 
     const isEqualAndhasCredential = (assets) => {
         setGenerateMiddle(false);
         let matchedAssets = [];
-        console.log("Es folgt unser Bild");
-        console.log(iscc);
-        console.log("Es folgen die Assets");
-        console.log(assets);
-
-        // console.log(iscc[0].isccMetadata.units[1].iscc_unit);
-        // console.log(assets[0].isccMetadata.isccContentCode);
-        // console.log(assets[1].isccMetadata.isccContentCode);
-
 
         if (assets.length >= 1) {
             for (let i = 0; i < assets.length; i++) {
                 if (assets[i].isccMetadata.isccContentCode == iscc[0].isccMetadata.units[1].iscc_unit
                     && assets[i].credentials != undefined
                     && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype != undefined) {
-                    console.log("is equal");
-                    console.log("has credentials");
-                    console.log("has tag");
                     matchedAssets.push(assets[i]);
                 } else {
                     console.log(i + "declaration not matched");
@@ -226,7 +194,6 @@ export const Overlay = () => {
                 let matchedAssetsEqual = true;
                 if (matchedAssets.length > 1) {
                     for (let i = 1; i < matchedAssets.length; i++) {
-                        console.log("TEST!!!!!");
                         if (matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype !=
                             matchedAssets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype) {
                             console.log("tags for matched assets not equal");
@@ -255,7 +222,6 @@ export const Overlay = () => {
 
         } else {
             console.log("n==0");
-            setnoDecOrNoAiOrGenAi(0);
         }
 
         console.log("matchedAssets " + matchedAssets.length);
@@ -269,40 +235,42 @@ export const Overlay = () => {
             || digitalsourcetypeString === "algorithmicMedia") {
 
             setGenerateStatText("Gen·AI");
-            setMiddleContent((prevState) => ({
-                ...prevState,
-                background: "rgba(179, 21, 27, 1)"
-            }));
-            console.log("####");
-            setOverlayStyle((prevState) => ({
-                ...prevState,
-                height: 73.5 + 'px',
-            }));
-            setnoDecOrNoAiOrGenAi(1);
-            setMediaType((digitalsourcetypeString === "trainedAlgorithmicMedia")
+            confMiddleContent(1);
+            let tooltipText = (digitalsourcetypeString === "trainedAlgorithmicMedia")
                 ? "Trained algorithmic media"
                 : (digitalsourcetypeString === "compositeSynthetic")
                     ? "Composite including synthetic elements"
                     : (digitalsourcetypeString === "algorithmicMedia")
-                        ? "Pure algorithmic media" : "");
+                        ? "Pure algorithmic media" : "";
+            setMediaType(tooltipText);
 
         } else if (digitalsourcetypeString === "digitalCapture"
             || digitalsourcetypeString === "minorHumanEdits") {
             setGenerateStatText("No·AI");
+            confMiddleContent(2);
+            setMediaType("Human generated content");
+        } else {
+
+        }
+    }
+
+    const confMiddleContent = (sourceType) => {
+        
+        if(sourceType == 1){    //GEN AI
+            setMiddleContent((prevState) => ({
+                ...prevState,
+                background: "rgba(179, 21, 27, 1)"
+            }));
+        }else if(sourceType == 2){  //NO AI
             setMiddleContent((prevState) => ({
                 ...prevState,
                 background: "rgba(126, 92, 126, 1)"
             }));
-            setnoDecOrNoAiOrGenAi(2);
-            setMediaType("Human generated content");
-            setOverlayStyle((prevState) => ({
-                ...prevState,
-                height: 73.5 + 'px',
-            }));
-
-        } else {
-            setnoDecOrNoAiOrGenAi(3);
         }
+        setOverlayStyle((prevState) => ({
+            ...prevState,
+            height: 73.5 + 'px',
+        }));
     }
 
 
@@ -315,7 +283,7 @@ export const Overlay = () => {
         srcUrlReadable = srcUrlReadable.replaceAll("&", "%26");
         srcUrlReadable = srcUrlReadable.replaceAll("=", "%3D");
 
-        setnoDecOrNoAiOrGenAi(0);
+        //setnoDecOrNoAiOrGenAi(0);
         let currentPageUrl = window.location.href;
         let jsonAssets = [];
         let isccJsonArray = [];
@@ -379,14 +347,9 @@ export const Overlay = () => {
         }
         let www = pageUrlName.substring(0, 4);
 
-        // console.log("TESTING SHIT");
-        // console.log(pageUrlName);
-        // console.log(www);
         if (www === "www.") {
             pageUrlName = pageUrlName.substring(4, pageUrlName.length);
         }
-        // console.log(pageUrlName);
-
         return pageUrlName;
     }
 
@@ -395,12 +358,7 @@ export const Overlay = () => {
     }
 
     const sortVCs = (assets) => {
-
-        // console.log("UNSORTED ASSETS:");
-        // console.log(assets);
-
         let assetsSortedVCs = [];
-
         let assetVCs = [];
 
         // First: insert assets with VCs
@@ -411,8 +369,6 @@ export const Overlay = () => {
         }
 
         // Second: sort VCs by length
-        // console.log("VC ASSETS:");
-        // console.log(assetVCs);
         let index = 0;
         let maxLength = 0;
         let maxIndex = 0;
@@ -431,8 +387,6 @@ export const Overlay = () => {
                 maxLength = 0;
             }
         }
-        // console.log("SORTED VCS ASSETS:");
-        // console.log(assetsSortedVCs);
 
         // Thired: insert assets without VCs
         for (let i = 0; i < assets.length; i++) {
@@ -440,15 +394,30 @@ export const Overlay = () => {
                 assetsSortedVCs.push(assets[i]);
             }
         }
-
-        // console.log("SORTED ASSETS:");
-        // console.log(assetsSortedVCs);
-
         return assetsSortedVCs;
     }
 
+    const showOverlayOne = () => {
+        setOverlayStyle((prevState) => ({
+            ...prevState,
+            display: "block"
+        }));
+        setIconLicciumStyle((prevState) => ({
+            ...prevState,
+            background: "none",
+            boxShadow: "none"
+        }));
+    }
 
-
+    //Div hiden beim mouse-out
+    const hideDiv = () => {
+        if (!boolOverlay) {
+            setIconLicciumStyle((prevState) => ({
+                ...prevState,
+                display: "none"
+            }));
+        }
+    };
 
     const generateMiddleDiv = () => {
         // if (noDecOrNoAiOrGenAi == 1) {
@@ -479,27 +448,6 @@ export const Overlay = () => {
 
     }
 
-    // const generateWarningIcon = () => {
-    //     if (noDecOrNoAiOrGenAi == 1) {
-    //         return <>
-    //             <WarningSvg />
-    //         </>
-    //     }
-    // }
-
-    // const generateBotttomDiv = () => {
-    //     if (noDecOrNoAiOrGenAi == 0 || noDecOrNoAiOrGenAi == 3) {
-    //         return <>
-    //         </>
-    //     } else {
-    //         return <>
-    //             <div className="link">
-    //                 <a href="#" onClick={() => openPopupTab()}>Verify content details</a>
-    //             </div>
-    //         </>
-    //     }
-    // }
-
     const renderOverlayComponents = () => {
         return (
             <>
@@ -515,10 +463,6 @@ export const Overlay = () => {
                 ) : (
                     <></>
                 )}
-
-                {/* <div className="bottom">
-                    {generateBotttomDiv()}
-                </div> */}
             </>
         );
     }
@@ -529,7 +473,6 @@ export const Overlay = () => {
             });
         });
     }
-
 
     useEffect(() => {
         chrome.storage.local.get(
@@ -567,7 +510,6 @@ export const Overlay = () => {
 
         });
 
-        /* window.addEventListener('wheel', checkMediaElement); */
         //listener für hover-in über bilder
         document.addEventListener('mouseover', checkMediaElement);
         //listener für hover-out von bilder
@@ -578,20 +520,11 @@ export const Overlay = () => {
             fetchingData(srcUrl);
         } else if (boolOverlay) {
             isEqualAndhasCredential(assets);
-            setOverlayStyle((prevState) => ({
-                ...prevState,
-                display: "block"
-            }));
-            setIconLicciumStyle((prevState) => ({
-                ...prevState,
-                background: "none",
-                boxShadow: "none"
-            }));
+            showOverlayOne();
         }
 
         return () => {
             // console.log('cleanUp');
-            /* window.removeEventListener('wheel', checkMediaElement); */
             document.removeEventListener('mouseover', checkMediaElement);
             document.removeEventListener('mouseout', hideDiv);
         }
