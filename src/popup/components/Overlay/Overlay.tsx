@@ -83,7 +83,7 @@ export const Overlay = () => {
         } as React.CSSProperties
     )
 
-    
+
     //update Div-Position
     const checkMediaElement = (event) => {
         console.log("check 1");
@@ -181,12 +181,13 @@ export const Overlay = () => {
         if (assets.length >= 1) {
             for (let i = 0; i < assets.length; i++) {
                 if (assets[i].isccMetadata.isccContentCode == iscc[0].isccMetadata.units[1].iscc_unit
-                    && assets[i].credentials != undefined
-                    && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype != undefined) {
+                    && assets[i].credentials !== undefined
+                    && assets[i].isccMetadata.liccium_plugins.iptc !== undefined // Überprüfen, ob iptc definiert ist
+                    && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype !== undefined // Überprüfen, ob digitalsourcetype definiert ist
+                    && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype !== null) { // Überprüfen, ob digitalsourcetype nicht null ist
                     matchedAssets.push(assets[i]);
                 } else {
-                    console.log(i + "declaration not matched");
-
+                    console.log(i + " declaration not matched");
                 }
             }
 
@@ -207,7 +208,7 @@ export const Overlay = () => {
                     for (let i = 0; i < assets.length; i++) {
                         if (matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype !=
                             assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype) {
-                            console.log("tags for all assets not euqal");
+                            console.log("tags for all assets not equal");
                             allAssetsEquals = false;
                             break;
                         }
@@ -219,13 +220,9 @@ export const Overlay = () => {
                     }
                 }
             }
-
-        } else {
-            console.log("n==0");
         }
-
-        console.log("matchedAssets " + matchedAssets.length);
     }
+
 
 
     //proof if at least one asset is genai
@@ -255,13 +252,13 @@ export const Overlay = () => {
     }
 
     const confMiddleContent = (sourceType) => {
-        
-        if(sourceType == 1){    //GEN AI
+
+        if (sourceType == 1) {    //GEN AI
             setMiddleContent((prevState) => ({
                 ...prevState,
                 background: "rgba(179, 21, 27, 1)"
             }));
-        }else if(sourceType == 2){  //NO AI
+        } else if (sourceType == 2) {  //NO AI
             setMiddleContent((prevState) => ({
                 ...prevState,
                 background: "rgba(126, 92, 126, 1)"
