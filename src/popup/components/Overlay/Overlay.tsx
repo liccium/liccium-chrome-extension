@@ -165,7 +165,13 @@ export const Overlay = () => {
     };
 
     const clear = () => {
-        chrome.storage.local.clear(); // Hier wird der Chrome-Speicher geleert
+        //chrome.storage.local.clear(); // Hier wird der Chrome-Speicher geleert
+        chrome.storage.local.remove(["selectedServerUrl",
+        /* "displayOverlay", */
+        "pageUrl",
+        "srcUrl",
+        "iscc",
+        "assets"]);
         chrome.storage.local.set({ selectedServerUrl: "https://search.liccium.app" });
         chrome.storage.local.set(
             {
