@@ -96,7 +96,13 @@ export const Overlay = () => {
                 setDokumentRect(rect);
                 updateOverlayPos(rect);
                 setSrcUrl(event.target.src);
+                
             }
+        }else if(event.target.tagName.toLowerCase() === 'img'
+            && srcUrl != event.target.src){
+            console.log("schliess dich");
+            toggleOverlayVisibility();
+            checkMediaElement(event);
         }
     }
 
