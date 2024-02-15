@@ -96,13 +96,16 @@ export const Overlay = () => {
                 setDokumentRect(rect);
                 updateOverlayPos(rect);
                 setSrcUrl(event.target.src);
-                
+
             }
-        }else if(event.target.tagName.toLowerCase() === 'img'
-            && srcUrl != event.target.src){
+        } else if (event.target.tagName.toLowerCase() === 'img'
+            && srcUrl !== event.target.src
+            && !isFetchingData) {
             console.log("schliess dich");
             toggleOverlayVisibility();
-            checkMediaElement(event);
+            setSrcUrl(event.target.src);
+            let rect = event.target.getBoundingClientRect();
+            updateOverlayPos(rect);
         }
     }
 
