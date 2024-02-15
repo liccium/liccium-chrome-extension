@@ -35,6 +35,7 @@ export const Overlay = () => {
     const [boolNoDeclaration, setBoolNoDeclaration] = useState(false);
     const [isFetchingData, setIsFetchingData] = useState(false);
     const [generateMiddle, setGenerateMiddle] = useState(false);
+    const [dokumentRect, setDokumentRect] = useState();
     const [overlayStyle, setOverlayStyle] = useState(
         {
             height: 36.75 + "px",
@@ -89,30 +90,45 @@ export const Overlay = () => {
             // border: "1px solid red"
         } as React.CSSProperties
     )
+
+    
     //update Div-Position
-    const updateDivPosition = (event) => {
+    const checkMediaElement = (event) => {
+        console.log("check 1");
         if (!boolOverlay) {
             if (event.target.tagName.toLowerCase() === 'img'
                 && event.target.width >= 100
                 && event.target.height >= 100) {
+                console.log("check 2");
                 let rect = event.target.getBoundingClientRect();
-                let paddingFromTop = 10;
-                let paddingFromLeft = 10;
-                setOverlayStyle((prevState) => ({
-                    ...prevState,
-                    top: (rect.top + window.scrollY + paddingFromTop) + 'px',
-                    left: (rect.left + window.scrollX + paddingFromLeft) + 'px'
-                }));
-                setIconLicciumStyle((prevState) => ({
-                    ...prevState,
-                    top: (rect.top + window.scrollY + paddingFromTop) + 'px',
-                    left: (rect.left + window.scrollX + paddingFromLeft) + 'px',
-                    display: 'block'
-                }));
+                setDokumentRect(rect);
+                updateOverlayPos(rect);
                 setSrcUrl(event.target.src);
             }
         }
     };
+
+    const updateOverlayPos = (rect) => {
+        let paddingFromTop = 10;
+        let paddingFromLeft = 10;
+        setOverlayStyle((prevState) => ({
+            ...prevState,
+            top: (rect.top + window.scrollY + paddingFromTop) + 'px',
+            left: (rect.left + window.scrollX + paddingFromLeft) + 'px'
+        }));
+        setIconLicciumStyle((prevState) => ({
+            ...prevState,
+            top: (rect.top + window.scrollY + paddingFromTop) + 'px',
+            left: (rect.left + window.scrollX + paddingFromLeft) + 'px',
+            display: 'block'
+        }));
+    }
+
+    const setDocumentPos = (event) => {
+        let rect = event.target.getBoundingClientRect();
+        setDokumentRect(rect);
+    };
+
     //Div hiden beim mouse-out
     const hideDiv = () => {
         if (!boolOverlay) {
@@ -129,26 +145,7 @@ export const Overlay = () => {
             setBoolOverlay(true);
             setIsFetchingData(true);
         } else {
-            chrome.storage.local.clear(); // Hier wird der Chrome-Speicher geleert
-            chrome.storage.local.set({ selectedServerUrl: "https://search.liccium.app" });
-            chrome.storage.local.set(
-                {
-                    serverUrls: [
-                        {
-                            name: "Liccium",
-                            url: "https://search.liccium.app"
-                        },
-                        {
-                            name: "if(is)",
-                            url: "https://iscc.if-is.net"
-                        },
-                        {
-                            name: "Development",
-                            url: "http://localhost"
-                        }
-                    ]
-                }
-            );
+            clear();
             setOverlayStyle((prevState) => ({
                 ...prevState,
                 display: "none",
@@ -167,7 +164,28 @@ export const Overlay = () => {
         }
     };
 
-
+    const clear = () => {
+        chrome.storage.local.clear(); // Hier wird der Chrome-Speicher geleert
+        chrome.storage.local.set({ selectedServerUrl: "https://search.liccium.app" });
+        chrome.storage.local.set(
+            {
+                serverUrls: [
+                    {
+                        name: "Liccium",
+                        url: "https://search.liccium.app"
+                    },
+                    {
+                        name: "if(is)",
+                        url: "https://iscc.if-is.net"
+                    },
+                    {
+                        name: "Development",
+                        url: "http://localhost"
+                    }
+                ]
+            }
+        );
+    };
 
 
     const isEqualAndhasCredential = (assets) => {
@@ -543,8 +561,9 @@ export const Overlay = () => {
 
         });
 
+        /* window.addEventListener('wheel', checkMediaElement); */
         //listener für hover-in über bilder
-        document.addEventListener('mouseover', updateDivPosition);
+        document.addEventListener('mouseover', checkMediaElement);
         //listener für hover-out von bilder
         document.addEventListener('mouseout', hideDiv);
         console.log("ASSETS:" + assets);
@@ -566,7 +585,8 @@ export const Overlay = () => {
 
         return () => {
             // console.log('cleanUp');
-            document.removeEventListener('mouseover', updateDivPosition);
+            /* window.removeEventListener('wheel', checkMediaElement); */
+            document.removeEventListener('mouseover', checkMediaElement);
             document.removeEventListener('mouseout', hideDiv);
         }
     }, [boolOverlay, isFetchingData]);
