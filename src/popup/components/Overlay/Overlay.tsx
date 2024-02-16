@@ -96,18 +96,21 @@ export const Overlay = () => {
                 setDokumentRect(rect);
                 updateOverlayPos(rect);
                 setSrcUrl(event.target.src);
-
             }
         } else if (event.target.tagName.toLowerCase() === 'img'
-            && srcUrl !== event.target.src
-            && !isFetchingData) {
+            && srcUrl !== event.target.src) {
             console.log("schliess dich");
+            if (abortController) {
+                abortController.abort();
+            }
             toggleOverlayVisibility();
             setSrcUrl(event.target.src);
             let rect = event.target.getBoundingClientRect();
             updateOverlayPos(rect);
         }
     }
+
+    let abortController;
 
     const updateOverlayPos = (rect) => {
         let paddingFromTop = 10;
@@ -281,6 +284,10 @@ export const Overlay = () => {
 
 
     const fetchingData = async (srcUrl) => {
+        // Erstelle einen neuen AbortController
+        abortController = new AbortController();
+        const signal = abortController.signal;
+
         // CONVERT SIGNS IN URL TO READABLE SIGNS
         let srcUrlReadable = srcUrl.replaceAll("%", "%25");
         srcUrlReadable = srcUrlReadable.replaceAll(":", "%3A");
@@ -294,19 +301,16 @@ export const Overlay = () => {
         let jsonAssets = [];
         let isccJsonArray = [];
         try {
-            isccJsonArray = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
-
-
+            // Verwende das Abort-Signal in deinem fetch Aufruf
+            isccJsonArray = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable, { signal }).then(response => response.json());
+            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A"), { signal }).then(response => response.json());
 
             // Put sourceUrl and units from explained ISCC in jsonIscc
             isccJsonArray[0].isccMetadata.name = getModeCapitalLetter(isccJsonArray[0].isccMetadata.mode) + " from " + getISCCName(currentPageUrl);
             isccJsonArray[0].isccMetadata.sourceUrl = srcUrl;
             isccJsonArray[0].isccMetadata.units = jsonExplain.units;
             console.log(isccJsonArray[0]);
-            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + isccJsonArray[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
-
-
+            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + isccJsonArray[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + isccJsonArray[0].isccMetadata.mode + "&isMainnet=false", { signal }).then(response => response.json());
 
             jsonAssets = sortVCs(jsonAssets);
             console.log(jsonAssets);
@@ -322,15 +326,17 @@ export const Overlay = () => {
             setSrcUrl(srcUrl);
 
         } catch (err) {
-            console.error(err);
-            setIsFetchingData(false);
-            window.alert("Request to " + serverUrls[serverUrl] + " failed.");
-            chrome.storage.local.remove(["srcUrl"]);
-            setSrcUrl("");
+            if (err.name === 'AbortError') {
+                console.log('Fetch abgebrochen');
+            } else {
+                console.error(err);
+                window.alert("Request to " + serverUrls[serverUrl] + " failed.");
+                chrome.storage.local.remove(["srcUrl"]);
+                setSrcUrl("");
+            }
         } finally {
             setIsFetchingData(false);
         }
-
     }
 
     const getISCCName = (pageUrl) => {
