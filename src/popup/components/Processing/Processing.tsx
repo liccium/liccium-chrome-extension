@@ -10,8 +10,11 @@ const Processing = () => {
     return (
         <div className="Processing">
             <div className="loading">
-                    <img src="liccium-icon.png" className="licciumIcon" alt="Liccium Icon" />
-                    <p className="loadingText">Generating ISCC, searching for declarations.</p>
+                <img src="liccium-icon.png" className="licciumIcon" alt="Liccium Icon" />
+                <p className="loadingText">Generating ISCC, searching for declarations.</p>
+                <div className="divClearBtn">
+                    <button className="clearBtn">Abbrechen</button>
+                </div>
             </div>
         </div>
     );
