@@ -90,7 +90,8 @@ export const Overlay = () => {
         if (!boolOverlay) {
             if (event.target.tagName.toLowerCase() === 'img'
                 && event.target.width >= 100
-                && event.target.height >= 100) {
+                && event.target.height >= 100
+                && !isBase64Image(event.target.src)) {
                 console.log("check 2");
                 let rect = event.target.getBoundingClientRect();
                 setDokumentRect(rect);
@@ -98,7 +99,8 @@ export const Overlay = () => {
                 setSrcUrl(event.target.src);
             }
         } else if (event.target.tagName.toLowerCase() === 'img'
-            && srcUrl !== event.target.src) {
+            && srcUrl !== event.target.src
+            && !isBase64Image(event.target.src)) {
             console.log("schliess dich");
             if (abortController) {
                 abortController.abort();
@@ -109,6 +111,11 @@ export const Overlay = () => {
             updateOverlayPos(rect);
         }
     }
+
+    const isBase64Image = (src) => {
+        return src.startsWith('data:image/');
+    }
+
 
     let abortController;
 
