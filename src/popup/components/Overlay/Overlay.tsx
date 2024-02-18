@@ -10,6 +10,7 @@ export const Overlay = () => {
 
 
     const [iconRotation, setIconRotation] = useState(0);
+    const [newIcon, setNewIcon] = useState(false);
 
     // chrome states
     const [serverUrl, setServerUrl] = useState("");
@@ -69,6 +70,9 @@ export const Overlay = () => {
         } as React.CSSProperties
     )
 
+    const [newIconLicciumStyle, setNewIconLicciumStyle] = useState({});
+
+
     const [middleContent, setMiddleContent] = useState(
         {
             position: "absolute",
@@ -105,11 +109,30 @@ export const Overlay = () => {
             if (abortController) {
                 abortController.abort();
             }
-            toggleOverlayVisibility();
+            // toggleOverlayVisibility();
             setSrcUrl(event.target.src);
             let rect = event.target.getBoundingClientRect();
-            updateOverlayPos(rect);
+            // Erstelle ein neues Icon und positioniere es entsprechend
+            const newIconLicciumStyle: React.CSSProperties = {
+                position: "absolute",
+                margin: 0,
+                width: 35 + "px",
+                left: (rect.left + window.scrollX + 10) + 'px', // Position entsprechend dem Bild
+                top: (rect.top + window.scrollY + 10) + 'px', // Position entsprechend dem Bild
+                borderRadius: "5px",
+                background: "rgba(255, 255, 255, 0.65)",
+                boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
+                zIndex: 10001,
+                display: "block",
+            };
+            // Setzen Sie den neuen Style für das Icon
+            setNewIconLicciumStyle(newIconLicciumStyle);
+            setNewIcon(true);
+            console.log(newIcon);
         }
+
+
+
     }
 
     const isBase64Image = (src) => {
@@ -579,8 +602,24 @@ export const Overlay = () => {
                             onClick={toggleOverlayVisibility}
                         >
                             <LicciumIconSvg />
+
                         </div>
+
                     )}
+                    {newIcon ? (
+                        <div
+                            className="icon-liccium"
+                            style={newIconLicciumStyle}
+                            onMouseOver={() => setIconLicciumStyle((prevState) => ({
+                                ...prevState,
+                                display: "block"
+                            }))}
+                            onClick={toggleOverlayVisibility}
+                        >
+                            <LicciumIconSvg />
+
+                        </div>
+                    ) : (<></>)}
                 </>
             )}
         </>
