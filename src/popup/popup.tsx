@@ -21,6 +21,8 @@ const Popup = () => {
     const [assets, setAssets] = useState([]); // new Entries().data
     const [selectedItemId, setSelectedItemId] = useState<string>("");
 
+    const[abort, setAbort] = useState(false);
+
     const serverUrls = {
         "https://search.liccium.app": "Liccium",  // plugin.liccium.app
         "https://iscc.if-is.net": "if(is)",
@@ -198,6 +200,13 @@ const Popup = () => {
         return pageUrlName;
     }
 
+    const abortFetching = () => {
+        if(abort && abortController){
+            abortController.abort();
+        }
+
+    }
+
     const render = () => {
 
         let element = [];
@@ -215,8 +224,11 @@ const Popup = () => {
 
         if (srcUrl !== "" && iscc.length === 0) {
             element.push(
-                <Processing key="Processing0" />
+                <Processing key="Processing0" 
+                    setAbort={setAbort}
+                />
             );
+            abortFetching();
         }
 
         if (iscc.length !== 0) {
@@ -259,7 +271,12 @@ const Popup = () => {
         setRenderer(element);
     }
 
+    let abortController;
+
     const sendRequest = async (srcUrl) => {
+
+        abortController = new AbortController();
+        const signal = abortController.signal;
 
         // CONVERT SIGNS IN URL TO READABLE SIGNS
         let srcUrlReadable = srcUrl.replaceAll("%", "%25");
@@ -278,15 +295,15 @@ const Popup = () => {
         let jsonIscc = [];
         let jsonAssets = [];
         try {
-            jsonIscc = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            jsonIscc = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable, { signal }).then(response => response.json());
+            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A"), { signal }).then(response => response.json());
             // Put sourceUrl and units from explained ISCC in jsonIscc
             jsonIscc[0].isccMetadata.name = getModeCapitalLetter(jsonIscc[0].isccMetadata.mode) + " from " + getISCCName(pageUrl);
             jsonIscc[0].isccMetadata.sourceUrl = srcUrl;
             jsonIscc[0].isccMetadata.units = jsonExplain.units;
 
             // FETCH ASSET DATA
-            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + jsonIscc[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
+            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + jsonIscc[0].isccMetadata.mode + "&isMainnet=false", { signal }).then(response => response.json());
 
             // Put units from explained ISCC in jsonAssets
             /* for (let i = 0; i < jsonAssets.length; i++) {

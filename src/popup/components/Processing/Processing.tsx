@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import './Processing.css';
 
-const Processing = () => {
+const Processing = ({setAbort}) => {
+
+    const abort = () => {
+        setAbort(true);
+    }
 
     useEffect(() => {
         console.log("useEffekt Processing");
@@ -13,7 +17,7 @@ const Processing = () => {
                 <img src="liccium-icon.png" className="licciumIcon" alt="Liccium Icon" />
                 <p className="loadingText">Generating ISCC, searching for declarations.</p>
                 <div className="divClearBtn">
-                    <button className="clearBtn">Abbrechen</button>
+                    <button className="clearBtn" onClick={() => abort()}>Abbrechen</button>
                 </div>
             </div>
         </div>
