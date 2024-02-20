@@ -106,9 +106,9 @@ export const Overlay = () => {
             && srcUrl !== event.target.src
             && !isBase64Image(event.target.src)) {
             console.log("schliess dich");
-            if (abortController) {
-                abortController.abort();
-            }
+            // if (abortController) {
+            //     abortController.abort();
+            // }
             // toggleOverlayVisibility();
             setSrcUrl(event.target.src);
             let rect = event.target.getBoundingClientRect();
@@ -143,6 +143,7 @@ export const Overlay = () => {
     let abortController;
 
     const updateOverlayPos = (rect) => {
+        console.log("UPDATE!!!");
         let paddingFromTop = 10;
         let paddingFromLeft = 10;
         setOverlayStyle((prevState) => ({
@@ -158,10 +159,10 @@ export const Overlay = () => {
         }));
     }
 
-    const setDocumentPos = (event) => {
-        let rect = event.target.getBoundingClientRect();
-        setDokumentRect(rect);
-    }
+    // const setDocumentPos = (event) => {
+    //     let rect = event.target.getBoundingClientRect();
+    //     setDokumentRect(rect);
+    // }
 
     const toggleOverlayVisibility = () => {
         console.log('click ' + srcUrl);
@@ -572,6 +573,29 @@ export const Overlay = () => {
         }
     }, [boolOverlay, isFetchingData]);
 
+    const clicked = () => {
+        clear();
+        setOverlayStyle((prevState) => ({
+            ...prevState,
+            display: "none",
+            height: 36.75 + "px"
+        }));
+        setIconLicciumStyle((prevState) => ({
+            ...prevState,
+            background: "rgba(255, 255, 255, 0.65)",
+            boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
+        }));
+        setBoolOverlay(false);
+        setIsFetchingData(false);
+        setMediaType("");
+        setGenerateMiddle(false);
+        setNewIconLicciumStyle((prevState) => ({
+            ...prevState,
+            display: "none"
+        }));
+
+    }
+
     return (
         <>
             {displayOverlay && (
@@ -610,11 +634,11 @@ export const Overlay = () => {
                         <div
                             className="icon-liccium"
                             style={newIconLicciumStyle}
-                            onMouseOver={() => setIconLicciumStyle((prevState) => ({
+                            onMouseOver={() => setNewIconLicciumStyle((prevState) => ({
                                 ...prevState,
                                 display: "block"
                             }))}
-                            onClick={toggleOverlayVisibility}
+                            onClick={clicked}
                         >
                             <LicciumIconSvg />
 
