@@ -15,7 +15,7 @@ const Popup = () => {
     const [srcUrl, setSrcUrl] = useState<string>("");
 
     const [renderer, setRenderer] = useState([]);
-    //const [renderType, setRenderType] = useState<string>("");
+    const [renderType, setRenderType] = useState<string>("");
 
     const [iscc, setIscc] = useState([]);
     const [assets, setAssets] = useState([]); // new Entries().data
@@ -33,7 +33,7 @@ const Popup = () => {
         console.log("Clearing storage");
         chrome.storage.local.remove(["pageUrl", "srcUrl", "iscc", "assets"/* , "renderType" */]);
         setSrcUrl("");
-        /* setRenderType(""); */
+        setRenderType("");
         setIscc([]);
         setAssets([]);
     }
@@ -219,7 +219,7 @@ const Popup = () => {
                     setPageUrl={setPageUrl}
                 />
             );
-            /* setRenderType("Selection"); */
+            setRenderType("Selection");
         }
 
         if (srcUrl !== "" && iscc.length === 0) {
@@ -265,7 +265,7 @@ const Popup = () => {
                     );
                 }
             }
-            /* setRenderType("Assets"); */
+            setRenderType("Assets");
 
         }
         setRenderer(element);
@@ -323,7 +323,7 @@ const Popup = () => {
             setIscc(jsonIscc);
             setAssets(jsonAssets);
 
-            /* setRenderType("Assets"); */
+            setRenderType("Assets");
 
         } catch (err) {
 
@@ -409,14 +409,14 @@ const Popup = () => {
         console.log(assets);
         /* console.log("renderer: " + renderType); */
 
-        if (srcUrl !== "" && iscc.length === 0 /* && renderType === "Selection" */) {
-            /* setRenderType("Processing"); */
+        if (srcUrl !== "" && iscc.length === 0 && renderType === "Selection") {
+            setRenderType("Processing");
             sendRequest(srcUrl);
         }
 
         render();
 
-    }, [srcUrl, /* renderType, */ selectedItemId]);
+    }, [srcUrl, renderType, selectedItemId]);
 
     return (
         <div className="Popup">
