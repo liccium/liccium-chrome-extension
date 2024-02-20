@@ -201,11 +201,10 @@ const Popup = () => {
     }
 
     const abortFetching = () => {
-        if(abort){
             console.log("##### Fetching abbrechen");
-            abortController.abort();
-            
-        }
+            //abortController.abort();
+            setAbort(true);
+            clearStorage();
 
     }
 
@@ -227,7 +226,8 @@ const Popup = () => {
         if (srcUrl !== "" && iscc.length === 0) {
             element.push(
                 <Processing key="Processing0" 
-                    setAbort={setAbort}
+                    abortController={abortFetching}
+                    /* clearStorage={clearStorage} */
                 />
                 
             );
@@ -274,12 +274,12 @@ const Popup = () => {
         setRenderer(element);
     }
 
-    let abortController;
+    var abortController = new AbortController();
 
     const sendRequest = async (srcUrl) => {
 
         //abortController
-        abortController = new AbortController();
+        /* abortController ; */
         const signal = abortController.signal;
 
         // CONVERT SIGNS IN URL TO READABLE SIGNS
@@ -332,6 +332,8 @@ const Popup = () => {
         } catch (err) {
             if (err.name === 'AbortError') {
                 console.log('Fetch abgebrochen');
+                setAbort(false);
+                
             } else {
                 console.error(err);
                 window.alert("Request to " + serverUrls[serverUrl] + " failed.");
@@ -419,8 +421,15 @@ const Popup = () => {
             setRenderType("Processing");
             sendRequest(srcUrl);
         }
-        abortFetching();
+        
         render();
+
+        return () => {
+            if(abort){
+                abortController.abort();
+            }
+            
+        };
 
     }, [srcUrl, renderType, selectedItemId, abort]);
 
