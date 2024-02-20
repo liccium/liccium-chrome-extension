@@ -8,6 +8,9 @@ import './popup.css';
 
 const Popup = () => {
 
+    const [abortController, setAbortController] = useState(new AbortController());
+    const [abort, setAbort] = useState(false);
+
     const [pageUrl, setPageUrl] = useState<string>("");
 
     const [serverUrl, setServerUrl] = useState<string>("");
@@ -20,8 +23,6 @@ const Popup = () => {
     const [iscc, setIscc] = useState([]);
     const [assets, setAssets] = useState([]); // new Entries().data
     const [selectedItemId, setSelectedItemId] = useState<string>("");
-
-    const [abort, setAbort] = useState(false);
 
     const serverUrls = {
         "https://search.liccium.app": "Liccium",  // plugin.liccium.app
@@ -201,10 +202,9 @@ const Popup = () => {
     }
 
     const abortFetching = () => {
-            console.log("##### Fetching abbrechen");
-            //abortController.abort();
-            setAbort(true);
-            clearStorage();
+        console.log("##### Fetching abbrechen");
+        setAbort(true);
+        clearStorage();
 
     }
 
@@ -225,13 +225,13 @@ const Popup = () => {
 
         if (srcUrl !== "" && iscc.length === 0) {
             element.push(
-                <Processing key="Processing0" 
+                <Processing key="Processing0"
                     abortController={abortFetching}
-                    /* clearStorage={clearStorage} */
+                /* clearStorage={clearStorage} */
                 />
-                
+
             );
-            
+
         }
 
         if (iscc.length !== 0) {
@@ -274,13 +274,15 @@ const Popup = () => {
         setRenderer(element);
     }
 
-    var abortController = new AbortController();
+
 
     const sendRequest = async (srcUrl) => {
 
         //abortController
         /* abortController ; */
-        const signal = abortController.signal;
+        const newAbortController = new AbortController(); // Erstellen Sie einen neuen AbortController
+        setAbortController(newAbortController); // Aktualisieren Sie den AbortController im State
+        const signal = newAbortController.signal;
 
         // CONVERT SIGNS IN URL TO READABLE SIGNS
         let srcUrlReadable = srcUrl.replaceAll("%", "%25");
@@ -331,9 +333,9 @@ const Popup = () => {
 
         } catch (err) {
             if (err.name === 'AbortError') {
-                console.log('Fetch abgebrochen');
+                console.log('#####################################################Fetch abgebrochen#####################################################');
                 setAbort(false);
-                
+
             } else {
                 console.error(err);
                 window.alert("Request to " + serverUrls[serverUrl] + " failed.");
@@ -421,17 +423,21 @@ const Popup = () => {
             setRenderType("Processing");
             sendRequest(srcUrl);
         }
-        
+
         render();
 
+        if (abort) {
+            abortController.abort();
+        }
+
+
         return () => {
-            if(abort){
-                abortController.abort();
-            }
-            
+
         };
 
     }, [srcUrl, renderType, selectedItemId, abort]);
+
+
 
     return (
         <div className="Popup">
