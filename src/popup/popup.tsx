@@ -21,7 +21,7 @@ const Popup = () => {
     const [assets, setAssets] = useState([]); // new Entries().data
     const [selectedItemId, setSelectedItemId] = useState<string>("");
 
-    const[abort, setAbort] = useState(false);
+    const [abort, setAbort] = useState(false);
 
     const serverUrls = {
         "https://search.liccium.app": "Liccium",  // plugin.liccium.app
@@ -201,8 +201,10 @@ const Popup = () => {
     }
 
     const abortFetching = () => {
-        if(abort && abortController){
+        if(abort){
+            console.log("##### Fetching abbrechen");
             abortController.abort();
+            
         }
 
     }
@@ -227,8 +229,9 @@ const Popup = () => {
                 <Processing key="Processing0" 
                     setAbort={setAbort}
                 />
+                
             );
-            abortFetching();
+            
         }
 
         if (iscc.length !== 0) {
@@ -275,6 +278,7 @@ const Popup = () => {
 
     const sendRequest = async (srcUrl) => {
 
+        //abortController
         abortController = new AbortController();
         const signal = abortController.signal;
 
@@ -326,12 +330,14 @@ const Popup = () => {
             setRenderType("Assets");
 
         } catch (err) {
-
-            console.error(err);
-
-            window.alert("Request to " + serverUrls[serverUrl] + " failed.");
-            chrome.storage.local.remove(["srcUrl"]);
-            setSrcUrl("");
+            if (err.name === 'AbortError') {
+                console.log('Fetch abgebrochen');
+            } else {
+                console.error(err);
+                window.alert("Request to " + serverUrls[serverUrl] + " failed.");
+                chrome.storage.local.remove(["srcUrl"]);
+                setSrcUrl("");
+            }
         }
 
     }
@@ -413,10 +419,10 @@ const Popup = () => {
             setRenderType("Processing");
             sendRequest(srcUrl);
         }
-
+        abortFetching();
         render();
 
-    }, [srcUrl, renderType, selectedItemId]);
+    }, [srcUrl, renderType, selectedItemId, abort]);
 
     return (
         <div className="Popup">
