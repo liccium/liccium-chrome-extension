@@ -594,7 +594,13 @@ export const Overlay = () => {
             display: "none"
         }));
 
+        // Kurze Verzögerung, bevor das Overlay wieder angezeigt wird und das Fetching gestartet wird
+        setTimeout(() => {
+            setBoolOverlay(true);
+            setIsFetchingData(true);
+        }, 1); // Ändern Sie die Zeit nach Bedarf
     }
+
 
     return (
         <>
