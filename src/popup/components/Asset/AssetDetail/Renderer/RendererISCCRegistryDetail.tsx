@@ -22,7 +22,8 @@ class RendererISCCRegistryDetail {
         }
         this.verificationTypes = {
             DomainVerification: "Domain verification",
-            TwitterVerification: "Twitter verification"
+            TwitterVerification: "Twitter verification",
+            DidKeyC2PAVerification: "User key"
         }
     }
 
