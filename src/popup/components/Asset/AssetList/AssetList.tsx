@@ -80,7 +80,7 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                             <div className="tagTooltip">
                                 <div key={"divNoAITag" + index} className={"noAITag"}>
                                     <img className="tagIcon" src="noai.png" alt="NoAI" />
-                                    <p key={"tagNameTrue" + index} className="handle">No·AI</p>
+                                    <p key={"tagNameTrue" + index} className="handle">Authentic</p>
                                 </div>
                                 <span className="tagtooltiptext">Human generated content</span>
                             </div>
