@@ -216,6 +216,29 @@ export const Overlay = () => {
         );
     }
 
+    const isEqualAndhasCredential2 = (assets) => {
+        setGenerateMiddle(false);
+        let matchedAssets = [];
+
+        let i;
+        for (i = 0; i < assets.length; i++) {
+            if (assets[i].isccMetadata.liccium_plugins.iptc !== undefined // Überprüfen, ob iptc definiert ist
+                && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype !== undefined
+                && isGenAi(assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype)) {
+                if (assets[i].isccMetadata.isccContentCode == iscc[0].isccMetadata.units[1].iscc_unit
+                    && assets[i].credentials !== undefined) {
+                        matchedAssets.push(assets[i]); 
+                }
+            } else {
+                break;
+            }
+        }
+        if (matchedAssets.length != 0 && i == assets.length) {
+            console.log("show tag");
+            setGenerateMiddle(true);
+            createMiddleContent(matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype);
+        }
+    }
 
     const isEqualAndhasCredential = (assets) => {
         setGenerateMiddle(false);
@@ -227,7 +250,7 @@ export const Overlay = () => {
                     && assets[i].credentials !== undefined
                     && assets[i].isccMetadata.liccium_plugins.iptc !== undefined // Überprüfen, ob iptc definiert ist
                     && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype !== undefined // Überprüfen, ob digitalsourcetype definiert ist
-                    && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype !== null) { // Überprüfen, ob digitalsourcetype nicht null ist
+                    && isGenAi(assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype)) { // Überprüfen, ob digitalsourcetype nicht null ist
                     matchedAssets.push(assets[i]);
                 } else {
                     console.log(i + " declaration not matched");
@@ -259,20 +282,23 @@ export const Overlay = () => {
                     if (allAssetsEquals) {
                         console.log("show tag");
                         setGenerateMiddle(true);
-                        isGenaiOrNoAi(matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype);
+                        createMiddleContent(matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype);
                     }
                 }
             }
         }
     }
 
+    const isGenAi = (digitalsourcetypeString) => {
+        return digitalsourcetypeString === "trainedAlgorithmicMedia"
+        || digitalsourcetypeString === "compositeSynthetic"
+        || digitalsourcetypeString === "algorithmicMedia";
+    }
 
 
     //proof if at least one asset is genai
-    const isGenaiOrNoAi = (digitalsourcetypeString) => {
-        if (digitalsourcetypeString === "trainedAlgorithmicMedia"
-            || digitalsourcetypeString === "compositeSynthetic"
-            || digitalsourcetypeString === "algorithmicMedia") {
+    const createMiddleContent = (digitalsourcetypeString) => {
+        /* if (isGenAi(digitalsourcetypeString)) { */
 
             setGenerateStatText("Gen·AI");
             confMiddleContent(1);
@@ -284,14 +310,14 @@ export const Overlay = () => {
                         ? "Pure algorithmic media" : "";
             setMediaType(tooltipText);
 
-        } else if (digitalsourcetypeString === "digitalCapture"
+       /* }  else if (digitalsourcetypeString === "digitalCapture"
             || digitalsourcetypeString === "minorHumanEdits") {
             setGenerateStatText("No·AI");
             confMiddleContent(2);
             setMediaType("Human generated content");
         } else {
 
-        }
+        } */
     }
 
     const confMiddleContent = (sourceType) => {
@@ -301,12 +327,12 @@ export const Overlay = () => {
                 ...prevState,
                 background: "rgba(179, 21, 27, 1)"
             }));
-        } else if (sourceType == 2) {  //NO AI
+        } /* else if (sourceType == 2) {  //NO AI
             setMiddleContent((prevState) => ({
                 ...prevState,
                 background: "rgba(126, 92, 126, 1)"
             }));
-        }
+        } */
         setOverlayStyle((prevState) => ({
             ...prevState,
             height: 73.5 + 'px',
@@ -562,7 +588,7 @@ export const Overlay = () => {
         if (isFetchingData) {
             fetchingData(srcUrl);
         } else if (boolOverlay) {
-            isEqualAndhasCredential(assets);
+            isEqualAndhasCredential2(assets);
             showOverlayOne();
         }
 
