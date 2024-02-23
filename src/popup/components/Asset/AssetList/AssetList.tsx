@@ -155,15 +155,17 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
         let credentials = asset.credentials;
         if (credentials !== null) {
             for (let i = 0; i < credentials.length; i++) {
-                tagElements.push(
-                    <div className="tagTooltip">
-                        <div key={"div" + index + "" + i} className={"verified"}>
-                            <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
-                            <p key={"verified" + index + "" + i} className="handle">{credentials[i].evidence.handle}</p>
+                if (credentials[i].evidence.type[0] != "DidKey509CertificateVerification") {
+                    tagElements.push(
+                        <div className="tagTooltip">
+                            <div key={"div" + index + "" + i} className={"verified"}>
+                                <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
+                                <p key={"verified" + index + "" + i} className="handle">{credentials[i].evidence.handle}</p>
+                            </div>
+                            <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain" : "Verified Twitter/X account"}</span>
                         </div>
-                        <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain" : "Verified Twitter/X account"}</span>
-                    </div>
-                );
+                    );
+                }
             }
         } else {
             tagElements.push(
