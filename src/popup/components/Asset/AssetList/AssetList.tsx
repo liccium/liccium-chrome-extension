@@ -165,6 +165,10 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                             <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain" : "Verified Twitter/X account"}</span>
                         </div>
                     );
+                } else if (credentials[i].evidence.type[0] == "DidKey509CertificateVerification") {
+                    console.log("HIERRRRRRRRRRR--------------");
+                    console.log(credentials[i].credentialSubject.id);
+
                 }
             }
         } else {
