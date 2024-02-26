@@ -152,6 +152,19 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
         } */
 
 
+        console.log("alle assets");
+        console.log(assets[0].credentials[2].evidence.type[0]);
+
+        for (let i = 0; i < assets.length; i++) {
+            for (let j = 0; j < assets[i].credentials.length; j++) {
+                if (assets[i].credentials[j].credentialSubject.id.includes(assets[i].resourceMetadata.declarer)
+                    && assets[i].credentials[j].evidence.type[0] == "DidKey509CertificateVerification") {
+                    console.log("TAG ERZEUGEN");
+                }
+            }
+        }
+
+
         let credentials = asset.credentials;
         if (credentials !== null) {
             for (let i = 0; i < credentials.length; i++) {
