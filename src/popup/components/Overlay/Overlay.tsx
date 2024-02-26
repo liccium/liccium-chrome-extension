@@ -35,7 +35,6 @@ export const Overlay = () => {
     const [boolNoDeclaration, setBoolNoDeclaration] = useState(false);
     const [isFetchingData, setIsFetchingData] = useState(false);
     const [generateMiddle, setGenerateMiddle] = useState(false);
-    const [dokumentRect, setDokumentRect] = useState();
     const [overlayStyle, setOverlayStyle] = useState(
         {
             height: 36.75 + "px",
@@ -70,7 +69,18 @@ export const Overlay = () => {
         } as React.CSSProperties
     )
 
-    const [newIconLicciumStyle, setNewIconLicciumStyle] = useState({});
+    const [newIconLicciumStyle, setNewIconLicciumStyle] = useState(
+        {
+            position: "absolute",
+            margin: 0,
+            width: 35 + "px",
+            borderRadius: "5px",
+            background: "rgba(255, 255, 255, 0.65)",
+            boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
+            zIndex: "10001",
+            display: "none"
+        } as React.CSSProperties
+    );
 
 
     const [middleContent, setMiddleContent] = useState(
@@ -89,50 +99,31 @@ export const Overlay = () => {
 
 
     //update Div-Position
-    const checkMediaElement = (event) => {
-        console.log("check 1");
-        if (!boolOverlay) {
+    const createIconContainer = (event) => {
+        if (!boolOverlay) { //wenn overlay nicht ausgeklappt ist
             if (event.target.tagName.toLowerCase() === 'img'
                 && event.target.width >= 100
                 && event.target.height >= 100
-                && !isBase64Image(event.target.src)) {
-                console.log("check 2");
+                && !isBase64Image(event.target.src)) { //wenn event ein IMG ist
                 let rect = event.target.getBoundingClientRect();
-                setDokumentRect(rect);
                 updateOverlayPos(rect);
                 setSrcUrl(event.target.src);
             }
         } else if (event.target.tagName.toLowerCase() === 'img'
             && srcUrl !== event.target.src
-            && !isBase64Image(event.target.src)) {
-            console.log("schliess dich");
-            // if (abortController) {
-            //     abortController.abort();
-            // }
-            // toggleOverlayVisibility();
-            setSrcUrl(event.target.src);
-            let rect = event.target.getBoundingClientRect();
-            // Erstelle ein neues Icon und positioniere es entsprechend
-            const newIconLicciumStyle: React.CSSProperties = {
-                position: "absolute",
-                margin: 0,
-                width: 35 + "px",
-                left: (rect.left + window.scrollX + 10) + 'px', // Position entsprechend dem Bild
-                top: (rect.top + window.scrollY + 10) + 'px', // Position entsprechend dem Bild
-                borderRadius: "5px",
-                background: "rgba(255, 255, 255, 0.65)",
-                boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
-                zIndex: 10001,
-                display: "block",
-            };
-            // Setzen Sie den neuen Style für das Icon
-            setNewIconLicciumStyle(newIconLicciumStyle);
-            setNewIcon(true);
-            console.log(newIcon);
+            && !isBase64Image(event.target.src)){ //Wenn overlay ausgeklappt ist und event ein anderes IMG ist
+                setSrcUrl(event.target.src);
+                let rect = event.target.getBoundingClientRect();
+                setNewIconLicciumStyle((prevState) => ({
+                    ...prevState,
+                    left: (rect.left + window.scrollX + 10) + 'px', // Position entsprechend dem Bild
+                    top: (rect.top + window.scrollY + 10) + 'px', // Position entsprechend dem Bild
+                    display: "block"
+                }));
+                setNewIcon(true);
+        } else if (event.target.className != 'icon-liccium') {
+            setNewIcon(false);
         }
-
-
-
     }
 
     const isBase64Image = (src) => {
@@ -580,7 +571,7 @@ export const Overlay = () => {
         });
 
         //listener für hover-in über bilder
-        document.addEventListener('mouseover', checkMediaElement);
+        document.addEventListener('mouseover', createIconContainer);
         //listener für hover-out von bilder
         document.addEventListener('mouseout', hideDiv);
         console.log("ASSETS:" + assets);
@@ -594,7 +585,7 @@ export const Overlay = () => {
 
         return () => {
             // console.log('cleanUp');
-            document.removeEventListener('mouseover', checkMediaElement);
+            document.removeEventListener('mouseover', createIconContainer);
             document.removeEventListener('mouseout', hideDiv);
         }
     }, [boolOverlay, isFetchingData]);
