@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { GenAISvg } from './GenAISvg';
 import { LicciumIconSvg } from './LicciumIconSvg';
 import './Overlay.css';
-import { ProcessingOverlay } from './ProcessingOverlay';
-import { WarningSvg } from './WarningSvg';
-import { ShieldSvg } from './ShieldSvg';
 
 export const Overlay = () => {
 
 
     const [iconRotation, setIconRotation] = useState(0);
     const [newIcon, setNewIcon] = useState(false);
+
+    const [abortController, setAbortController] = useState(new AbortController());
 
     // chrome states
     const [serverUrl, setServerUrl] = useState("");
@@ -69,6 +68,7 @@ export const Overlay = () => {
         } as React.CSSProperties
     )
 
+
     const [newIconLicciumStyle, setNewIconLicciumStyle] = useState(
         {
             position: "absolute",
@@ -121,17 +121,16 @@ export const Overlay = () => {
                     display: "block"
                 }));
                 setNewIcon(true);
-        } else if (event.target.className != 'icon-liccium') {
+        } else if (event.target.className != 'icon-liccium') { //hoverOut für newIcon
             setNewIcon(false);
         }
     }
+
 
     const isBase64Image = (src) => {
         return src.startsWith('data:image/');
     }
 
-
-    let abortController;
 
     const updateOverlayPos = (rect) => {
         console.log("UPDATE!!!");
@@ -150,10 +149,6 @@ export const Overlay = () => {
         }));
     }
 
-    // const setDocumentPos = (event) => {
-    //     let rect = event.target.getBoundingClientRect();
-    //     setDokumentRect(rect);
-    // }
 
     const toggleOverlayVisibility = () => {
         console.log('click ' + srcUrl);
@@ -178,6 +173,44 @@ export const Overlay = () => {
             setGenerateMiddle(false);
         }
     }
+
+
+    const clicked = () => {
+        clear();
+        setOverlayStyle((prevState) => ({
+            ...prevState,
+            display: "none",
+            height: 36.75 + "px"
+        }));
+        setIconLicciumStyle((prevState) => ({
+            ...prevState,
+            background: "rgba(255, 255, 255, 0.65)",
+            boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
+        }));
+        setBoolOverlay(false);
+        setIsFetchingData(false);
+        setMediaType("");
+        setGenerateMiddle(false);
+        setNewIconLicciumStyle((prevState) => ({
+            ...prevState,
+            display: "none"
+        }));
+
+        // Kurze Verzögerung, bevor das Overlay wieder angezeigt wird und das Fetching gestartet wird
+        setTimeout(() => {
+            setBoolOverlay(true);
+            setIsFetchingData(true);
+        }, 1); // Ändern Sie die Zeit nach Bedarf
+    }
+
+
+    const clickAbort = () => {
+        abortController.abort();
+        clear();
+        setBoolOverlay(false);
+        setIsFetchingData(false);
+    }
+
 
     const clear = () => {
         chrome.storage.local.remove(["selectedServerUrl",
@@ -207,6 +240,7 @@ export const Overlay = () => {
         );
     }
 
+
     const isEqualAndhasCredential2 = (assets) => {
         setGenerateMiddle(false);
         let matchedAssets = [];
@@ -230,6 +264,7 @@ export const Overlay = () => {
             createMiddleContent(matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype);
         }
     }
+
 
     const isEqualAndhasCredential = (assets) => {
         setGenerateMiddle(false);
@@ -280,6 +315,7 @@ export const Overlay = () => {
         }
     }
 
+
     const isGenAi = (digitalsourcetypeString) => {
         return digitalsourcetypeString === "trainedAlgorithmicMedia"
         || digitalsourcetypeString === "compositeSynthetic"
@@ -311,6 +347,7 @@ export const Overlay = () => {
         } */
     }
 
+
     const confMiddleContent = (sourceType) => {
 
         if (sourceType == 1) {    //GEN AI
@@ -332,9 +369,11 @@ export const Overlay = () => {
 
 
     const fetchingData = async (srcUrl) => {
+
         // Erstelle einen neuen AbortController
-        abortController = new AbortController();
-        const signal = abortController.signal;
+        const newAbortController = new AbortController(); // Erstellen Sie einen neuen AbortController
+        setAbortController(newAbortController); // Aktualisieren Sie den AbortController im State
+        const signal = newAbortController.signal;
 
         // CONVERT SIGNS IN URL TO READABLE SIGNS
         let srcUrlReadable = srcUrl.replaceAll("%", "%25");
@@ -387,6 +426,7 @@ export const Overlay = () => {
         }
     }
 
+
     const getISCCName = (pageUrl) => {
 
         let pageUrlSplit = pageUrl.split("/");
@@ -413,9 +453,11 @@ export const Overlay = () => {
         return pageUrlName;
     }
 
+
     const getModeCapitalLetter = (mode) => {
         return String.fromCharCode((mode.charCodeAt(0) - 32)) + mode.substring(1, mode.length);
     }
+
 
     const sortVCs = (assets) => {
         let assetsSortedVCs = [];
@@ -457,6 +499,7 @@ export const Overlay = () => {
         return assetsSortedVCs;
     }
 
+
     const showOverlayOne = () => {
         setOverlayStyle((prevState) => ({
             ...prevState,
@@ -469,6 +512,7 @@ export const Overlay = () => {
         }));
     }
 
+
     //Div hiden beim mouse-out
     const hideDiv = () => {
         if (!boolOverlay) {
@@ -478,6 +522,7 @@ export const Overlay = () => {
             }));
         }
     };
+
 
     const generateMiddleDiv = () => {
         // if (noDecOrNoAiOrGenAi == 1) {
@@ -495,6 +540,7 @@ export const Overlay = () => {
         // }
     }
 
+
     const generateHeadline = () => {
         if (assets.length == 0) {
             return <>
@@ -507,6 +553,7 @@ export const Overlay = () => {
         }
 
     }
+
 
     const renderOverlayComponents = () => {
         return (
@@ -527,6 +574,7 @@ export const Overlay = () => {
         );
     }
 
+    
     const openPopupTab = () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id, { openPopupTab: true }).then(response => {
@@ -590,35 +638,6 @@ export const Overlay = () => {
         }
     }, [boolOverlay, isFetchingData]);
 
-    const clicked = () => {
-        clear();
-        setOverlayStyle((prevState) => ({
-            ...prevState,
-            display: "none",
-            height: 36.75 + "px"
-        }));
-        setIconLicciumStyle((prevState) => ({
-            ...prevState,
-            background: "rgba(255, 255, 255, 0.65)",
-            boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
-        }));
-        setBoolOverlay(false);
-        setIsFetchingData(false);
-        setMediaType("");
-        setGenerateMiddle(false);
-        setNewIconLicciumStyle((prevState) => ({
-            ...prevState,
-            display: "none"
-        }));
-
-        // Kurze Verzögerung, bevor das Overlay wieder angezeigt wird und das Fetching gestartet wird
-        setTimeout(() => {
-            setBoolOverlay(true);
-            setIsFetchingData(true);
-        }, 1); // Ändern Sie die Zeit nach Bedarf
-    }
-
-
     return (
         <>
             {displayOverlay && (
@@ -627,7 +646,7 @@ export const Overlay = () => {
                         ...prevState,
                         display: "block"
                     }))}>
-                        {isFetchingData ? <ProcessingOverlay /> : renderOverlayComponents()}
+                        {isFetchingData ? (<> </>) : renderOverlayComponents()}
                     </div>
 
                     {/* Conditionally render the icon based on isFetchingData */}
@@ -635,6 +654,7 @@ export const Overlay = () => {
                         <div
                             className="icon-liccium-loading"
                             style={{ ...iconLicciumStyle, transform: `rotate(${iconRotation}deg)` }}
+                            onClick={clickAbort}
                         >
                             <LicciumIconSvg />
                         </div>
