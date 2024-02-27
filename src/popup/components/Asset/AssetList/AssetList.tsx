@@ -20,7 +20,7 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                         <div className="tagTooltip" key={`certificateTag_${index}_${i}`}>
                             <div className="c2paTag">
                                 <img className="tagIcon" src="contentCredential-white.png" alt="verified" />
-                                <p className="handle">content c.</p>
+                                <p className="handle">c2pa</p>
                             </div>
                             <span className="tagtooltiptext">Content Credential</span>
                         </div>
