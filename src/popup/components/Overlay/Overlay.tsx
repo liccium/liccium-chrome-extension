@@ -110,17 +110,18 @@ export const Overlay = () => {
                 setSrcUrl(event.target.src);
             }
         } else if (event.target.tagName.toLowerCase() === 'img'
-            && srcUrl !== event.target.src
             && !isBase64Image(event.target.src)){ //Wenn overlay ausgeklappt ist und event ein anderes IMG ist
-                setSrcUrl(event.target.src);
-                let rect = event.target.getBoundingClientRect();
-                setNewIconLicciumStyle((prevState) => ({
-                    ...prevState,
-                    left: (rect.left + window.scrollX + 10) + 'px', // Position entsprechend dem Bild
-                    top: (rect.top + window.scrollY + 10) + 'px', // Position entsprechend dem Bild
-                    display: "block"
-                }));
-                setNewIcon(true);
+                if(srcUrl !== event.target.src){
+                    let rect = event.target.getBoundingClientRect();
+                    setNewIconLicciumStyle((prevState) => ({
+                        ...prevState,
+                        left: (rect.left + window.scrollX + 10) + 'px', // Position entsprechend dem Bild
+                        top: (rect.top + window.scrollY + 10) + 'px', // Position entsprechend dem Bild
+                        display: "block"
+                    }));
+                    setNewIcon(true);   
+                }
+                setSrcUrl(event.target.src);       
         } else if (event.target.className != 'icon-liccium') { //hoverOut für newIcon
             setNewIcon(false);
         }
@@ -168,7 +169,7 @@ export const Overlay = () => {
                 boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
             }));
             setBoolOverlay(false);
-            setIsFetchingData(false);
+            //setIsFetchingData(false);
             setMediaType("");
             setGenerateMiddle(false);
         }
@@ -176,6 +177,12 @@ export const Overlay = () => {
 
 
     const clicked = () => {
+        /* if(isFetchingData){
+            console.log("##### Hier vor dem fetch abbruch ######");
+            abortController.abort();
+            
+        }  */
+        console.log("isFetching: " + isFetchingData);
         clear();
         setOverlayStyle((prevState) => ({
             ...prevState,
@@ -188,7 +195,7 @@ export const Overlay = () => {
             boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
         }));
         setBoolOverlay(false);
-        setIsFetchingData(false);
+        //setIsFetchingData(false);
         setMediaType("");
         setGenerateMiddle(false);
         setNewIconLicciumStyle((prevState) => ({
@@ -201,6 +208,7 @@ export const Overlay = () => {
             setBoolOverlay(true);
             setIsFetchingData(true);
         }, 1); // Ändern Sie die Zeit nach Bedarf
+
     }
 
 
@@ -208,7 +216,7 @@ export const Overlay = () => {
         abortController.abort();
         clear();
         setBoolOverlay(false);
-        setIsFetchingData(false);
+        //setIsFetchingData(false);
     }
 
 
