@@ -362,6 +362,28 @@ input[type="reset"] {
     border: 2px solid #B3011B;
 }
 
+.c2paTag {
+    margin: 0;
+    margin-left: 3px;
+
+    padding-right: 10px;
+
+    max-width: 114px;
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #000000;
+    color: white;
+
+    border-radius: 15px 15px 15px 15px;
+    border: 2px solid #000000;
+}
+
 .tagIcon {
     margin: 0;
     padding: 3px;

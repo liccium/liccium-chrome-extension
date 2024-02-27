@@ -18,11 +18,11 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                 ) {
                     certificateTagElements.push(
                         <div className="tagTooltip" key={`certificateTag_${index}_${i}`}>
-                            <div className="genAITag">
-                                <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
-                                <p className="handle">C2PA</p>
+                            <div className="c2paTag">
+                                <img className="tagIcon" src="contentCredential-white.png" alt="verified" />
+                                <p className="handle">content c.</p>
                             </div>
-                            <span className="tagtooltiptext">Certificate verification</span>
+                            <span className="tagtooltiptext">Content Credential</span>
                         </div>
                     );
                 }
