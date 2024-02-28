@@ -377,11 +377,11 @@ input[type="reset"] {
     align-items: center;
     justify-content: center;
 
-    background-color: #000000;
+    background-color: #4b4949;
     color: white;
 
     border-radius: 15px 15px 15px 15px;
-    border: 2px solid #000000;
+    border: 2px solid #4b4949;
 }
 
 .tagIcon {
