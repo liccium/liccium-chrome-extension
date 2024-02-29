@@ -245,7 +245,7 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                                 <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
                                 <p key={"verified" + index + "" + i} className="handle">{credentials[i].evidence.handle}</p>
                             </div>
-                            <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain" : "Verified Twitter/X account"}</span>
+                            <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain: " + credentials[i].evidence.handle : "Verified Twitter/X account"}</span>
                         </div>
                     );
                 }
