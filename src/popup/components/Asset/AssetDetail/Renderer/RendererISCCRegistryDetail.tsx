@@ -1,7 +1,25 @@
 import React from 'react';
 import Unit from '../../../Unit/Unit';
 
+
+
 class RendererISCCRegistryDetail {
+
+    convertDateFormat(dateTimeString) {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        const date = new Date(dateTimeString);
+        const dayOfWeek = days[date.getUTCDay()];
+        const dayOfMonth = date.getUTCDate();
+        const month = months[date.getUTCMonth()];
+        const year = date.getUTCFullYear();
+        const hours = ('0' + date.getUTCHours()).slice(-2);
+        const minutes = ('0' + date.getUTCMinutes()).slice(-2);
+        const seconds = ('0' + date.getUTCSeconds()).slice(-2);
+
+        return `${dayOfWeek}, ${dayOfMonth} ${month} ${year} ${hours}:${minutes}:${seconds} GMT`;
+    }
 
     data = null;
     setData = null;
@@ -116,7 +134,55 @@ class RendererISCCRegistryDetail {
             controlButtons.push(<button key="compareBtn" id="compareBtn" className="controlsButton" onClick={() => this.renderCompareData(iscc, asset)}>Compare</button>);
         }
 
+        if (asset.credentials[2] != null) {
+            controlButtons.push(<button key="c2paBtn" id="c2paBtn" className="controlsButton" onClick={() => this.renderC2paData(asset)}>C2PA</button>);
+        }
+
+
+
         return controlButtons;
+    }
+
+
+    renderC2paData(asset) {
+        let assetBtn = document.getElementById("c2paBtn");
+        this.clearControlsButtonStyle();
+        this.setControlsButtonStyle(assetBtn);
+        let data = [];
+        let inputString = asset.isccMetadata.liccium_plugins.c2pa.active_manifest.claim_generator;
+        let firstWord = inputString.split(" ")[0];
+        data.push(
+            <div key="cro0" className="contentRowOdd">
+                <p key="keyFilename" className="pRowKey">Issued by</p>
+                <p key="keyFilenameValue" className="pRowValue">{firstWord}</p>
+            </div>
+        );
+        data.push(
+            <div key="cro1" className="contentRowEven">
+                <p key="keyMediatype" className="pRowKey">Issued on</p>
+                <p key="keyMediatypeValue" className="pRowValue">{this.convertDateFormat(asset.isccMetadata.liccium_plugins.c2pa.active_manifest.signature_info.time)}</p>
+            </div>
+        );
+        data.push(
+            <div key="cro2" className="contentRowOdd">
+                <p key="keyWidth" className="pRowKey">Signed by</p>
+                <p key="keyWidthValue" className="pRowValue">{asset.credentials[2].credentialSubject.sameAs}</p>
+            </div>
+        );
+        data.push(
+            <div key="cro3" className="contentRowEven">
+                <p key="keyHeight" className="pRowKey">Credentials</p>
+                <p key="keyHeightValue" className="pRowValue">{<button onClick={() => this.renderCredentialsData(asset)}>User keys</button>}</p>
+            </div>
+        );
+        data.push(
+            <div key="cro4" className="contentRowOdd">
+                <p key="keyFilesize" className="pRowKey">Manifest</p>
+                <p key="keyFilesizeValue" className="pRowValue"><a href={asset.resourceMetadata.meta_url} target="_blank">{asset.resourceMetadata.meta_url}</a></p>
+            </div>
+        );
+        this.setData(data);
+
     }
 
     renderMetadataData(asset) {
@@ -657,5 +723,6 @@ class RendererISCCRegistryDetail {
     }
 
 }
+
 
 export default RendererISCCRegistryDetail;
