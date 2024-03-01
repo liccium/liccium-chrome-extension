@@ -134,13 +134,19 @@ class RendererISCCRegistryDetail {
             controlButtons.push(<button key="compareBtn" id="compareBtn" className="controlsButton" onClick={() => this.renderCompareData(iscc, asset)}>Compare</button>);
         }
 
-        if (asset.credentials[2] != null) {
+        if (credentials !== null && credentials !== undefined && this.isVerificationTypeIncluded(credentials, "DidKeyC2PAVerification")) {
             controlButtons.push(<button key="c2paBtn" id="c2paBtn" className="controlsButton" onClick={() => this.renderC2paData(asset)}>C2PA</button>);
         }
 
-
-
         return controlButtons;
+    }
+
+    isVerificationTypeIncluded(credentials, verificationType) {
+        let isVerificationTypeIncluded = false;
+        for (let i = 0; i < credentials.length && !isVerificationTypeIncluded; i++) {
+            isVerificationTypeIncluded = credentials[i].type[0] === "VerifiableCredential" && credentials[i].type[1] === verificationType;
+        }
+        return isVerificationTypeIncluded;
     }
 
 
