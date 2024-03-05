@@ -134,7 +134,7 @@ class RendererISCCRegistryDetail {
             controlButtons.push(<button key="compareBtn" id="compareBtn" className="controlsButton" onClick={() => this.renderCompareData(iscc, asset)}>Compare</button>);
         }
 
-        if (credentials !== null && credentials !== undefined && this.isVerificationTypeIncluded(credentials, "DidKeyC2PAVerification")) {
+        if (credentials !== null && credentials !== undefined && this.isVerificationTypeIncluded(credentials, "DidKeyC2PAVerification") && asset.isccMetadata.liccium_plugins.c2pa !== undefined) {
             controlButtons.push(<button key="c2paBtn" id="c2paBtn" className="controlsButton" onClick={() => this.renderC2paData(asset)}>C2PA</button>);
         }
 

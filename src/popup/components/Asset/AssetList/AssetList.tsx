@@ -14,7 +14,8 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                     credential.credentialSubject.id.includes(asset.resourceMetadata.declarer) &&
                     credential.evidence &&
                     credential.evidence.type &&
-                    credential.evidence.type[0] === "DidKey509CertificateVerification"
+                    credential.type[1] === "DidKeyC2PAVerification" &&
+                    asset.isccMetadata.liccium_plugins.c2pa !== undefined
                 ) {
                     certificateTagElements.push(
                         <div className="tagTooltip" key={`certificateTag_${index}_${i}`}>
@@ -238,7 +239,7 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
         let credentials = asset.credentials;
         if (credentials !== null) {
             for (let i = 0; i < credentials.length; i++) {
-                if (credentials[i].evidence.type[0] != "DidKey509CertificateVerification") {
+                if (credentials[i].type[1] != "DidKeyC2PAVerification") {
                     tagElements.push(
                         <div className="tagTooltip">
                             <div key={"div" + index + "" + i} className={"verified"}>
