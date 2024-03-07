@@ -29,9 +29,6 @@ export const Overlay = () => {
     const [mediaType, setMediaType] = useState("");
     const [generateStatText, setGenerateStatText] = useState("");
     const [boolOverlay, setBoolOverlay] = useState(false);
-    const [boolNoAi, setBoolNoAi] = useState(false);
-    const [boolGenAi, setBoolGenaAi] = useState(false);
-    const [boolNoDeclaration, setBoolNoDeclaration] = useState(false);
     const [isFetchingData, setIsFetchingData] = useState(false);
     const [generateMiddle, setGenerateMiddle] = useState(false);
     const [overlayStyle, setOverlayStyle] = useState(
@@ -64,7 +61,6 @@ export const Overlay = () => {
             boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset",
             zIndex: "10001",
             display: "none",
-            // border: "1px solid red"
         } as React.CSSProperties
     )
 
@@ -89,49 +85,63 @@ export const Overlay = () => {
             width: 74 + "px",
             height: 28 + "px",
             borderRadius: 25 + "px",
-            // border: "1px solid var(--white, #FFF)",
             display: "flex",
             alignItems: "center",
             background: "rgba(0, 0, 0, 1)"
-            // border: "1px solid red"
         } as React.CSSProperties
     )
 
-
-    //update Div-Position
-    const createIconContainer = (event) => {
-        if (!boolOverlay) { //wenn overlay nicht ausgeklappt ist
-            if (event.target.tagName.toLowerCase() === 'img'
-                && event.target.width >= 100
-                && event.target.height >= 100
-                && !isBase64Image(event.target.src)) { //wenn event ein IMG ist
-                let rect = event.target.getBoundingClientRect();
-                updateOverlayPos(rect);
-                setSrcUrl(event.target.src);
-            }
-        } else if (event.target.tagName.toLowerCase() === 'img'
-            && !isBase64Image(event.target.src)){ //Wenn overlay ausgeklappt ist und event ein anderes IMG ist
-                if(srcUrl !== event.target.src){
-                    let rect = event.target.getBoundingClientRect();
-                    setNewIconLicciumStyle((prevState) => ({
-                        ...prevState,
-                        left: (rect.left + window.scrollX + 10) + 'px', // Position entsprechend dem Bild
-                        top: (rect.top + window.scrollY + 10) + 'px', // Position entsprechend dem Bild
-                        display: "block"
-                    }));
-                    setNewIcon(true);   
-                }
-                setSrcUrl(event.target.src);       
-        } else if (event.target.className != 'icon-liccium') { //hoverOut für newIcon
-            setNewIcon(false);
-        }
+    const expandOverlay = () => {
+        setOverlayStyle((prevState) => ({
+            ...prevState,
+            //display: 'block',
+            height: 73.5 + 'px'
+        }));
+    }
+    const collapseOverlay = () => {
+        setOverlayStyle((prevState) => ({
+            ...prevState,
+            display: "none",
+            height: 36.75 + "px"
+        }));
     }
 
-
-    const isBase64Image = (src) => {
-        return src.startsWith('data:image/');
+    const showOverlay = () => {
+        setOverlayStyle((prevState) => ({
+            ...prevState,
+            display: "block"
+        }));
     }
 
+    const hideIcon = () => {
+        setIconLicciumStyle((prevState) => ({
+            ...prevState,
+            display: "none"
+        }));
+    }
+
+    const showIcon = () => {
+        setIconLicciumStyle((prevState) => ({
+            ...prevState,
+            display: "block"
+        }));
+    }
+
+    const negateIconBackground = () => {
+        setIconLicciumStyle((prevState) => ({
+            ...prevState,
+            background: "none",
+            boxShadow: "none"
+        }));
+    }
+
+    const setIconBackground = () => {
+        setIconLicciumStyle((prevState) => ({
+            ...prevState,
+            background: "rgba(255, 255, 255, 0.65)",
+            boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
+        }));
+    }
 
     const updateOverlayPos = (rect) => {
         console.log("UPDATE!!!");
@@ -150,6 +160,73 @@ export const Overlay = () => {
         }));
     }
 
+    const showNewIcon = () => {
+        setNewIconLicciumStyle((prevState) => ({
+            ...prevState,
+            display: "block"
+        }));
+    }
+
+    const hideNewIcon = () => {
+        setNewIconLicciumStyle((prevState) => ({
+            ...prevState,
+            display: "none"
+        }));
+    }
+
+    const updateNewIconPos = (rect) => {
+        setNewIconLicciumStyle((prevState) => ({
+            ...prevState,
+            left: (rect.left + window.scrollX + 10) + 'px', // Position entsprechend dem Bild
+            top: (rect.top + window.scrollY + 10) + 'px', // Position entsprechend dem Bild
+            display: "block"
+        }));
+    }
+
+    const setMiddleContentToGenAi = () => {
+        setMiddleContent((prevState) => ({
+            ...prevState,
+            background: "rgba(179, 21, 27, 1)"
+        }));
+    }
+
+    const setMiddleContentToNoAi = () => {
+        setMiddleContent((prevState) => ({
+            ...prevState,
+            background: "rgba(126, 92, 126, 1)"
+        }));
+    }
+
+
+    //update Div-Position
+    const createIconContainer = (event) => {
+        if (!boolOverlay) { //wenn overlay nicht ausgeklappt ist
+            if (event.target.tagName.toLowerCase() === 'img'
+                && event.target.width >= 100
+                && event.target.height >= 100
+                && !isBase64Image(event.target.src)) { //wenn event ein IMG ist
+                let rect = event.target.getBoundingClientRect();
+                updateOverlayPos(rect);
+                setSrcUrl(event.target.src);
+            }
+        } else if (event.target.tagName.toLowerCase() === 'img'
+            && !isBase64Image(event.target.src)){ //Wenn overlay ausgeklappt ist und event ein anderes IMG ist
+                if(srcUrl !== event.target.src){
+                    let rect = event.target.getBoundingClientRect();
+                    updateNewIconPos(rect);
+                    setNewIcon(true);   
+                }
+                setSrcUrl(event.target.src);       
+        } else if (event.target.className != 'icon-liccium') { //hoverOut für newIcon
+            setNewIcon(false);
+        }
+    }
+
+
+    const isBase64Image = (src) => {
+        return src.startsWith('data:image/');
+    }
+
 
     const toggleOverlayVisibility = () => {
         console.log('click ' + srcUrl);
@@ -158,18 +235,9 @@ export const Overlay = () => {
             setIsFetchingData(true);
         } else {
             clear();
-            setOverlayStyle((prevState) => ({
-                ...prevState,
-                display: "none",
-                height: 36.75 + "px"
-            }));
-            setIconLicciumStyle((prevState) => ({
-                ...prevState,
-                background: "rgba(255, 255, 255, 0.65)",
-                boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
-            }));
+            collapseOverlay();
+            setIconBackground();
             setBoolOverlay(false);
-            //setIsFetchingData(false);
             setMediaType("");
             setGenerateMiddle(false);
         }
@@ -184,24 +252,12 @@ export const Overlay = () => {
         }  */
         console.log("isFetching: " + isFetchingData);
         clear();
-        setOverlayStyle((prevState) => ({
-            ...prevState,
-            display: "none",
-            height: 36.75 + "px"
-        }));
-        setIconLicciumStyle((prevState) => ({
-            ...prevState,
-            background: "rgba(255, 255, 255, 0.65)",
-            boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset"
-        }));
+        collapseOverlay();
+        setIconBackground();
         setBoolOverlay(false);
-        //setIsFetchingData(false);
         setMediaType("");
         setGenerateMiddle(false);
-        setNewIconLicciumStyle((prevState) => ({
-            ...prevState,
-            display: "none"
-        }));
+        hideNewIcon();
 
         // Kurze Verzögerung, bevor das Overlay wieder angezeigt wird und das Fetching gestartet wird
         setTimeout(() => {
@@ -216,7 +272,6 @@ export const Overlay = () => {
         abortController.abort();
         clear();
         setBoolOverlay(false);
-        //setIsFetchingData(false);
     }
 
 
@@ -274,56 +329,6 @@ export const Overlay = () => {
     }
 
 
-    const isEqualAndhasCredential = (assets) => {
-        setGenerateMiddle(false);
-        let matchedAssets = [];
-
-        if (assets.length >= 1) {
-            for (let i = 0; i < assets.length; i++) {
-                if (assets[i].isccMetadata.isccContentCode == iscc[0].isccMetadata.units[1].iscc_unit
-                    && assets[i].credentials !== undefined
-                    && assets[i].isccMetadata.liccium_plugins.iptc !== undefined // Überprüfen, ob iptc definiert ist
-                    && assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype !== undefined // Überprüfen, ob digitalsourcetype definiert ist
-                    && isGenAi(assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype)) { // Überprüfen, ob digitalsourcetype nicht null ist
-                    matchedAssets.push(assets[i]);
-                } else {
-                    console.log(i + " declaration not matched");
-                }
-            }
-
-            if (matchedAssets.length != 0) {
-                let matchedAssetsEqual = true;
-                if (matchedAssets.length > 1) {
-                    for (let i = 1; i < matchedAssets.length; i++) {
-                        if (matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype !=
-                            matchedAssets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype) {
-                            console.log("tags for matched assets not equal");
-                            matchedAssetsEqual = false;
-                            break;
-                        }
-                    }
-                }
-                let allAssetsEquals = true;
-                if (matchedAssetsEqual) {
-                    for (let i = 0; i < assets.length; i++) {
-                        if (matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype !=
-                            assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype) {
-                            console.log("tags for all assets not equal");
-                            allAssetsEquals = false;
-                            break;
-                        }
-                    }
-                    if (allAssetsEquals) {
-                        console.log("show tag");
-                        setGenerateMiddle(true);
-                        createMiddleContent(matchedAssets[0].isccMetadata.liccium_plugins.iptc.digitalsourcetype);
-                    }
-                }
-            }
-        }
-    }
-
-
     const isGenAi = (digitalsourcetypeString) => {
         return digitalsourcetypeString === "trainedAlgorithmicMedia"
         || digitalsourcetypeString === "compositeSynthetic"
@@ -333,8 +338,6 @@ export const Overlay = () => {
 
     //proof if at least one asset is genai
     const createMiddleContent = (digitalsourcetypeString) => {
-        /* if (isGenAi(digitalsourcetypeString)) { */
-
             setGenerateStatText("Gen·AI");
             confMiddleContent(1);
             let tooltipText = (digitalsourcetypeString === "trainedAlgorithmicMedia")
@@ -344,35 +347,15 @@ export const Overlay = () => {
                     : (digitalsourcetypeString === "algorithmicMedia")
                         ? "Pure algorithmic media" : "";
             setMediaType(tooltipText);
-
-       /* }  else if (digitalsourcetypeString === "digitalCapture"
-            || digitalsourcetypeString === "minorHumanEdits") {
-            setGenerateStatText("No·AI");
-            confMiddleContent(2);
-            setMediaType("Human generated content");
-        } else {
-
-        } */
     }
 
 
     const confMiddleContent = (sourceType) => {
 
         if (sourceType == 1) {    //GEN AI
-            setMiddleContent((prevState) => ({
-                ...prevState,
-                background: "rgba(179, 21, 27, 1)"
-            }));
-        } /* else if (sourceType == 2) {  //NO AI
-            setMiddleContent((prevState) => ({
-                ...prevState,
-                background: "rgba(126, 92, 126, 1)"
-            }));
-        } */
-        setOverlayStyle((prevState) => ({
-            ...prevState,
-            height: 73.5 + 'px',
-        }));
+            setMiddleContentToGenAi();
+        }
+        expandOverlay();
     }
 
 
@@ -509,25 +492,15 @@ export const Overlay = () => {
 
 
     const showOverlayOne = () => {
-        setOverlayStyle((prevState) => ({
-            ...prevState,
-            display: "block"
-        }));
-        setIconLicciumStyle((prevState) => ({
-            ...prevState,
-            background: "none",
-            boxShadow: "none"
-        }));
+        showOverlay();
+        negateIconBackground();
     }
 
 
     //Div hiden beim mouse-out
     const hideDiv = () => {
         if (!boolOverlay) {
-            setIconLicciumStyle((prevState) => ({
-                ...prevState,
-                display: "none"
-            }));
+            hideIcon();
         }
     };
 
@@ -650,10 +623,7 @@ export const Overlay = () => {
         <>
             {displayOverlay && (
                 <>
-                    <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={() => setOverlayStyle((prevState) => ({
-                        ...prevState,
-                        display: "block"
-                    }))}>
+                    <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={showOverlay}>
                         {isFetchingData ? (<> </>) : renderOverlayComponents()}
                     </div>
 
@@ -670,10 +640,7 @@ export const Overlay = () => {
                         <div
                             className="icon-liccium"
                             style={iconLicciumStyle}
-                            onMouseOver={() => setIconLicciumStyle((prevState) => ({
-                                ...prevState,
-                                display: "block"
-                            }))}
+                            onMouseOver={showIcon}
                             onClick={toggleOverlayVisibility}
                         >
                             <LicciumIconSvg />
@@ -685,10 +652,7 @@ export const Overlay = () => {
                         <div
                             className="icon-liccium"
                             style={newIconLicciumStyle}
-                            onMouseOver={() => setNewIconLicciumStyle((prevState) => ({
-                                ...prevState,
-                                display: "block"
-                            }))}
+                            onMouseOver={showNewIcon}
                             onClick={clicked}
                         >
                             <LicciumIconSvg />
