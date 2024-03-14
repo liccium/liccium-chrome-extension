@@ -127,7 +127,7 @@ export const Overlay = () => {
         }));
     }
 
-    const negateIconBackground = () => {
+    const hideIconBackground = () => {
         setIconLicciumStyle((prevState) => ({
             ...prevState,
             background: "none",
@@ -339,7 +339,8 @@ export const Overlay = () => {
     //proof if at least one asset is genai
     const createMiddleContent = (digitalsourcetypeString) => {
             setGenerateStatText("Gen·AI");
-            confMiddleContent(1);
+            setMiddleContentToGenAi();
+            expandOverlay();
             let tooltipText = (digitalsourcetypeString === "trainedAlgorithmicMedia")
                 ? "Trained algorithmic media"
                 : (digitalsourcetypeString === "compositeSynthetic")
@@ -347,15 +348,6 @@ export const Overlay = () => {
                     : (digitalsourcetypeString === "algorithmicMedia")
                         ? "Pure algorithmic media" : "";
             setMediaType(tooltipText);
-    }
-
-
-    const confMiddleContent = (sourceType) => {
-
-        if (sourceType == 1) {    //GEN AI
-            setMiddleContentToGenAi();
-        }
-        expandOverlay();
     }
 
 
@@ -493,7 +485,7 @@ export const Overlay = () => {
 
     const showOverlayOne = () => {
         showOverlay();
-        negateIconBackground();
+        hideIconBackground();
     }
 
 
