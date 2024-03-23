@@ -98,7 +98,7 @@ Digital signatures and verifiable creator credentials increase trust in assertio
 
 Liccium is based on the ([International Standard Content Code (ISCC)](https://www.iso.org/standard/77899.html)), a content-derived identifier, lightweight fingerprinting, and open identification system for digital media content of all media types (image, video, text, audio),  using cryptographic and similarity- preserving hashes to create a unique ID for each digital asset.  
 
-[Current status of the ISCC at ISO: Draft International Standard ISO/DIS 24138](https://www.iso.org/standard/77899.html)
+[Current status of the ISCC at ISO: Draft International Standard ISO/PRF 24138](https://www.iso.org/standard/77899.html)
 
 Using a novel standard for decentralised content identification, these claims inseparably stick with the content **without relying on watermarks or embedded metadata**. 
 
