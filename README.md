@@ -23,8 +23,8 @@ NOTE: Of course, you can only verify content that has been previously declared b
 ### Limitations
 
 The browser extension is for testing purposes only. 
-
-- At present, only declarations made on testnet blockchains can be analysed. 
+- It can only tested using the Chrome browser
+- Currently only declarations made on testnet blockchains can be analysed. 
 - Currently only images are supported. In future releases you will be able to verify all media types and formats. 
  
 ## Test declarations
@@ -104,9 +104,15 @@ Using a novel standard for decentralised content identification, these claims in
 
 This empowers any user, system, or machine with access to the digital asset to independently generate an identical or similar ISCC code, enabling the identification, comparison, and matching of digital content while assessing its integrity and authenticity. Thus, ISCC remains dependable, retaining its full range of capabilities even in scenarios where content is altered or manipulated, or when watermarks, steganographic data, or metadata is removed from the media asset.
 
-## Installation instructions 
+## Installation via Chrome Web Store
 
-Follow the instruction to install the browser plugin. 
+The Liccium browser extension can be installed via the Chrome web store:
+
+[https://chromewebstore.google.com/detail/liccium-trust-engine/lkoiefagffheekoglghdblaeemembbjh](https://chromewebstore.google.com/detail/liccium-trust-engine/lkoiefagffheekoglghdblaeemembbjh)
+
+## Installation via GitHub 
+
+You can also install the browser extension manually. This requires a a few steps. Follow the instructions:
 
 [Latest release](https://github.com/liccium/liccium-chrome-extension/releases)
 
