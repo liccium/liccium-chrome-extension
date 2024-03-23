@@ -18,13 +18,19 @@ The plugin was developed by [Dominik Krakau](https://github.com/dkrakau), [Lukas
 
 Go to any website and click on the extension icon to verify content on this page. 
 
-NOTE: Of course, you can only verify content that has been previously declared by a creator, rightsholder, or any other entity. Currently only images are supported. In future releases you will be able to verify all media types and formats. 
+NOTE: Of course, you can only verify content that has been previously declared by a creator, rightsholder, or any other entity.
 
-To test the browser plugin, you can use the examples of a few test declarations, below: 
+### Limitations
+
+The browser extension is for testing purposes only. 
+
+- At present, only declarations made on testnet blockchains can be analysed. 
+- Currently only images are supported. In future releases you will be able to verify all media types and formats. 
  
 ## Test declarations
 
-You can find verifiable content posted by this Twitter account:
+To test the browser plugin, you can use the examples of a few test declarations, below.  
+Alternatively, you can find verifiable content posted by this Twitter account:
 
 [https://twitter.com/spsth](https://twitter.com/spsth)
 
@@ -70,10 +76,6 @@ These example shows how to verify AI generated content:
 <img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/8c9bbddf-e712-43cb-be47-2cf177fd0792">
 
 [https://twitter.com/spsth/status/1723712373431673208/photo/1](https://twitter.com/spsth/status/1723712373431673208/photo/1)
-
-### Declarations on mainnet
-
-At present, there are no declarations made on mainnet blockchains.
 
 ## How to make content declarations?
 
