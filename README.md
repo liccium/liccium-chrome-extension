@@ -2,7 +2,7 @@
 
 The Liccium Chrome browser plugin allows users to identify and verify declarations of digital media content online and perform a reverse-lookup of associated metadata, rights, and available or already acquired licences. 
 
-The plugin will draw information from decentralised registries, which are based on content declarations on decentralised public blockchain networks, providing users with additional details about the media content and related assets.  
+The plugin will draw information from decentralised registries, which are (currently) based on content declarations on decentralised public blockchain networks, providing users with additional details about the media content and related assets.  
 
 Overall, the Liccium browser plugin will provide a straightforward and effective way for users to verify the authenticity and accuracy of digital media content encountered while browsing the web, helping to establish trust in online publications, data, and information.
 
@@ -10,7 +10,7 @@ Overall, the Liccium browser plugin will provide a straightforward and effective
 
 ## Credits
 
-The plugin was developed by [Dominik Krakau](https://github.com/dkrakau) and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science. The backend technology is based on code, developed by [ISCC Foundation](https://github.com/iscc) and [Posth Werk](https://posth.me), co-funded by [Trublo.eu](https://Trublo.eu) and the European Union’s Horizon 2020 research and innovation programme grant agreement No. 957228.  
+The plugin was developed by [Dominik Krakau](https://github.com/dkrakau), [Lukas Amerkamp](https://github.com/lamerkamp) and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science. The backend technology is based on code, developed by [ISCC Foundation](https://github.com/iscc) and [Liccium B.V.](https://liccium.com), co-funded by [Trublo.eu](https://Trublo.eu) and the European Union’s Horizon 2020 research and innovation programme grant agreement No. 957228.  
 
 <img width="200" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/d494868d-60c9-4ade-bb09-1f1df57bc538">
 
