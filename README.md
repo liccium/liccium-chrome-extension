@@ -108,16 +108,16 @@ This empowers any user, system, or machine with access to the digital asset to i
 
 Follow the instruction to install the browser plugin. 
 
-[Latest release](https://github.com/liccium/liccium-chrome-extension/releases/tag/v0.0.2)
+[Latest release](https://github.com/liccium/liccium-chrome-extension/releases)
 
-1. Download [liccium-chrome-extension-v0.0.2.zip](https://github.com/liccium/liccium-chrome-extension/releases/download/v0.0.2/liccium-chrome-extension-v0.0.2.zip) file.
+1. Download the zip file of the [latest release](https://github.com/liccium/liccium-chrome-extension/releases).
 2. Extract the zip file.
 3. Place extracted folder in any location.  
 4. Start the Google Chrome browser.
 5. Go to your Extensions page by entering **_chrome://extensions/_** into your Chrome browser. 
 6. Enable the **_Developer mode_** on the top right.
 7. Click on **_Load unpacked_**.
-8. Select extracted **_liccium-chrome-extension-v0.0.1_** folder and enter. The folder _must not_ be deleted after extraction.
+8. Select extracted **_liccium-chrome-extension[-version number]_** folder and enter. The folder _must not_ be deleted after extraction.
 9. Go to the Plugins settings and pin the Liccium Trust Engine browser extension.
 10. Please refresh browser window befor first use. 
 
