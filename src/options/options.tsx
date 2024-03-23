@@ -53,7 +53,7 @@ const renderElements = (storage) => {
     elements.push(
         <div key={"settingDisplayOverlay"} className={"setting"}>
             <div className="settingKey">
-                <label>Display Overlay</label>
+                <label>Display Overlay (beta)</label>
             </div>
             <div className="settingValue">
                 <label className="switch">

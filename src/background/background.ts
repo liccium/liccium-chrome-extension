@@ -21,7 +21,7 @@ chrome.runtime.onInstalled.addListener(() => {
             ]
         }
     );
-    chrome.storage.local.set({ displayOverlay: true });
+    chrome.storage.local.set({ displayOverlay: false });
     chrome.storage.local.set({ renderType: "" });
 
     chrome.contextMenus.create({
