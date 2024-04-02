@@ -1,13 +1,14 @@
 {
   "name": "Liccium Trust Engine",
   "description": "Search and verification of digital content declarations.",
-  "version": "0.0.4",
+  "version": "0.0.8",
   "manifest_version": 3,
   "permissions": [
     "activeTab",
     "tabs",
     "contextMenus",
-    "storage"
+    "storage",
+    "management"
   ],
   "icons": {
     "16": "liccium-icon.png",
