@@ -1,6 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
     console.log('I come from Background-Script.');
 
+
     chrome.storage.local.clear();
     chrome.storage.local.set({ selectedServerUrl: "https://search.liccium.app" });
     chrome.storage.local.set(
@@ -61,6 +62,7 @@ chrome.runtime.onConnect.addListener(function (port) {
     if (port.name === "popup") {
         port.onDisconnect.addListener(function () {
             console.log("Popup closed.");
+            isPopupopen = false;
         });
     }
 });
@@ -76,7 +78,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         chrome.storage.local.set({ pageUrl: pageUrl });
         chrome.storage.local.set({ srcUrl: srcUrl });
         chrome.tabs.create({ url: "popup.html" });
-        /* chrome.action.openPopup(); */
+        //chrome.action.openPopup();
     }
 
     if (info.menuItemId === "link") {
@@ -86,7 +88,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         chrome.storage.local.set({ pageUrl: pageUrl });
         chrome.storage.local.set({ srcUrl: linkUrl });
         chrome.tabs.create({ url: "popup.html" });
-        /* chrome.action.openPopup(); */
+        //chrome.action.openPopup();
     }
 
 
@@ -99,11 +101,23 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+
+let isPopupopen = false;
+
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     console.log(request);
     console.log(sender);
-    if (request.openPopupTab) {
-        chrome.tabs.create({ url: "popup.html" });
+    if (request.action === 'openPopup') {
+        if (typeof chrome.action.openPopup === 'function') {
+            if(!isPopupopen){
+                console.log("Open the popup");
+                await chrome.action.openPopup();
+                isPopupopen = true;
+            }
+          }
+          else {
+            console.log("chrome.action.openPopup() not supported");
+          }
     }
 });
 

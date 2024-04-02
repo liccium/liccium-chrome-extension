@@ -295,6 +295,11 @@
     animation: rotate 1s linear infinite;
 }
 
+#openpopup a:hover {
+    text-decoration: underline;
+}
+
+
 /* Define the rotation animation */
 @keyframes rotate {
     from {

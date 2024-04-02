@@ -18,6 +18,7 @@ export const Overlay = () => {
     const [srcUrl, setSrcUrl] = useState("");
     const [iscc, setIscc] = useState([]);
     const [assets, setAssets] = useState([]);
+
     // const [matchedAssets, setMatchedAssets] = useState([]);
     const serverUrls = {
         "https://search.liccium.app": "Liccium",  // plugin.liccium.app
@@ -521,7 +522,7 @@ export const Overlay = () => {
             </>
         } else {
             return <>
-                <p><a href='#'>Declaration(s)</a> <span className='red-circle'>{assets.length}</span> </p>
+                <p><a id="openpopup" onClick={openPopupTab} >Declaration(s)</a> <span className='red-circle'>{assets.length}</span> </p>
             </>
         }
 
@@ -549,10 +550,11 @@ export const Overlay = () => {
 
     
     const openPopupTab = () => {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        /* chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id, { openPopupTab: true }).then(response => {
             });
-        });
+        }); */
+        chrome.runtime.sendMessage({action: 'openPopup'});
     }
 
     useEffect(() => {
@@ -591,6 +593,8 @@ export const Overlay = () => {
 
         });
 
+      
+        
         //listener für hover-in über bilder
         document.addEventListener('mouseover', createIconContainer);
         //listener für hover-out von bilder
