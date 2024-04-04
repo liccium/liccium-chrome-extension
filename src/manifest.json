@@ -39,7 +39,8 @@
       "resources": [
         "images/noai.png",
         "images/warning.svg",
-        "images/Liccium-Logo-black-on-transparent-1400.svg"
+        "images/Liccium-Logo-black-on-transparent-1400.svg",
+        "images/member.svg"
       ],
       "matches": [
         "https://*/*"

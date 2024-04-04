@@ -239,28 +239,34 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
         let credentials = asset.credentials;
         if (credentials !== null) {
             for (let i = 0; i < credentials.length; i++) {
-                if (credentials[i].type[1] != "DidKeyC2PAVerification") {
-                    tagElements.push(
-                        <div className="tagTooltip">
-                            <div key={"div" + index + "" + i} className={"verified"}>
-                                <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
-                                <p key={"verified" + index + "" + i} className="handle">{credentials[i].evidence.handle}</p>
-                            </div>
-                            <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain: " + credentials[i].evidence.handle : "Verified Twitter/X account"}</span>
-                        </div>
-                    );
+
+                for (let n = 1; n < credentials[i].type.length; n++) {
+                    if (credentials[i].type[n] != "DidKeyC2PAVerification") {
+                        if (credentials[i].type[n] == "VerifiableMember") {
+                            tagElements.push(
+                                <div className="tagTooltip">
+                                    <div key={"div" + index + "" + i} className={"member"}>
+                                        <img className="tagIcon" src="member.svg" alt="member" />
+                                        <p key={"member" + index + "" + i} className="handle">Member</p>
+                                    </div>
+                                    <span className="tagtooltiptext">{credentials[i].credentialSubject.memberOf ? "Member of: " + credentials[i].credentialSubject.memberOf.replace("did:web:", "") : "missing Member"}</span>
+                                </div>
+                            );
+                        }
+                        else if(credentials[i].type[n] != "VerifiableAttestation") {
+                            tagElements.push(
+                                <div className="tagTooltip">
+                                    <div key={"div" + index + "" + i} className={"verified"}>
+                                        <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
+                                        {<p key={"verified" + index + "" + i} className="handle">{credentials[i].evidence.handle}</p>}
+                                    </div>
+                                    <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain: " + credentials[i].evidence.handle : "Verified Twitter/X account"}</span>
+                                </div>
+                            );
+                        }
+
+                    }
                 }
-                // else if (credentials[i].evidence.type[0] == "DidKey509CertificateVerification") {
-                //     tagElements.push(
-                //         <div className="tagTooltip">
-                //             <div key={"div" + index + "" + i} className={"verified"}>
-                //                 <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
-                //                 <p key={"verified" + index + "" + i} className="handle">c2pa</p>
-                //             </div>
-                //             <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain" : "Verified Twitter/X account"}</span>
-                //         </div>
-                //     );
-                // }
             }
         } else {
             tagElements.push(
