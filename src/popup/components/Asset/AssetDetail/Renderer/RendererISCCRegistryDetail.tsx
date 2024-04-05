@@ -585,9 +585,23 @@ class RendererISCCRegistryDetail {
             } 
             else {
                 data.push(
-                    <div key={"cro5" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                        <p key={"keyMember" + i} className="pRowKey">Member of:</p>
-                        <p key={"keyMemberValue" + i} className="pRowValue">{asset.credentials[i].credentialSubject.memberOf.replace("did:web:", "")}</p>
+                    <div key={"cro0" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key={"keyMember" + i} className="pRowKey">Member Credential</p>
+                        <p key={"keyMemberValue" + i} className="pRowValue">Member of {asset.credentials[i].credentialSubject.memberOf.replace("did:web:", "")}</p>
+                    </div>
+                );
+                let did = asset.credentials[i].issuer.split(":");
+                data.push(
+                    <div key={"cro1" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key={"keyIssuer" + i} className="pRowKey">Issuer</p>
+                        <p key={"keyIssuerValue" + i} className="pRowValue"><a href={"https://" + did[did.length - 1] + "/.well-known/did.json"} target="_blank">{asset.credentials[i].issuer}</a></p>
+                    </div>
+                );
+                
+                data.push(
+                    <div key={"cro2" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key={"keyIssuanceDate" + i} className="pRowKey">Valid until</p>
+                        <p key={"keyIssuanceDateValue" + i} className="pRowValue">{asset.credentials[i].validUntil.replace("T", " ").substring(0, asset.credentials[i].validUntil.length - 5)}</p> {/* convert utc string */}
                     </div>
                 );
             }
@@ -605,9 +619,6 @@ class RendererISCCRegistryDetail {
                 </div>
             );
 
-            if (verificationType === "VerifiableMember" || verificationType !== "VerifiableAttestation"){
-                
-            }
         }
         this.setData(data);
     }
