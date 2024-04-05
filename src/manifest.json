@@ -1,7 +1,7 @@
 {
   "name": "Liccium Trust Engine",
   "description": "Search and verification of digital content declarations.",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "manifest_version": 3,
   "permissions": [
     "activeTab",
