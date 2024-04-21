@@ -5,6 +5,7 @@ import Processing from './components/Processing/Processing';
 import Selection from './components/Selection/Selection';
 import './popup.css';
 import { callNewApiAndTranslate } from './adapterUtil';
+import { LegacyResponse, LegacyResult } from './adapterInterfaces';
 
 
 const Popup = () => {
@@ -276,7 +277,7 @@ const Popup = () => {
 
         // FETCH ISCC DATA
         let jsonIscc = [];
-        let jsonAssets = [];
+        let jsonAssets:LegacyResult[] = [];
         try {
             jsonIscc = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
             let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
@@ -287,7 +288,9 @@ const Popup = () => {
 
             // FETCH ASSET DATA
             // jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + jsonIscc[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
-           const searchResults = await  callNewApiAndTranslate( jsonIscc[0].isccMetadata.iscc);
+           const searchResults:LegacyResponse = await  callNewApiAndTranslate( jsonIscc[0].isccMetadata.iscc);
+           jsonAssets = searchResults.results;
+           alert(JSON.stringify(jsonAssets, null, 2))
            console.log("searchResults", searchResults);
 
             // Put units from explained ISCC in jsonAssets
