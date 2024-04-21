@@ -4,6 +4,7 @@ import AssetList from './components/Asset/AssetList/AssetList';
 import Processing from './components/Processing/Processing';
 import Selection from './components/Selection/Selection';
 import './popup.css';
+import { callNewApiAndTranslate } from './adapterUtil';
 
 
 const Popup = () => {
@@ -258,6 +259,67 @@ const Popup = () => {
         setRenderer(element);
     }
 
+    const sendRequestV2 = async (srcUrl) => {
+
+        // CONVERT SIGNS IN URL TO READABLE SIGNS
+        let srcUrlReadable = srcUrl.replaceAll("%", "%25");
+        srcUrlReadable = srcUrlReadable.replaceAll(":", "%3A");
+        srcUrlReadable = srcUrlReadable.replaceAll("/", "%2F");
+        srcUrlReadable = srcUrlReadable.replaceAll("?", "%3F");
+        srcUrlReadable = srcUrlReadable.replaceAll("&", "%26");
+        srcUrlReadable = srcUrlReadable.replaceAll("=", "%3D");
+
+        console.log("Fetching with Readable src url: " + srcUrlReadable);
+
+        console.log("SELECTED SERVER:");
+        console.log(serverUrl);
+
+        // FETCH ISCC DATA
+        let jsonIscc = [];
+        let jsonAssets = [];
+        try {
+            jsonIscc = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
+            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            // Put sourceUrl and units from explained ISCC in jsonIscc
+            jsonIscc[0].isccMetadata.name = getModeCapitalLetter(jsonIscc[0].isccMetadata.mode) + " from " + getISCCName(pageUrl);
+            jsonIscc[0].isccMetadata.sourceUrl = srcUrl;
+            jsonIscc[0].isccMetadata.units = jsonExplain.units;
+
+            // FETCH ASSET DATA
+            // jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + jsonIscc[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
+           const searchResults = await  callNewApiAndTranslate( jsonIscc[0].isccMetadata.iscc);
+           console.log("searchResults", searchResults);
+
+            // Put units from explained ISCC in jsonAssets
+            /* for (let i = 0; i < jsonAssets.length; i++) {
+                let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+                let assetUnits = jsonExplain.units;
+                jsonAssets[i].isccMetadata.units = assetUnits;
+            } */
+
+            console.log("ARRAY FROM NNS");
+            console.log(jsonAssets);
+
+            jsonAssets = sortVCs(jsonAssets);
+
+            // ADD iscc and assets to CHROME STORAGE
+            chrome.storage.local.set({ iscc: jsonIscc });
+            chrome.storage.local.set({ assets: jsonAssets });
+            setIscc(jsonIscc);
+            setAssets(jsonAssets);
+
+            setRenderType("Assets");
+
+        } catch (err) {
+
+            console.error(err);
+
+            window.alert("Reuqest to " + serverUrls[serverUrl] + " failed.");
+            chrome.storage.local.remove(["srcUrl"]);
+            setSrcUrl("");
+        }
+
+    }
     const sendRequest = async (srcUrl) => {
 
         // CONVERT SIGNS IN URL TO READABLE SIGNS
@@ -387,7 +449,8 @@ const Popup = () => {
 
         if (srcUrl !== "" && iscc.length === 0 && renderType === "Selection") {
             setRenderType("Processing");
-            sendRequest(srcUrl);
+            // sendRequest(srcUrl);
+            sendRequestV2(srcUrl);
         }
 
         render();

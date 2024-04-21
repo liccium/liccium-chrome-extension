@@ -13,7 +13,7 @@ module.exports = {
         rules: [
             {
                 use: "ts-loader",
-                test: /\.tsx$/,
+                test: /\.ts.?$/,
                 exclude: /node_modules/,
             },
             {

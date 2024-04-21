@@ -1,0 +1,19 @@
+{
+    "workbench.colorCustomizations": {
+        "panel.border": "#777777",
+        "panel.borderSolid": "#777777",
+        "sideBar.border": "#777777",
+        "activityBar.border": "#777777",
+        "tab.activeBackground": "#555555",
+        "tab.activeBorder": "#ff0000",
+        "tab.activeBorderTop": "#ff0000",
+        "tab.activeForeground": "#FFFFFF",
+        "editorOverviewRuler.border": "#ff0000",
+        "editorStickyScroll.border": "#ff0000",
+        "tree.indentGuidesStroke": "#ff0000",
+        "tree.inactiveIndentGuidesStroke": "#0000ff",
+        "activityBar.background": "#53172E",
+        "titleBar.activeBackground": "#752041",
+        "titleBar.activeForeground": "#FEFCFC"
+    }
+}
