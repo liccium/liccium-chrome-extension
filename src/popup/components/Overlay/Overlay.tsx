@@ -211,13 +211,13 @@ export const Overlay = () => {
                 setSrcUrl(event.target.src);
             }
         } else if (event.target.tagName.toLowerCase() === 'img'
-            && !isBase64Image(event.target.src)){ //Wenn overlay ausgeklappt ist und event ein anderes IMG ist
-                if(srcUrl !== event.target.src){
-                    let rect = event.target.getBoundingClientRect();
-                    updateNewIconPos(rect);
-                    setNewIcon(true);   
-                }
-                setSrcUrl(event.target.src);       
+            && !isBase64Image(event.target.src)) { //Wenn overlay ausgeklappt ist und event ein anderes IMG ist
+            if (srcUrl !== event.target.src) {
+                let rect = event.target.getBoundingClientRect();
+                updateNewIconPos(rect);
+                setNewIcon(true);
+            }
+            setSrcUrl(event.target.src);
         } else if (event.target.className != 'icon-liccium') { //hoverOut für newIcon
             setNewIcon(false);
         }
@@ -305,7 +305,7 @@ export const Overlay = () => {
     }
 
 
-    const isEqualAndhasCredential2 = (assets) => {
+    const isEqualAndhasCredential = (assets) => {
         setGenerateMiddle(false);
         let matchedAssets = [];
 
@@ -316,7 +316,7 @@ export const Overlay = () => {
                 && isGenAi(assets[i].isccMetadata.liccium_plugins.iptc.digitalsourcetype)) {
                 if (assets[i].isccMetadata.isccContentCode == iscc[0].isccMetadata.units[1].iscc_unit
                     && assets[i].credentials !== undefined) {
-                        matchedAssets.push(assets[i]); 
+                    matchedAssets.push(assets[i]);
                 }
             } else {
                 break;
@@ -332,23 +332,23 @@ export const Overlay = () => {
 
     const isGenAi = (digitalsourcetypeString) => {
         return digitalsourcetypeString === "trainedAlgorithmicMedia"
-        || digitalsourcetypeString === "compositeSynthetic"
-        || digitalsourcetypeString === "algorithmicMedia";
+            || digitalsourcetypeString === "compositeSynthetic"
+            || digitalsourcetypeString === "algorithmicMedia";
     }
 
 
     //proof if at least one asset is genai
     const createMiddleContent = (digitalsourcetypeString) => {
-            setGenerateStatText("Gen·AI");
-            setMiddleContentToGenAi();
-            expandOverlay();
-            let tooltipText = (digitalsourcetypeString === "trainedAlgorithmicMedia")
-                ? "Trained algorithmic media"
-                : (digitalsourcetypeString === "compositeSynthetic")
-                    ? "Composite including synthetic elements"
-                    : (digitalsourcetypeString === "algorithmicMedia")
-                        ? "Pure algorithmic media" : "";
-            setMediaType(tooltipText);
+        setGenerateStatText("Gen·AI");
+        setMiddleContentToGenAi();
+        expandOverlay();
+        let tooltipText = (digitalsourcetypeString === "trainedAlgorithmicMedia")
+            ? "Trained algorithmic media"
+            : (digitalsourcetypeString === "compositeSynthetic")
+                ? "Composite including synthetic elements"
+                : (digitalsourcetypeString === "algorithmicMedia")
+                    ? "Pure algorithmic media" : "";
+        setMediaType(tooltipText);
     }
 
 
@@ -528,7 +528,6 @@ export const Overlay = () => {
 
     }
 
-
     const renderOverlayComponents = () => {
         return (
             <>
@@ -548,13 +547,80 @@ export const Overlay = () => {
         );
     }
 
-    
+    const renderOverlayContent = () => {
+        return (
+            <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={showOverlay}>
+                {isFetchingData ? (<> </>) : renderOverlayComponents()}
+            </div>
+        )
+    }
+
+    const renderIconLoading = () => {
+        return (
+            <div
+                className="icon-liccium-loading"
+                style={{ ...iconLicciumStyle, transform: `rotate(${iconRotation}deg)` }}
+                onClick={clickAbort}
+            >
+                <LicciumIconSvg />
+            </div>
+        )
+    }
+
+    const renderIcon = () => {
+        return (
+            <div
+                className="icon-liccium"
+                style={iconLicciumStyle}
+                onMouseOver={showIcon}
+                onClick={toggleOverlayVisibility}
+            >
+                <LicciumIconSvg />
+
+            </div>
+        )
+    }
+
+    const renderNewIcon = () => {
+        return (
+            <div
+                className="icon-liccium"
+                style={newIconLicciumStyle}
+                onMouseOver={showNewIcon}
+                onClick={clicked}
+            >
+                <LicciumIconSvg />
+
+            </div>
+        )
+    }
+
+    const renderOverlay = () => {
+        return (
+            <>
+                {renderOverlayContent()}
+
+                {/* Conditionally render the icon based on isFetchingData */}
+                {isFetchingData ? (
+                    renderIconLoading()
+                ) : (
+                    renderIcon()
+
+                )}
+                {newIcon ? (
+                    renderNewIcon()
+                ) : (<></>)}
+            </>
+        )
+    }
+
+
     const openPopupTab = () => {
         /* chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id, { openPopupTab: true }).then(response => {
             });
         }); */
-        chrome.runtime.sendMessage({action: 'openPopup'});
+        chrome.runtime.sendMessage({ action: 'openPopup' });
     }
 
     useEffect(() => {
@@ -593,8 +659,8 @@ export const Overlay = () => {
 
         });
 
-      
-        
+
+
         //listener für hover-in über bilder
         document.addEventListener('mouseover', createIconContainer);
         //listener für hover-out von bilder
@@ -604,7 +670,7 @@ export const Overlay = () => {
         if (isFetchingData) {
             fetchingData(srcUrl);
         } else if (boolOverlay) {
-            isEqualAndhasCredential2(assets);
+            isEqualAndhasCredential(assets);
             showOverlayOne();
         }
 
@@ -618,44 +684,7 @@ export const Overlay = () => {
     return (
         <>
             {displayOverlay && (
-                <>
-                    <div className="ausklapp_overlay" style={overlayStyle} onMouseOver={showOverlay}>
-                        {isFetchingData ? (<> </>) : renderOverlayComponents()}
-                    </div>
-
-                    {/* Conditionally render the icon based on isFetchingData */}
-                    {isFetchingData ? (
-                        <div
-                            className="icon-liccium-loading"
-                            style={{ ...iconLicciumStyle, transform: `rotate(${iconRotation}deg)` }}
-                            onClick={clickAbort}
-                        >
-                            <LicciumIconSvg />
-                        </div>
-                    ) : (
-                        <div
-                            className="icon-liccium"
-                            style={iconLicciumStyle}
-                            onMouseOver={showIcon}
-                            onClick={toggleOverlayVisibility}
-                        >
-                            <LicciumIconSvg />
-
-                        </div>
-
-                    )}
-                    {newIcon ? (
-                        <div
-                            className="icon-liccium"
-                            style={newIconLicciumStyle}
-                            onMouseOver={showNewIcon}
-                            onClick={clicked}
-                        >
-                            <LicciumIconSvg />
-
-                        </div>
-                    ) : (<></>)}
-                </>
+                renderOverlay()
             )}
         </>
     );
