@@ -1,3 +1,18 @@
 dist
 node_modules
 *.zip
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# common chrome extension react ignores:
+*.pem
+*.key
+*.crt
+*.csr
+
+
+# common node_modules ignores:
+*.log
+*.lock
+
