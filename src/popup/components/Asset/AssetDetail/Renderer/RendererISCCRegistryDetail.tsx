@@ -1,7 +1,25 @@
 import React from 'react';
 import Unit from '../../../Unit/Unit';
 
+
+
 class RendererISCCRegistryDetail {
+
+    convertDateFormat(dateTimeString) {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        const date = new Date(dateTimeString);
+        const dayOfWeek = days[date.getUTCDay()];
+        const dayOfMonth = date.getUTCDate();
+        const month = months[date.getUTCMonth()];
+        const year = date.getUTCFullYear();
+        const hours = ('0' + date.getUTCHours()).slice(-2);
+        const minutes = ('0' + date.getUTCMinutes()).slice(-2);
+        const seconds = ('0' + date.getUTCSeconds()).slice(-2);
+
+        return `${dayOfWeek}, ${dayOfMonth} ${month} ${year} ${hours}:${minutes}:${seconds} GMT`;
+    }
 
     data = null;
     setData = null;
@@ -22,7 +40,8 @@ class RendererISCCRegistryDetail {
         }
         this.verificationTypes = {
             DomainVerification: "Domain verification",
-            TwitterVerification: "Twitter verification"
+            TwitterVerification: "Twitter verification",
+            DidKeyC2PAVerification: "User key"
         }
     }
 
@@ -115,7 +134,61 @@ class RendererISCCRegistryDetail {
             controlButtons.push(<button key="compareBtn" id="compareBtn" className="controlsButton" onClick={() => this.renderCompareData(iscc, asset)}>Compare</button>);
         }
 
+        if (credentials !== null && credentials !== undefined && this.isVerificationTypeIncluded(credentials, "DidKeyC2PAVerification") && asset.isccMetadata.liccium_plugins.c2pa !== undefined) {
+            controlButtons.push(<button key="c2paBtn" id="c2paBtn" className="controlsButton" onClick={() => this.renderC2paData(asset)}>C2PA</button>);
+        }
+
         return controlButtons;
+    }
+
+    isVerificationTypeIncluded(credentials, verificationType) {
+        let isVerificationTypeIncluded = false;
+        for (let i = 0; i < credentials.length && !isVerificationTypeIncluded; i++) {
+            isVerificationTypeIncluded = credentials[i].type[0] === "VerifiableCredential" && credentials[i].type[1] === verificationType;
+        }
+        return isVerificationTypeIncluded;
+    }
+
+
+    renderC2paData(asset) {
+        let assetBtn = document.getElementById("c2paBtn");
+        this.clearControlsButtonStyle();
+        this.setControlsButtonStyle(assetBtn);
+        let data = [];
+        let inputString = asset.isccMetadata.liccium_plugins.c2pa.active_manifest.claim_generator;
+        let firstWord = inputString.split(" ")[0];
+        data.push(
+            <div key="cro0" className="contentRowOdd">
+                <p key="keyFilename" className="pRowKey">Issued by</p>
+                <p key="keyFilenameValue" className="pRowValue">{firstWord}</p>
+            </div>
+        );
+        data.push(
+            <div key="cro1" className="contentRowEven">
+                <p key="keyMediatype" className="pRowKey">Issued on</p>
+                <p key="keyMediatypeValue" className="pRowValue">{this.convertDateFormat(asset.isccMetadata.liccium_plugins.c2pa.active_manifest.signature_info.time)}</p>
+            </div>
+        );
+        data.push(
+            <div key="cro2" className="contentRowOdd">
+                <p key="keyWidth" className="pRowKey">Signed by</p>
+                <p key="keyWidthValue" className="pRowValue">{asset.credentials[2].credentialSubject.sameAs}</p>
+            </div>
+        );
+        data.push(
+            <div key="cro3" className="contentRowEven">
+                <p key="keyHeight" className="pRowKey">Credentials</p>
+                <p key="keyHeightValue" className="pRowValue">{<button onClick={() => this.renderCredentialsData(asset)}>User keys</button>}</p>
+            </div>
+        );
+        data.push(
+            <div key="cro4" className="contentRowOdd">
+                <p key="keyFilesize" className="pRowKey">Manifest</p>
+                <p key="keyFilesizeValue" className="pRowValue"><a href={asset.resourceMetadata.meta_url} target="_blank">{asset.resourceMetadata.meta_url}</a></p>
+            </div>
+        );
+        this.setData(data);
+
     }
 
     renderMetadataData(asset) {
@@ -470,6 +543,7 @@ class RendererISCCRegistryDetail {
         this.setData(data);
     }
     renderCredentialsData(asset) {
+        console.log("du gehst in die Methode");
         let credentialsBtn = document.getElementById("credentialsBtn");
         this.clearControlsButtonStyle();
         this.setControlsButtonStyle(credentialsBtn);
@@ -478,34 +552,60 @@ class RendererISCCRegistryDetail {
         console.log(asset.credentials);
         for (let i = 0; i < asset.credentials.length; i++) {
             let verificationType = asset.credentials[i].type[1];
-            let handle = asset.credentials[i].evidence.handle;
+            let handle;
             let href = "";
-            if (verificationType === "TwitterVerification") {
-                href = "https://www.twitter.com/" + handle.substring(1, handle.length);
-            } else {
-                href = "https://www." + handle + "/";
+            if (verificationType !== "VerifiableAttestation" && verificationType !== "VerifiableMember") {
+                handle = asset.credentials[i].evidence.handle;
+                if (verificationType === "TwitterVerification") {
+                    href = "https://www.twitter.com/" + handle.substring(1, handle.length);
+                } else {
+                    href = "https://www." + handle + "/";
+                }
+                data.push(
+                    <div key={"cro0" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key={"keyVerify" + i} className="pRowKey">{this.getVerificationType(verificationType)}</p>
+                        <p key={"keyVerifyValue" + i} className="pRowValue">
+                            <a href={href} target="_blank">{handle}</a> &#8594; {asset.resourceMetadata.owner}
+                        </p>
+                    </div>
+                );
+                data.push(
+                    <div key={"cro1" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key={"keyIssuanceDate" + i} className="pRowKey">Issuance date</p>
+                        <p key={"keyIssuanceDateValue" + i} className="pRowValue">{asset.credentials[i].issuanceDate.replace("T", " ").substring(0, asset.credentials[i].issuanceDate.length - 5)}</p> {/* convert utc string */}
+                    </div>
+                );
+                let did = asset.credentials[i].issuer.id.split(":");
+                data.push(
+                    <div key={"cro2" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key={"keyIssuer" + i} className="pRowKey">Issuer</p>
+                        <p key={"keyIssuerValue" + i} className="pRowValue"><a href={"https://" + did[did.length - 1] + "/.well-known/did.json"} target="_blank">{asset.credentials[i].issuer.id}</a></p>
+                    </div>
+                );
+            } 
+            else {
+                data.push(
+                    <div key={"cro0" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key={"keyMember" + i} className="pRowKey">Member Credential</p>
+                        <p key={"keyMemberValue" + i} className="pRowValue">Member of {asset.credentials[i].credentialSubject.memberOf.replace("did:web:", "")}</p>
+                    </div>
+                );
+                let did = asset.credentials[i].issuer.split(":");
+                data.push(
+                    <div key={"cro1" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key={"keyIssuer" + i} className="pRowKey">Issuer</p>
+                        <p key={"keyIssuerValue" + i} className="pRowValue"><a href={"https://" + did[did.length - 1] + "/.well-known/did.json"} target="_blank">{asset.credentials[i].issuer}</a></p>
+                    </div>
+                );
+                
+                data.push(
+                    <div key={"cro2" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
+                        <p key={"keyIssuanceDate" + i} className="pRowKey">Valid until</p>
+                        <p key={"keyIssuanceDateValue" + i} className="pRowValue">{asset.credentials[i].validUntil.replace("T", " ").substring(0, asset.credentials[i].validUntil.length - 5)}</p> {/* convert utc string */}
+                    </div>
+                );
             }
-            data.push(
-                <div key={"cro0" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                    <p key={"keyVerify" + i} className="pRowKey">{this.getVerificationType(verificationType)}</p>
-                    <p key={"keyVerifyValue" + i} className="pRowValue">
-                        <a href={href} target="_blank">{handle}</a> &#8594; {asset.resourceMetadata.owner}
-                    </p>
-                </div>
-            );
-            data.push(
-                <div key={"cro1" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                    <p key={"keyIssuanceDate" + i} className="pRowKey">Issuance date</p>
-                    <p key={"keyIssuanceDateValue" + i} className="pRowValue">{asset.credentials[i].issuanceDate.replace("T", " ").substring(0, asset.credentials[i].issuanceDate.length - 5)}</p> {/* convert utc string */}
-                </div>
-            );
-            let did = asset.credentials[i].issuer.id.split(":");
-            data.push(
-                <div key={"cro2" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
-                    <p key={"keyIssuer" + i} className="pRowKey">Issuer</p>
-                    <p key={"keyIssuerValue" + i} className="pRowValue"><a href={"https://" + did[did.length - 1] + "/.well-known/did.json"} target="_blank">{asset.credentials[i].issuer.id}</a></p>
-                </div>
-            );
+
             data.push(
                 <div key={"cro3" + i} className={i % 2 === 0 ? "contentRowOdd" : "contentRowEven"}>
                     <p key={"keyHolder" + i} className="pRowKey">Holder</p>
@@ -518,6 +618,7 @@ class RendererISCCRegistryDetail {
                     <p key={"keyCredentialsValue" + i} className="pRowValue"><a href={asset.isccMetadata.credentials} target="_blank">{asset.isccMetadata.credentials}</a></p>
                 </div>
             );
+
         }
         this.setData(data);
     }
@@ -656,5 +757,6 @@ class RendererISCCRegistryDetail {
     }
 
 }
+
 
 export default RendererISCCRegistryDetail;

@@ -1,19 +1,28 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './options.css';
+const manifest = require('./../manifest.json');
 
 let serverUrls = null;
 let selectedServerUrl = null;
+let displayOverlay = null;
 
 const save = () => {
-    chrome.storage.local.set({ selectedServerUrl: selectedServerUrl })
-        .then(() => {
-            window.alert("Settings saved.");
-        });
+    chrome.storage.local.set({
+        selectedServerUrl: selectedServerUrl,
+        displayOverlay: displayOverlay
+    }).then(() => {
+        window.alert("Settings saved.");
+    });
 }
+
 
 const getSelectedServerUrl = (event) => {
     selectedServerUrl = event.target.value;
+}
+
+const toggleDisplayOverlay = (event) => {
+    displayOverlay = event.target.checked;
 }
 
 const renderElements = (storage) => {
@@ -43,23 +52,70 @@ const renderElements = (storage) => {
     );
 
     elements.push(
+        <div key={"settingDisplayOverlay"} className={"setting"}>
+            <div className="settingKey">
+                <label>Display Overlay (beta)</label>
+            </div>
+            <div className="settingValue">
+                <label className="switch">
+                    {displayOverlay
+                        ? <input type="checkbox" onChange={toggleDisplayOverlay} defaultChecked />
+                        : <input type="checkbox" onChange={toggleDisplayOverlay} />}
+                    <span className="slider round" />
+                </label>
+            </div>
+        </div>
+    )
+
+    /* elements.push(
         <div className="about">
+            <p>Published via Chrome store | Version: 0.0.6</p>
             <a href="https://github.com/liccium/liccium-chrome-extension/tree/main#liccium-browser-plugin---terms-of-service-tos" target="_blank">Terms of Service</a>
             <a href="https://liccium.com/contact/" target="_blank">Contact</a>
         </div>
-    );
+    ); */
 
     return elements;
 }
 
-chrome.storage.local.get(["selectedServerUrl", "serverUrls"]).then((storage) => {
+let info;
 
+await chrome.management.getSelf().then((result) => {
+        console.log(result);
+        info = result;
+    }).catch((error) => {
+        console.log(error);
+    }); 
+
+const renderSourceInfo = () => {
+    const version = manifest.version;
+    if (info) {
+        if (info.id === 'lkoiefagffheekoglghdblaeemembbjh') {
+            return <>
+                <p>Published via Chrome Store | Version: {version} <br /><a href="https://chromewebstore.google.com/detail/liccium-trust-engine/lkoiefagffheekoglghdblaeemembbjh" target="blank">https://chromewebstore.google.com</a></p>
+            </>;
+        }
+        else if (info.name === 'Liccium Trust Engine') {
+            return <>
+                <p>Published via GitHub | Version: {version} <br /><a href="https://github.com/liccium/liccium-chrome-extension/releases" target="blank">https://github.com/</a></p>
+            </>;
+        }
+    }
+    return <>
+        <p>Published via Unknown | Version: {version} </p>
+    </>;
+}
+
+chrome.storage.local.get(["selectedServerUrl", "serverUrls", "displayOverlay"]).then((storage) => {
     console.log("---------- CHROME STORAGE -------->");
     console.log(storage);
 
-    if (storage.selectedServerUrl !== undefined && storage.serverUrls !== undefined) {
+    if (storage.selectedServerUrl !== undefined
+        && storage.serverUrls !== undefined
+        && storage.displayOverlay !== undefined) {
         serverUrls = storage.serverUrls;
         selectedServerUrl = storage.selectedServerUrl;
+        displayOverlay = storage.displayOverlay;
         const options = (
             <div className="Options">
                 <div className="optionsBanner">
@@ -71,6 +127,11 @@ chrome.storage.local.get(["selectedServerUrl", "serverUrls"]).then((storage) => 
                 </div>
                 <div className="settings">
                     {renderElements(storage)}
+                </div>
+                <div className="about">
+                    {renderSourceInfo()}
+                    <a href="https://github.com/liccium/liccium-chrome-extension/tree/main#liccium-browser-plugin---terms-of-service-tos" target="_blank">Terms of Service</a>
+                    <a href="https://liccium.com/contact/" target="_blank">Contact</a>
                 </div>
             </div>
         );

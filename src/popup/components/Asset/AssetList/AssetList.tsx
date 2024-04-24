@@ -2,6 +2,37 @@ import React, { useEffect } from 'react';
 import './AssetList.css';
 
 const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStorage }) => {
+    const renderCertificateTags = (asset, index) => {
+        let certificateTagElements = [];
+
+        if (asset.credentials) {
+            for (let i = 0; i < asset.credentials.length; i++) {
+                const credential = asset.credentials[i];
+                if (
+                    credential.credentialSubject &&
+                    credential.credentialSubject.id &&
+                    credential.credentialSubject.id.includes(asset.resourceMetadata.declarer) &&
+                    credential.evidence &&
+                    credential.evidence.type &&
+                    credential.type[1] === "DidKeyC2PAVerification" &&
+                    asset.isccMetadata.liccium_plugins.c2pa !== undefined
+                ) {
+                    certificateTagElements.push(
+                        <div className="tagTooltip" key={`certificateTag_${index}_${i}`}>
+                            <div className="c2paTag">
+                                <img className="tagIcon" src="contentCredential-white.png" alt="verified" />
+                                <p className="handle">C2PA</p>
+                            </div>
+                            <span className="tagtooltiptext">Content Credential</span>
+                        </div>
+                    );
+                }
+            }
+        }
+
+        return certificateTagElements;
+    };
+
 
     const renderElements = () => {
 
@@ -80,7 +111,7 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                             <div className="tagTooltip">
                                 <div key={"divNoAITag" + index} className={"noAITag"}>
                                     <img className="tagIcon" src="noai.png" alt="NoAI" />
-                                    <p key={"tagNameTrue" + index} className="handle">No·AI</p>
+                                    <p key={"tagNameTrue" + index} className="handle">Authentic</p>
                                 </div>
                                 <span className="tagtooltiptext">Human generated content</span>
                             </div>
@@ -110,6 +141,38 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
                 }
             }
         }
+
+
+        // if (asset.credentials) {
+        //     let hasCertificateVerification = false;
+
+        //     for (let i = 0; i < asset.credentials.length; i++) {
+        //         const credential = asset.credentials[i];
+        //         if (
+        //             credential.credentialSubject &&
+        //             credential.credentialSubject.id &&
+        //             credential.credentialSubject.id.includes(asset.resourceMetadata.declarer) &&
+        //             credential.evidence &&
+        //             credential.evidence.type &&
+        //             credential.evidence.type[0] === "DidKey509CertificateVerification"
+        //         ) {
+        //             hasCertificateVerification = true;
+        //             break; // Wir haben die Bedingung erfüllt, also brechen wir die Schleife ab
+        //         }
+        //     }
+
+        //     if (hasCertificateVerification) {
+        //         // Zertifikat-Tags rendern
+        //         tagElements = tagElements.concat(renderCertificateTags(asset, index));
+        //     }
+        // }
+
+        // Zertifikats-Tags rendern, wenn vorhanden
+        const certificateTags = renderCertificateTags(asset, index);
+        if (certificateTags.length > 0) {
+            tagElements = tagElements.concat(certificateTags);
+        }
+
 
         if (asset.isccMetadata.original !== undefined) {
             if (asset.isccMetadata.original === true) {
@@ -152,18 +215,58 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
         } */
 
 
+
+
+        // for (let i = 0; i < assets.length; i++) {
+        //     for (let j = 0; j < assets[i].credentials.length; j++) {
+        //         if (assets[i].credentials[j].credentialSubject.id.includes(assets[i].resourceMetadata.declarer)
+        //             && assets[i].credentials[j].evidence.type[0] == "DidKey509CertificateVerification") {
+        //             console.log("TAG ERZEUGEN");
+        //             tagElements.push(
+        //                 <div className="tagTooltip">
+        //                     <div key={"div" + index + "" + i} className={"verified"}>
+        //                         <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
+        //                         <p key={"verified" + index + "" + i} className="handle">c2pa</p>
+        //                     </div>
+        //                     <span className="tagtooltiptext">{assets[i].credentials[j].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain" : "Verified Twitter/X account"}</span>
+        //                 </div>
+        //             );
+        //         }
+        //     }
+        // }
+
+
         let credentials = asset.credentials;
         if (credentials !== null) {
             for (let i = 0; i < credentials.length; i++) {
-                tagElements.push(
-                    <div className="tagTooltip">
-                        <div key={"div" + index + "" + i} className={"verified"}>
-                            <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
-                            <p key={"verified" + index + "" + i} className="handle">{credentials[i].evidence.handle}</p>
-                        </div>
-                        <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain" : "Verified Twitter/X account"}</span>
-                    </div>
-                );
+
+                for (let n = 1; n < credentials[i].type.length; n++) {
+                    if (credentials[i].type[n] != "DidKeyC2PAVerification") {
+                        if (credentials[i].type[n] == "VerifiableMember") {
+                            tagElements.push(
+                                <div className="tagTooltip">
+                                    <div key={"div" + index + "" + i} className={"member"}>
+                                        <img className="tagIcon" src="member.svg" alt="member" />
+                                        <p key={"member" + index + "" + i} className="handle">Member</p>
+                                    </div>
+                                    <span className="tagtooltiptext">{credentials[i].credentialSubject.memberOf ? "Member of: " + credentials[i].credentialSubject.memberOf.replace("did:web:", "") : "missing Member"}</span>
+                                </div>
+                            );
+                        }
+                        else if(credentials[i].type[n] != "VerifiableAttestation") {
+                            tagElements.push(
+                                <div className="tagTooltip">
+                                    <div key={"div" + index + "" + i} className={"verified"}>
+                                        <img className="tagIcon" src="certificate-icon-stripped-white-100.png" alt="verified" />
+                                        {<p key={"verified" + index + "" + i} className="handle">{credentials[i].evidence.handle}</p>}
+                                    </div>
+                                    <span className="tagtooltiptext">{credentials[i].evidence.type[0] === "DomainVerificationTXTRecord" ? "Verified domain: " + credentials[i].evidence.handle : "Verified Twitter/X account"}</span>
+                                </div>
+                            );
+                        }
+
+                    }
+                }
             }
         } else {
             tagElements.push(
@@ -176,6 +279,8 @@ const AssetList = ({ iscc, assets, createThumbnail, onItemClickHadler, clearStor
 
         return tagElements;
     }
+
+
 
     const getDate = (timestamp) => {
 

@@ -1,0 +1,316 @@
+/*Css klassen für aufklapp*/
+.ausklapp_overlay {
+    height: 135px;
+    width: 200px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    position: absolute;
+    z-index: 10000;
+    pointer-events: auto;
+    display: none;
+    opacity: 1.0;
+    overflow: visible;
+    text-align: center;
+    /* border: 1px solid green; */
+}
+
+.transition {
+    height: 156px;
+    width: 232px;
+}
+
+.top,
+.middle,
+.bottom {
+    width: 100%;
+    position: absolute;
+    box-sizing: border-box;
+}
+
+
+.top {
+    top: 0px;
+    height: 36.75px;
+    /* border: 1px solid red; */
+}
+
+.icon-liccium,
+.icon-warning,
+.headline {
+    position: absolute;
+    top: 0;
+}
+
+.icon-liccium,
+.icon-warning,
+.genAITag-icon {
+    overflow: hidden;
+}
+
+.icon-liccium {
+    position: absolute;
+    margin: 0;
+    width: 35px;
+    left: 0;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    /* border: 1px solid red; */
+    z-index: 10001;
+    display: none;
+    align-items: center;
+}
+
+.icon-liccium svg {
+    width: 90%;
+    height: 90%;
+    pointer-events: none;
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.headline {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    /* border: 1px solid green; */
+}
+
+.headline p {
+    margin-top: 3%;
+    margin-left: 15%;
+    color: #000;
+    text-align: center;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 550;
+    line-height: normal;
+}
+
+
+.icon-warning {
+    margin-right: auto;
+    width: 40px;
+    height: 40px;
+    right: 0;
+    top: 0;
+    /* border: 1px solid red;  */
+}
+
+.icon-warning svg {
+    width: 80%;
+    height: 80%;
+    margin-top: 20%;
+}
+
+
+.middle {
+    top: 36.5px;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    /*align-items: center;
+    border: 1px solid green; */
+}
+
+.generateStat {
+    /*width: 184px;
+    height: 56px;
+    border-radius: 25px;
+    border: 1px solid var(--white, #FFF);
+    background: #B3151B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    margin-top: 0px;
+     border: 1px solid green; */
+    background: rgba(0, 0, 0, 1);
+    opacity: 1.0;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 105px;
+    height: 25px;
+    border-radius: 15px 15px 15px 15px;
+    overflow: visible;
+    /* border: 2px solid #B3011B; */
+
+    /* border: 1px solid var(--white, #FFF); */
+
+    /* text-align: center; */
+
+}
+
+.generateStat-icon {
+    width: 25px;
+    height: 28px;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    /* border: 1px solid blue; */
+}
+
+.generateStat-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* border: 1px solid green; */
+    margin-top: 8px;
+    margin-left: 5px;
+}
+
+.generateStat-text {
+    position: absolute;
+    height: 28px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 26px;
+    display: flex;
+    align-items: center;
+}
+
+.generateStat-text p {
+    /*    margin-right: 20px;
+    top: 10px;
+    right: 10px;*/
+
+    margin-top: 12px;
+    margin-bottom: 12px;
+    color: var(--white, #FFF);
+    font-family: 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    /* Arial, Helvetica, sans-serif; */
+    font-size: 13px;
+    /*9pt;*/
+    font-weight: 600;
+    /*400;*/
+    /* line-height: normal; */
+    /* overflow: hidden; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+.bottom {
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+}
+
+.link {
+    height: 20px;
+    width: 250px;
+    /* color: #000; */
+    /* text-align: center; */
+    margin-left: 20px;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    /* text-decoration-line: underline;  */
+}
+
+.tagTooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tagTooltip .tagtooltiptext {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+    visibility: visible;
+    width: 120px;
+    background-color: rgba(70, 71, 93, 0.9);
+    border: 1px solid #46475d;
+    color: #eeeeee;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 36px;
+
+    left: 50%;
+    margin-left: -85px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tagTooltip .tagtooltiptext::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #46475d transparent transparent transparent;
+    transform: rotateX(180deg);
+}
+
+.tagTooltip:hover .tagtooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.noDec {
+    font-family: Inter, sans-serif;
+}
+
+.red-circle {
+    display: inline-block;
+    width: 25px;
+    /* Ändere die Breite des Kreises nach Bedarf */
+    height: 25px;
+    /* Ändere die Höhe des Kreises nach Bedarf */
+    border-radius: 50%;
+    background-color: #B3151B;
+    text-align: center;
+    line-height: 25px;
+    /* Passe die line-height an die Höhe des Kreises an */
+    color: white;
+}
+
+/* Add a loading class for the rotating effect */
+.icon-liccium-loading {
+    animation: rotate 1s linear infinite;
+}
+
+#openpopup a:hover {
+    text-decoration: underline;
+}
+
+
+/* Define the rotation animation */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+a {
+    color: rgb(0, 0, 0);
+}
