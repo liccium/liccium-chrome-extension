@@ -10,6 +10,9 @@ import { LegacyResponse, LegacyResult } from './adapterInterfaces';
 
 const Popup = () => {
 
+    const [abortController, setAbortController] = useState(new AbortController());
+    const [abort, setAbort] = useState(false);
+
     const [pageUrl, setPageUrl] = useState<string>("");
 
     const [serverUrl, setServerUrl] = useState<string>("");
@@ -31,8 +34,9 @@ const Popup = () => {
 
     const clearStorage = () => {
         console.log("Clearing storage");
-        chrome.storage.local.remove(["pageUrl", "srcUrl", "iscc", "assets"]);
+        chrome.storage.local.remove(["pageUrl", "srcUrl", "iscc", "assets"/* , "renderType" */]);
         setSrcUrl("");
+        setRenderType("");
         setIscc([]);
         setAssets([]);
     }
@@ -199,6 +203,13 @@ const Popup = () => {
         return pageUrlName;
     }
 
+    const abortFetching = () => {
+        console.log("##### Fetching abbrechen");
+        setAbort(true);
+        clearStorage();
+
+    }
+
     const render = () => {
 
         let element = [];
@@ -216,8 +227,13 @@ const Popup = () => {
 
         if (srcUrl !== "" && iscc.length === 0) {
             element.push(
-                <Processing key="Processing0" />
+                <Processing key="Processing0"
+                    abortController={abortFetching}
+                /* clearStorage={clearStorage} */
+                />
+
             );
+
         }
 
         if (iscc.length !== 0) {
@@ -325,6 +341,12 @@ const Popup = () => {
     }
     const sendRequest = async (srcUrl) => {
 
+        //abortController
+        /* abortController ; */
+        const newAbortController = new AbortController(); // Erstellen Sie einen neuen AbortController
+        setAbortController(newAbortController); // Aktualisieren Sie den AbortController im State
+        const signal = newAbortController.signal;
+
         // CONVERT SIGNS IN URL TO READABLE SIGNS
         let srcUrlReadable = srcUrl.replaceAll("%", "%25");
         srcUrlReadable = srcUrlReadable.replaceAll(":", "%3A");
@@ -342,15 +364,15 @@ const Popup = () => {
         let jsonIscc = [];
         let jsonAssets = [];
         try {
-            jsonIscc = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            jsonIscc = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable, { signal }).then(response => response.json());
+            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A"), { signal }).then(response => response.json());
             // Put sourceUrl and units from explained ISCC in jsonIscc
             jsonIscc[0].isccMetadata.name = getModeCapitalLetter(jsonIscc[0].isccMetadata.mode) + " from " + getISCCName(pageUrl);
             jsonIscc[0].isccMetadata.sourceUrl = srcUrl;
             jsonIscc[0].isccMetadata.units = jsonExplain.units;
 
             // FETCH ASSET DATA
-            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + jsonIscc[0].isccMetadata.mode + "&isMainnet=false").then(response => response.json());
+            jsonAssets = await fetch(serverUrl + "/asset/nns?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A") + "&mode=" + jsonIscc[0].isccMetadata.mode + "&isMainnet=false", { signal }).then(response => response.json());
 
             // Put units from explained ISCC in jsonAssets
             /* for (let i = 0; i < jsonAssets.length; i++) {
@@ -373,12 +395,16 @@ const Popup = () => {
             setRenderType("Assets");
 
         } catch (err) {
+            if (err.name === 'AbortError') {
+                console.log('#####################################################Fetch abgebrochen#####################################################');
+                setAbort(false);
 
-            console.error(err);
-
-            window.alert("Reuqest to " + serverUrls[serverUrl] + " failed.");
-            chrome.storage.local.remove(["srcUrl"]);
-            setSrcUrl("");
+            } else {
+                console.error(err);
+                window.alert("Request to " + serverUrls[serverUrl] + " failed.");
+                chrome.storage.local.remove(["srcUrl"]);
+                setSrcUrl("");
+            }
         }
 
     }
@@ -405,6 +431,8 @@ const Popup = () => {
 
     useEffect(() => {
 
+
+        console.log("popup useeffect");
         document.title = "Liccium Trust Engine";
 
         chrome.runtime.connect({ name: "popup" }); // connect to content script
@@ -415,7 +443,8 @@ const Popup = () => {
                 "pageUrl",
                 "srcUrl",
                 "iscc",
-                "assets"
+                "assets"/* ,
+                "renderType" */
             ]
         ).then((storage) => {
 
@@ -437,6 +466,9 @@ const Popup = () => {
             if (storage.assets !== undefined) {
                 setAssets(storage.assets);
             }
+            /* if (storage.renderType !== undefined) {
+                setRenderType(storage.renderType);
+            } */
 
         });
 
@@ -448,7 +480,7 @@ const Popup = () => {
         console.log(iscc);
         console.log("assets: " + assets.length);
         console.log(assets);
-        console.log("renderer: " + renderType);
+        /* console.log("renderer: " + renderType); */
 
         if (srcUrl !== "" && iscc.length === 0 && renderType === "Selection") {
             setRenderType("Processing");
@@ -458,7 +490,18 @@ const Popup = () => {
 
         render();
 
-    }, [srcUrl, renderType, selectedItemId]);
+        if (abort) {
+            abortController.abort();
+        }
+
+
+        return () => {
+
+        };
+
+    }, [srcUrl, renderType, selectedItemId, abort]);
+
+
 
     return (
         <div className="Popup">
