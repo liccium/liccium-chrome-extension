@@ -15,4 +15,5 @@ package-lock.json
 # common node_modules ignores:
 *.log
 *.lock
+.env*
 
