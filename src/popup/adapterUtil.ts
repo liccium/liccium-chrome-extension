@@ -44,20 +44,21 @@ import { LegacyResponse, NewResponse } from "./adapterInterfaces";
   // Function to call the new API and translate the result
   export async function callNewApiAndTranslate(ISCC:string): Promise<LegacyResponse> {
     try {
+      // Remove "ISCC:" prefix if present
+      const formattedISCC = ISCC.startsWith("ISCC:") ? ISCC.slice(5) : ISCC;
+
       // Make the API call to the new endpoint
       // get from local storage, default value is for testing
-     const bearer  =  localStorage.getItem('bearer') || "NONE"
-     const customerId = localStorage.getItem('customerId') || "NO-CID"
-     const fullURL = `https://1fmh9kqvna.execute-api.eu-central-1.amazonaws.com/api/v1/search?iscc=${ISCC}`
-     alert(fullURL)
-      const response = await fetch( fullURL,
-        {
-          method: "GET",
-          headers: {
-            "Bearer":  bearer,
-            "x-customer-id":  customerId
-          },
-        });
+      const bearer  =  localStorage.getItem('API_KEY') || "NONE"
+      const server = localStorage.getItem('API_URL') || "NO-API-FOUND"
+      const fullURL = `${server}/v1/search/${formattedISCC}`
+      alert(fullURL)
+      const response = await fetch(fullURL, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${bearer}`
+        },
+      });
       const newResponse: NewResponse = await response.json();
   
       // Adapt the new response to the legacy format

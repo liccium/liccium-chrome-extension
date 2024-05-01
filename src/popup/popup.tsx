@@ -16,6 +16,8 @@ const Popup = () => {
     const [pageUrl, setPageUrl] = useState<string>("");
 
     const [serverUrl, setServerUrl] = useState<string>("");
+    const [legacySearchServer, setLegacySearchServer] = useState<string>("");
+    const [apiKey, setApiKey] = useState<string>("");
 
     const [srcUrl, setSrcUrl] = useState<string>("");
 
@@ -26,11 +28,11 @@ const Popup = () => {
     const [assets, setAssets] = useState([]); // new Entries().data
     const [selectedItemId, setSelectedItemId] = useState<string>("");
 
-    const serverUrls = {
-        "https://search.liccium.app": "Liccium",  // plugin.liccium.app
-        "https://iscc.if-is.net": "if(is)",
-        "http://localhost": "Development"
-    }
+    // const serverUrls = {
+    //     "https://search.liccium.app": "Liccium",  // plugin.liccium.app
+    //     "https://iscc.if-is.net": "if(is)",
+    //     "http://localhost": "Development"
+    // }
 
     const clearStorage = () => {
         console.log("Clearing storage");
@@ -295,8 +297,8 @@ const Popup = () => {
         let jsonIscc = [];
         let jsonAssets:LegacyResult[] = [];
         try {
-            jsonIscc = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
-            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
+            jsonIscc = await fetch(legacySearchServer + "/iscc/create?sourceUrl=" + srcUrlReadable).then(response => response.json());
+            let jsonExplain = await fetch(legacySearchServer + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
             // Put sourceUrl and units from explained ISCC in jsonIscc
             jsonIscc[0].isccMetadata.name = getModeCapitalLetter(jsonIscc[0].isccMetadata.mode) + " from " + getISCCName(pageUrl);
             jsonIscc[0].isccMetadata.sourceUrl = srcUrl;
@@ -308,13 +310,6 @@ const Popup = () => {
            jsonAssets = searchResults.results;
            alert(JSON.stringify(jsonAssets, null, 2))
            console.log("searchResults", searchResults);
-
-            // Put units from explained ISCC in jsonAssets
-            /* for (let i = 0; i < jsonAssets.length; i++) {
-                let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonAssets[i].isccMetadata.iscc.replace(":", "%3A")).then(response => response.json());
-                let assetUnits = jsonExplain.units;
-                jsonAssets[i].isccMetadata.units = assetUnits;
-            } */
 
             console.log("ARRAY FROM NNS");
             console.log(jsonAssets);
@@ -333,7 +328,7 @@ const Popup = () => {
 
             console.error(err);
 
-            window.alert("Reuqest to " + serverUrls[serverUrl] + " failed.");
+            // window.alert("Reuqest to " + serverUrls[serverUrl] + " failed.");
             chrome.storage.local.remove(["srcUrl"]);
             setSrcUrl("");
         }
@@ -396,12 +391,12 @@ const Popup = () => {
 
         } catch (err) {
             if (err.name === 'AbortError') {
-                console.log('#####################################################Fetch abgebrochen#####################################################');
+                console.log('#####################################################Fetch aborted#####################################################');
                 setAbort(false);
 
             } else {
                 console.error(err);
-                window.alert("Request to " + serverUrls[serverUrl] + " failed.");
+                // window.alert("Request to " + serverUrls[serverUrl] + " failed.");
                 chrome.storage.local.remove(["srcUrl"]);
                 setSrcUrl("");
             }
@@ -439,7 +434,9 @@ const Popup = () => {
 
         chrome.storage.local.get(
             [
-                "selectedServerUrl",
+                "legacySearchServer",
+                "API_URL",
+                "API_KEY",
                 "pageUrl",
                 "srcUrl",
                 "iscc",
@@ -451,8 +448,21 @@ const Popup = () => {
             console.log("---------- CHROME STORAGE -------->");
             console.log(storage);
 
-            if (storage.selectedServerUrl !== undefined) {
-                setServerUrl(storage.selectedServerUrl);
+            if(storage.legacySearchServer !== undefined){
+                setLegacySearchServer(storage.legacySearchServer);
+                console.log("legacySearchServer found", storage.legacySearchServer);
+            }
+            if (storage.API_URL !== undefined) {
+                setServerUrl(storage.API_URL);
+                console.log("API_URL found", storage.API_URL);
+            }
+            if(storage.API_KEY !== undefined){
+                setApiKey(storage.API_KEY);
+                console.log("API_KEY found", storage.API_KEY); 
+            }
+            else{
+                console.error("storage.API_KEY not found");
+                alert("storage.API_KEY not found")
             }
             if (storage.pageUrl !== undefined) {
                 setPageUrl(storage.pageUrl);

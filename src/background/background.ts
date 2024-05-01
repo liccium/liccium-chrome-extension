@@ -1,8 +1,32 @@
+const storeEnvironmentVariables = () => {
+  const API_URL = process.env.API_URL;
+  const API_KEY = process.env.API_KEY;
+
+  if (API_URL) {
+    chrome.storage.local.set({ API_URL });
+    console.log("loaded API_URL from env file ", API_URL);
+  }
+    else {
+        console.error("API_URL not found in env file");
+    }
+
+  if (API_KEY) {
+    chrome.storage.local.set({ API_KEY});
+    console.log("loaded API_KEY from env file", API_KEY);
+  }
+  else {
+    console.error("API_KEY not found in env file");
+  }
+}
+
 chrome.runtime.onInstalled.addListener(() => {
+
+    // chrome.storage.local.clear();
     console.log('I come from Background-Script.');
+   storeEnvironmentVariables(); 
+   chrome.storage.local.set({ legacySearchServer: "https://search.liccium.app" });
 
 
-    chrome.storage.local.clear();
     chrome.storage.local.set({ selectedServerUrl: "https://search.liccium.app" });
     chrome.storage.local.set(
         {
