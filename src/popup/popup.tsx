@@ -359,8 +359,8 @@ const Popup = () => {
         let jsonIscc = [];
         let jsonAssets = [];
         try {
-            jsonIscc = await fetch(serverUrl + "/iscc/create?sourceUrl=" + srcUrlReadable, { signal }).then(response => response.json());
-            let jsonExplain = await fetch(serverUrl + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A"), { signal }).then(response => response.json());
+            jsonIscc = await fetch(legacySearchServer + "/iscc/create?sourceUrl=" + srcUrlReadable, { signal }).then(response => response.json());
+            let jsonExplain = await fetch(legacySearchServer + "/iscc/explain?iscc=" + jsonIscc[0].isccMetadata.iscc.replace(":", "%3A"), { signal }).then(response => response.json());
             // Put sourceUrl and units from explained ISCC in jsonIscc
             jsonIscc[0].isccMetadata.name = getModeCapitalLetter(jsonIscc[0].isccMetadata.mode) + " from " + getISCCName(pageUrl);
             jsonIscc[0].isccMetadata.sourceUrl = srcUrl;
@@ -407,7 +407,7 @@ const Popup = () => {
     function onItemClickHadler(id: string): void {
         console.log("clicked " + id);
         if (id !== "" && id !== "iscc") {
-            fetch(serverUrl + "/iscc/explain?iscc=" + assets[id].isccMetadata.iscc.replace(":", "%3A"))
+            fetch(legacySearchServer + "/iscc/explain?iscc=" + assets[id].isccMetadata.iscc.replace(":", "%3A"))
                 .then(response => response.json())
                 .then(jsonExplain => {
 
