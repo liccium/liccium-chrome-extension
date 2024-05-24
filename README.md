@@ -6,11 +6,9 @@ The plugin will draw information from decentralised registries, which are (curre
 
 Overall, the Liccium browser plugin will provide a straightforward and effective way for users to verify the authenticity and accuracy of digital media content encountered while browsing the web, helping to establish trust in online publications, data, and information.
 
-<img width="400" alt="image" src="https://1543071982-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FKyPjnRgFAp1MzuOXKSXI%2Fuploads%2FokEGb9HJrYaL3kpZ0Nx6%2FBrowser%20plugin%20small.gif?alt=media&token=489e7ea6-1a6a-4fad-b18d-7af0b50eb3f4">
-
 ## Credits
 
-The plugin was developed by [Dominik Krakau](https://github.com/dkrakau), [Lukas Amerkamp](https://github.com/lamerkamp), [Michael Sorban](https://github.com/msorban), and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science. The backend technology is based on code, developed by [ISCC Foundation](https://github.com/iscc) and [Liccium B.V.](https://liccium.com), co-funded by [Trublo.eu](https://Trublo.eu) and the European Union’s Horizon 2020 research and innovation programme grant agreement No. 957228.  
+An early version of the plugin was developed by [Dominik Krakau](https://github.com/dkrakau), [Lukas Amerkamp](https://github.com/lamerkamp), [Michael Sorban](https://github.com/msorban), and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science. The backend technology is based on code, developed by [ISCC Foundation](https://github.com/iscc) and [Liccium B.V.](https://liccium.com), co-funded by [Trublo.eu](https://Trublo.eu) and the European Union’s Horizon 2020 research and innovation programme grant agreement No. 957228.  
 
 <img width="200" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/d494868d-60c9-4ade-bb09-1f1df57bc538">
 
@@ -24,62 +22,11 @@ NOTE: Of course, you can only verify content that has been previously declared b
 
 The browser extension is for testing purposes only. 
 - It can only tested using the Chrome browser
-- Currently only declarations made on testnet blockchains can be analysed. 
 - Currently only images are supported. In future releases you will be able to verify all media types and formats. 
- 
-## Test declarations
-
-To test the browser plugin, you can use the examples of a few test declarations, below.  
-Alternatively, you can find verifiable content posted by this Twitter account:
-
-[https://twitter.com/spsth](https://twitter.com/spsth)
-
-### Declarations by two verified declarants
-
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/3b2ab918-5523-4a96-ace5-badd816564df">
-
-[https://photos.com/featured/eye-of-horse-gabriella-nonino.html](https://photos.com/featured/eye-of-horse-gabriella-nonino.html
-) 
-
-### Examples of fake/manipulated content
-
-These example shows how to resolve the original declaration from manipulated content:
-
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/09ab9b0a-6423-4d81-a84d-e11463257ba1">
-
-[https://twitter.com/spsth/status/1718594137702777111](https://twitter.com/spsth/status/1718594137702777111)
-
-This was the original declaration – spot the difference :) 
-
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/38632fdd-9f70-4bd9-adee-405e224487cf">  
-
-[https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r](https://bsky.app/profile/sandswimmer.xyz/post/3kcb6dwb4ck2r)  
-
-This is the result of the reverse-lookup: 
-
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/bf66b58f-ada1-4db3-bd82-81a0fd1d030b">
-
-Another fake image; the browser plugin will lead you to the original content:
-
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/39a5074b-fa3b-44eb-a0f7-0bd39007ea7a">
-
-[https://twitter.com/spsth/status/1718591647087251519](https://twitter.com/spsth/status/1718591647087251519)
-
-### Examples of AI generated content
-
-These example shows how to verify AI generated content: 
-
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/c2c576bc-e3b1-4a17-b2df-1128dfd8b7fd">
-
-[https://twitter.com/spsth/status/1723709427130257804](https://twitter.com/spsth/status/1723709427130257804)
-
-<img width="400" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/8c9bbddf-e712-43cb-be47-2cf177fd0792">
-
-[https://twitter.com/spsth/status/1723712373431673208/photo/1](https://twitter.com/spsth/status/1723712373431673208/photo/1)
 
 ## How to make content declarations?
 
-The test declarations have been published with the Liccium app, which is presently in its private alpha phase. For those interested in experiencing and testing the app firsthand and joining as early adopters, you're welcome to register and request an invite code at [Liccium.com](https://Liccium.com).
+The test declarations have been published with the Liccium app, which is presently in its closed alpha phase. For those interested in experiencing and testing the app firsthand and joining as early adopters, you're welcome to register and request an invite code at [Liccium.com](https://Liccium.com).
 
 ## What is the Liccium Trust Engine?
 
