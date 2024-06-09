@@ -1,18 +1,8 @@
 # Liccium Chrome Browser Extension
 
-The Liccium Chrome browser plugin allows users to identify and verify declarations of digital media content online and perform a reverse-lookup of associated metadata, rights, and available or already acquired licences. 
+The Liccium Chrome browser extension allows users to verify declarations of digital media content online by performing a reverse-lookup of associated rights, metadata and verifiable credentials. The extension will draw information from Liccium registries, providing users with additional details about the media content and related assets. The Liccium browser extension will provide a straightforward and effective way for users to verify the authenticity and integrity of digital media content online, helping to establish trust in online publications, data, and information.
 
-The plugin will draw information from decentralised registries, which are (currently) based on content declarations on decentralised public blockchain networks, providing users with additional details about the media content and related assets.  
-
-Overall, the Liccium browser plugin will provide a straightforward and effective way for users to verify the authenticity and accuracy of digital media content encountered while browsing the web, helping to establish trust in online publications, data, and information.
-
-## Credits
-
-An early version of the plugin was developed by [Dominik Krakau](https://github.com/dkrakau), [Lukas Amerkamp](https://github.com/lamerkamp), [Michael Sorban](https://github.com/msorban), and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science. The backend technology is based on code, developed by [ISCC Foundation](https://github.com/iscc) and [Liccium B.V.](https://liccium.com), co-funded by [Trublo.eu](https://Trublo.eu) and the European Union’s Horizon 2020 research and innovation programme grant agreement No. 957228.  
-
-<img width="200" alt="image" src="https://github.com/liccium/liccium-chrome-extension/assets/14913025/d494868d-60c9-4ade-bb09-1f1df57bc538">
-
-## How to use the browser plugin?
+## How to use the browser extension?
 
 Go to any website and click on the extension icon to verify content on this page. 
 
@@ -21,21 +11,18 @@ NOTE: Of course, you can only verify content that has been previously declared b
 ### Limitations
 
 The browser extension is for testing purposes only. 
-- It can only tested using the Chrome browser
+- It can only tested using the Chrome browser.
 - Currently only images are supported. In future releases you will be able to verify all media types and formats. 
 
 ## How to make content declarations?
 
 The test declarations have been published with the Liccium app, which is presently in its closed alpha phase. For those interested in experiencing and testing the app firsthand and joining as early adopters, you're welcome to register and request an invite code at [Liccium.com](https://Liccium.com).
 
-## What is the Liccium Trust Engine?
+## What is the Liccium?
 
 **1. Verifiable declarations**  
 
-With Liccium, content creators and rightsholders can digitally sign their original creative works and make publicly verifiable declarations of their original content.
-
-Liccium helps creators and rightsholders to generate, manage, and declare content-derived identifiers (ISCC codes) for digital media content. Using ISCC, they can inseparably bind verifiable claims – e.g. rights, license, and other product metadata – to the fingerprint of their digital content. 
-All declarations are automatically accessible via decentralised content registries, which allow users or machines to discover, identify, and verify the authenticity and integrity of digital media content and resolve rights, licenses, and other product metadata.
+With Liccium, content creators and rightsholders can digitally sign their original creative works and make publicly verifiable declarations of their original content. Liccium helps creators and rightsholders to generate, manage, and declare content-derived identifiers (ISCC codes) for digital media content. Using ISCC, they can inseparably bind verifiable claims – e.g. rights, license, and other product metadata – to the fingerprint of their digital content. All declarations are automatically accessible via the Liccium content registries, which allow users or machines to discover, identify, and verify the authenticity and integrity of digital media content and resolve rights, licenses, and other product metadata.
 
 **2. Creator attribution**
 
@@ -45,17 +32,15 @@ Digital signatures and verifiable creator credentials increase trust in assertio
 
 Liccium is based on the ([International Standard Content Code (ISCC)](https://www.iso.org/standard/77899.html)), a content-derived identifier, lightweight fingerprinting, and open identification system for digital media content of all media types (image, video, text, audio),  using cryptographic and similarity- preserving hashes to create a unique ID for each digital asset.  
 
-[Current status of the ISCC at ISO: Draft International Standard ISO/PRF 24138](https://www.iso.org/standard/77899.html)
+[ISO has published the ISCC as ISO 24138:2014](https://www.iso.org/standard/77899.html)
 
-Using a novel standard for decentralised content identification, these claims inseparably stick with the content **without relying on watermarks or embedded metadata**. 
-
-This empowers any user, system, or machine with access to the digital asset to independently generate an identical or similar ISCC code, enabling the identification, comparison, and matching of digital content while assessing its integrity and authenticity. Thus, ISCC remains dependable, retaining its full range of capabilities even in scenarios where content is altered or manipulated, or when watermarks, steganographic data, or metadata is removed from the media asset.
+Using a novel standard for decentralised content identification, these claims inseparably stick with the content **without relying on watermarks or embedded metadata**. This empowers any user, system, or machine with access to the digital asset to independently generate an identical or similar ISCC code, enabling the identification, comparison, and matching of digital content while assessing its integrity and authenticity. Thus, ISCC remains dependable, retaining its full range of capabilities even in scenarios where content is altered or manipulated, or when watermarks, steganographic data, or metadata is removed from the media asset.
 
 ## Installation via Chrome Web Store
 
 The Liccium browser extension can be installed via the Chrome web store:
 
-[https://chromewebstore.google.com/detail/liccium-trust-engine/lkoiefagffheekoglghdblaeemembbjh](https://chromewebstore.google.com/detail/liccium-trust-engine/lkoiefagffheekoglghdblaeemembbjh)
+[https://chromewebstore.google.com/detail/liccium/lkoiefagffheekoglghdblaeemembbjh](https://chromewebstore.google.com/detail/liccium/lkoiefagffheekoglghdblaeemembbjh)
 
 ## Installation via GitHub 
 
@@ -71,38 +56,38 @@ You can also install the browser extension manually. This requires a a few steps
 6. Enable the **_Developer mode_** on the top right.
 7. Click on **"_Load unpacked_"**.
 8. Select extracted **_liccium-chrome-extension[-version number]_** folder and enter. The folder _must not_ be deleted after extraction.
-9. Go to the Plugins settings and pin the Liccium Trust Engine browser extension.
+9. Go to the Extension settings and pin the Liccium Trust Engine browser extension.
 10. Please refresh the browser window before first use.
 
-## Liccium Browser Plugin - Terms of Service (ToS)
+## Liccium Browser Extension - Terms of Service (ToS)
 
-> **This is the pre-release of the Liccium browser plugin and for testing purposes only!**
+> **This is the pre-release of the Liccium browser extension and for testing purposes only!**
 
-By using The plugin, you agree to these Terms of Service. Please read them carefully.
+By using The extension, you agree to these Terms of Service. Please read them carefully.
 
 ### Usage
 
-The Liccium Browser Plugin is designed to allow users to find and verify declarations of digital media content online. Any misuse or malicious use of the plugin is strictly prohibited.
+The Liccium Browser extension is designed to allow users to find and verify declarations of digital media content online. Any misuse or malicious use of the extension is strictly prohibited.
 
 ### Verification & Authenticity
 
-The Liccium Browser Plugin operates by capturing the URL of the online content and transmitting it to the server. This process facilitates the generation of an [ISCC code](https://iscc.codes) ([International Standard Content Code](https://www.iso.org/standard/77899.html)) specific to the content in question. Post ISCC generation, the plugin queries the Liccium index to obtain relevant information. This index is rooted in content declarations on decentralized public blockchain networks. The derived information, including the ISCC and associated metadata, is then presented to the user, offering insights into the content's authenticity and declaration metadata.
+The Liccium Browser extension operates by capturing the URL of the online content and transmitting it to the server. This process facilitates the generation of an [ISCC code](https://iscc.codes) ([International Standard Content Code](https://www.iso.org/standard/77899.html)) specific to the content in question. Post ISCC generation, the extension queries the Liccium index to obtain relevant information. This index is rooted in content declarations on decentralized public blockchain networks. The derived information, including the ISCC and associated metadata, is then presented to the user, offering insights into the content's authenticity and declaration metadata.
 
 ### Privacy
 
-We respect your privacy! The plugin does not collect any personal data. To generate the ISCC code, the URL of the content is provided temporarily to the ISCC generator service, hosted on the servers. No IP address, no URL, no content is stored!
+We respect your privacy! The extension does not collect any personal data. To generate the ISCC code, the URL of the content is provided temporarily to the ISCC generator service, hosted on the servers. No IP address, no URL, no content is stored!
 
 ### Limitation of Liability
 
-While we strive to provide accurate and timely information, there may be inadvertent technical or factual inaccuracies and typographical errors. We reserve the right to make corrections and changes to the plugin at any time without notice.
+While we strive to provide accurate and timely information, there may be inadvertent technical or factual inaccuracies and typographical errors. We reserve the right to make corrections and changes to the extension at any time without notice.
 
 ### Updates
 
-We may update the plugin and these Terms of Service from time to time. It is your responsibility to check for updates regularly.
+We may update the extension and these Terms of Service from time to time. It is your responsibility to check for updates regularly.
 
 ### Termination
 
-We reserve the right to terminate or suspend access to the plugin for any user who violates these Terms of Service.
+We reserve the right to terminate or suspend access to the extension for any user who violates these Terms of Service.
 
 ### Governing Law
 
@@ -110,5 +95,9 @@ These Terms of Service are governed by Dutch law.
 
 ### Contact
 
-For any questions or concerns regarding these Terms of Service, please contact us at werk at posth .me. By using the Liccium Browser Plugin, you agree to abide by these terms and conditions. If you do not agree with any of these terms, please do not use the plugin.
+For any questions or concerns regarding these Terms of Service, please contact us at werk at posth .me. By using the Liccium Browser extension, you agree to abide by these terms and conditions. If you do not agree with any of these terms, please do not use the extension.
 
+
+## Credits
+
+An early version of the extension was developed by [Dominik Krakau](https://github.com/dkrakau), [Lukas Amerkamp](https://github.com/lamerkamp), [Michael Sorban](https://github.com/msorban), and [Sebastian Posth](https://github.com/sposth) in collaboration with the [Institute for Internet Security](https://www.internet-sicherheit.de/) of the Westfalian University of Applied Science.  
