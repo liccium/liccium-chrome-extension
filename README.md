@@ -65,14 +65,14 @@ You can also install the browser extension manually. This requires a a few steps
 
 1. Download the zip file of the [latest release](https://github.com/liccium/liccium-chrome-extension/releases).
 2. Extract the zip file.
-3. Place extracted folder in any location.  
+3. Place the extracted folder in any location.  
 4. Start the Google Chrome browser.
 5. Go to your Extensions page by entering **_chrome://extensions/_** into your Chrome browser. 
 6. Enable the **_Developer mode_** on the top right.
-7. Click on **_Load unpacked_**.
+7. Click on **"_Load unpacked_"**.
 8. Select extracted **_liccium-chrome-extension[-version number]_** folder and enter. The folder _must not_ be deleted after extraction.
 9. Go to the Plugins settings and pin the Liccium Trust Engine browser extension.
-10. Please refresh browser window befor first use. 
+10. Please refresh the browser window before first use.
 
 ## Liccium Browser Plugin - Terms of Service (ToS)
 
