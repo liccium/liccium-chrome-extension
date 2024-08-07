@@ -10,9 +10,9 @@ NOTE: Of course, you can only verify content that has been previously declared b
 
 ### Limitations
 
-The browser extension is for testing purposes only. 
+> **The browser extension is for testing purposes only.** 
 - It can only tested using the Chrome browser.
-- Currently only images are supported. In future releases you will be able to verify all media types and formats. 
+- Currently only images are supported. 
 
 ## How to make content declarations?
 
